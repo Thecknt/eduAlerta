@@ -594,52 +594,79 @@
       </button>
     </div>
 
-    <!-- Canales Institucionales de Contacto Directo -->
-    <div id="seccionContactos" class="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-sm space-y-3">
-      <h3 class="text-sm font-bold text-[#001433] flex items-center gap-2">
-        <i class="fa-solid fa-address-book text-[#0066FF]"></i> Canales de Comunicación Escolar
-      </h3>
-
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-        <!-- Docente -->
-        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
-          <div class="font-bold text-slate-800">Prof. Roberto García</div>
-          <p class="text-[11px] text-slate-500">Matemática (Tutor 4° B)</p>
-          <div class="flex gap-1.5 pt-1">
-            <a href="tel:+5491155550101" class="flex-1 py-1.5 px-2 text-center rounded-xl bg-white border border-slate-200 font-bold text-slate-700 hover:text-[#0066FF]">
-              <i class="fa-solid fa-phone"></i>
-            </a>
-            <a href="https://wa.me/5491155550101?text=Hola%20Prof.%20Garc%C3%ADa,%20le%20escribe%20Carlos%20Mart%C3%ADnez%20(Padre%20de%20Lautaro)" target="_blank" class="flex-1 py-1.5 px-2 text-center rounded-xl bg-emerald-500 text-white font-bold hover:bg-emerald-600">
-              <i class="fa-brands fa-whatsapp"></i>
-            </a>
+    <!-- TAB 6: CONTACTOS Y CANALES ESCOLARES -->
+    <div id="contentContactos" class="space-y-4 hidden">
+      <!-- Canales Institucionales de Contacto Directo -->
+      <div id="seccionContactos" class="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-sm space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-2xl bg-blue-50 text-[#0066FF] flex items-center justify-center text-sm font-bold">
+              <i class="fa-solid fa-address-book"></i>
+            </div>
+            <div>
+              <h3 class="text-sm sm:text-base font-bold text-[#001433]">Canales de Comunicación Escolar</h3>
+              <p class="text-xs text-slate-500">Contactos institucionales directos para la familia de Lautaro</p>
+            </div>
           </div>
+          <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700">Canales Verificados</span>
         </div>
 
-        <!-- Directora -->
-        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
-          <div class="font-bold text-slate-800">Directora Silvia Martínez</div>
-          <p class="text-[11px] text-slate-500">Dirección Institucional</p>
-          <div class="flex gap-1.5 pt-1">
-            <a href="tel:+5491155550102" class="flex-1 py-1.5 px-2 text-center rounded-xl bg-white border border-slate-200 font-bold text-slate-700 hover:text-[#0066FF]">
-              <i class="fa-solid fa-phone"></i>
-            </a>
-            <a href="https://wa.me/5491155550102?text=Estimada%20Directora,%20le%20escribe%20Carlos%20Mart%C3%ADnez%20(Familia%20Lautaro)" target="_blank" class="flex-1 py-1.5 px-2 text-center rounded-xl bg-emerald-500 text-white font-bold hover:bg-emerald-600">
-              <i class="fa-brands fa-whatsapp"></i>
-            </a>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-1">
+          <!-- Docente -->
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
+            <div>
+              <span class="text-[10px] font-bold uppercase text-slate-400 block tracking-wider">Profesor Tutor</span>
+              <div class="font-bold text-slate-900 text-sm mt-0.5">Prof. Roberto García</div>
+              <p class="text-[11px] text-slate-500">Matemática (4° Año B)</p>
+            </div>
+            <div class="flex gap-2 pt-1">
+              <a href="tel:+5491155550101" class="flex-1 py-2 px-2 text-center rounded-xl bg-white border border-slate-200 font-bold text-slate-700 hover:text-[#0066FF] flex items-center justify-center gap-1.5 shadow-2xs">
+                <i class="fa-solid fa-phone text-xs"></i>
+                <span>Llamar</span>
+              </a>
+              <a href="https://wa.me/5491155550101?text=Hola%20Prof.%20Garc%C3%ADa,%20le%20escribe%20Carlos%20Mart%C3%ADnez%20(Padre%20de%20Lautaro)" target="_blank" class="flex-1 py-2 px-2 text-center rounded-xl bg-emerald-500 text-white font-bold hover:bg-emerald-600 flex items-center justify-center gap-1.5 shadow-2xs">
+                <i class="fa-brands fa-whatsapp text-sm"></i>
+                <span>WhatsApp</span>
+              </a>
+            </div>
           </div>
-        </div>
 
-        <!-- Cooperadora -->
-        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
-          <div class="font-bold text-slate-800">Cooperadora Escolar</div>
-          <p class="text-[11px] text-slate-500">Cuota al día: $3.500</p>
-          <div class="flex gap-1.5 pt-1">
-            <a href="tel:+5491155550103" class="flex-1 py-1.5 px-2 text-center rounded-xl bg-white border border-slate-200 font-bold text-slate-700 hover:text-[#0066FF]">
-              <i class="fa-solid fa-phone"></i>
-            </a>
-            <a href="https://wa.me/5491155550103?text=Hola,%20consulta%20desde%20familia%20Lautaro%20Mart%C3%ADnez" target="_blank" class="flex-1 py-1.5 px-2 text-center rounded-xl bg-emerald-500 text-white font-bold hover:bg-emerald-600">
-              <i class="fa-brands fa-whatsapp"></i>
-            </a>
+          <!-- Directora -->
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
+            <div>
+              <span class="text-[10px] font-bold uppercase text-slate-400 block tracking-wider">Dirección Escolar</span>
+              <div class="font-bold text-slate-900 text-sm mt-0.5">Directora Silvia Martínez</div>
+              <p class="text-[11px] text-slate-500">Escuela Secundaria N° 12</p>
+            </div>
+            <div class="flex gap-2 pt-1">
+              <a href="tel:+5491155550102" class="flex-1 py-2 px-2 text-center rounded-xl bg-white border border-slate-200 font-bold text-slate-700 hover:text-[#0066FF] flex items-center justify-center gap-1.5 shadow-2xs">
+                <i class="fa-solid fa-phone text-xs"></i>
+                <span>Llamar</span>
+              </a>
+              <a href="https://wa.me/5491155550102?text=Estimada%20Directora,%20le%20escribe%20Carlos%20Mart%C3%ADnez%20(Familia%20Lautaro)" target="_blank" class="flex-1 py-2 px-2 text-center rounded-xl bg-emerald-500 text-white font-bold hover:bg-emerald-600 flex items-center justify-center gap-1.5 shadow-2xs">
+                <i class="fa-brands fa-whatsapp text-sm"></i>
+                <span>WhatsApp</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Cooperadora -->
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
+            <div>
+              <span class="text-[10px] font-bold uppercase text-slate-400 block tracking-wider">Administración</span>
+              <div class="font-bold text-slate-900 text-sm mt-0.5">Cooperadora Escolar</div>
+              <p class="text-[11px] text-slate-500">Cuota al día: $3.500</p>
+            </div>
+            <div class="flex gap-2 pt-1">
+              <a href="tel:+5491155550103" class="flex-1 py-2 px-2 text-center rounded-xl bg-white border border-slate-200 font-bold text-slate-700 hover:text-[#0066FF] flex items-center justify-center gap-1.5 shadow-2xs">
+                <i class="fa-solid fa-phone text-xs"></i>
+                <span>Llamar</span>
+              </a>
+              <a href="https://wa.me/5491155550103?text=Hola,%20consulta%20desde%20familia%20Lautaro%20Mart%C3%ADnez" target="_blank" class="flex-1 py-2 px-2 text-center rounded-xl bg-emerald-500 text-white font-bold hover:bg-emerald-600 flex items-center justify-center gap-1.5 shadow-2xs">
+                <i class="fa-brands fa-whatsapp text-sm"></i>
+                <span>WhatsApp</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -803,6 +830,7 @@
       document.getElementById('contentRendimiento').classList.add('hidden');
       document.getElementById('contentAgenda').classList.add('hidden');
       document.getElementById('contentComunicaciones').classList.add('hidden');
+      document.getElementById('contentContactos').classList.add('hidden');
 
       const activeBtn = document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1));
       if (activeBtn) {
@@ -820,9 +848,8 @@
       } else if (tab === 'comunicaciones') {
         document.getElementById('contentComunicaciones').classList.remove('hidden');
       } else if (tab === 'contactos') {
-        document.getElementById('contentResumen').classList.remove('hidden');
-        const cont = document.getElementById('seccionContactos');
-        if (cont) cont.scrollIntoView({ behavior: 'smooth' });
+        document.getElementById('contentContactos').classList.remove('hidden');
+        window.scrollTo({ top: 150, behavior: 'smooth' });
       }
     }
 
@@ -1148,7 +1175,7 @@
     }
 
     function abrirModalContacto() {
-      document.getElementById('seccionContactos').scrollIntoView({ behavior: 'smooth' });
+      cambiarTab('contactos');
     }
 
     function toggleMenuMobile() {

@@ -763,7 +763,12 @@
               <i class="fa-solid fa-file-pen"></i> Nota
             </button>
 
-            <!-- Contactar por email al padre/tutor (Norma institucional: docentes contactan por mail) -->
+            <!-- Botón Llamar a la Familia -->
+            <a href="tel:${est.tel || ('+' + est.wa)}" class="p-2 rounded-xl bg-slate-50 hover:bg-emerald-50 text-slate-600 hover:text-emerald-600 text-xs border border-slate-200" title="Llamar a la familia">
+              <i class="fa-solid fa-phone"></i>
+            </a>
+
+            <!-- Contactar por email al padre/tutor (Norma institucional) -->
             <a href="mailto:${est.emailTutor}?subject=EduAlerta%20-%20Seguimiento%20Pedag%C3%B3gico%20de%20${encodeURIComponent(est.nombre)}&body=Estimado/a%20${encodeURIComponent(est.tutor)},%20le%20escribe%20el%20Prof.%20Roberto%20Garc%C3%ADa%20(Matem%C3%A1tica)%20de%20la%20Escuela%20Secundaria%20N%C2%B0%2012..." class="p-2 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-[#0066FF] text-xs border border-slate-200" title="Contactar por email al padre/tutor">
               <i class="fa-regular fa-envelope"></i>
             </a>
