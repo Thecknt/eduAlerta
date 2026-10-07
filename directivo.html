@@ -122,9 +122,17 @@
           <i class="fa-solid fa-chart-pie text-slate-400 w-4 text-center"></i>
           <span>Indicadores de la Escuela</span>
         </button>
+        <button onclick="navegarDirectivo('radar')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-purple-50 text-purple-700 font-bold text-left">
+          <i class="fa-solid fa-brain text-purple-600 w-4 text-center"></i>
+          <span>Radar Predictivo de Deserción</span>
+        </button>
         <button onclick="navegarDirectivo('alumnos')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 text-slate-700 transition-colors text-left">
           <i class="fa-solid fa-triangle-exclamation text-rose-500 w-4 text-center"></i>
           <span>Casos Prioritarios y Contactos</span>
+        </button>
+        <button onclick="navegarDirectivo('bitacora')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 text-slate-700 transition-colors text-left">
+          <i class="fa-solid fa-clipboard-list text-amber-500 w-4 text-center"></i>
+          <span>Bitácora de Acuerdos Pedagógicos</span>
         </button>
         <button onclick="navegarDirectivo('docentes')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 text-slate-700 transition-colors text-left">
           <i class="fa-solid fa-chalkboard-user text-emerald-600 w-4 text-center"></i>
@@ -349,16 +357,28 @@
       </div>
     </div>
 
-    <!-- Navigation Tabs: Cuerpo Docente vs Casos en Alerta -->
-    <div class="flex border-b border-slate-200 text-xs sm:text-sm font-semibold text-slate-500">
-      <button onclick="cambiarTabDirectivo('docentes')" id="tabBtnDocentes" class="py-2.5 px-4 text-[#0066FF] border-b-2 border-[#0066FF] font-bold">
-        Cuerpo Docente (26)
+    <!-- Navigation Tabs: Cuerpo Docente vs Casos en Alerta vs Radar vs Bitácora -->
+    <div class="flex flex-wrap sm:flex-nowrap border-b border-slate-200 text-xs sm:text-sm font-semibold text-slate-500 gap-1 sm:gap-0">
+      <button onclick="cambiarTabDirectivo('radar')" id="tabBtnRadar" class="py-2.5 px-3 sm:px-4 hover:text-slate-800 flex items-center gap-1.5">
+        <i class="fa-solid fa-brain text-purple-600"></i>
+        <span>Radar Predictivo IA</span>
+        <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
       </button>
-      <button onclick="cambiarTabDirectivo('alumnos')" id="tabBtnAlumnos" class="py-2.5 px-4 hover:text-slate-800">
-        Casos en Alerta Temprana (8)
+      <button onclick="cambiarTabDirectivo('alumnos')" id="tabBtnAlumnos" class="py-2.5 px-3 sm:px-4 hover:text-slate-800 flex items-center gap-1.5">
+        <i class="fa-solid fa-triangle-exclamation text-rose-500"></i>
+        <span>Casos Alerta (8)</span>
       </button>
-      <button onclick="cambiarTabDirectivo('gerencia')" id="tabBtnGerencia" class="py-2.5 px-4 hover:text-slate-800">
-        Red de Colegios del Sur
+      <button onclick="cambiarTabDirectivo('bitacora')" id="tabBtnBitacora" class="py-2.5 px-3 sm:px-4 hover:text-slate-800 flex items-center gap-1.5">
+        <i class="fa-solid fa-clipboard-list text-amber-500"></i>
+        <span>Bitácora de Acuerdos</span>
+      </button>
+      <button onclick="cambiarTabDirectivo('docentes')" id="tabBtnDocentes" class="py-2.5 px-3 sm:px-4 text-[#0066FF] border-b-2 border-[#0066FF] font-bold flex items-center gap-1.5">
+        <i class="fa-solid fa-chalkboard-user"></i>
+        <span>Cuerpo Docente (26)</span>
+      </button>
+      <button onclick="cambiarTabDirectivo('gerencia')" id="tabBtnGerencia" class="py-2.5 px-3 sm:px-4 hover:text-slate-800 flex items-center gap-1.5">
+        <i class="fa-solid fa-building-columns"></i>
+        <span>Red del Sur</span>
       </button>
     </div>
 
@@ -425,6 +445,150 @@
         </div>
       </div>
     </div>
+
+    <!-- PANEL RADAR PREDICTIVO IA (Diferencial 1: Motor Predictivo de Deserción) -->
+    <div id="panelRadar" class="hidden bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-sm space-y-5">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-purple-100 text-purple-700 flex items-center justify-center text-base font-bold">
+            <i class="fa-solid fa-brain"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-base font-bold text-[#001433]">Radar Predictivo de Deserción Escolar</h2>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-100 text-purple-700">Modelo Heurístico IA</span>
+            </div>
+            <p class="text-xs text-slate-500">Detección anticipada de patrones antes de la pérdida de regularidad.</p>
+          </div>
+        </div>
+        <button onclick="ejecutarAnalisisPredictivo()" class="px-3.5 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold flex items-center gap-2 shadow-sm transition-all self-start sm:self-auto">
+          <i class="fa-solid fa-arrows-rotate"></i> Recalcular Análisis
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+        <!-- Tarjeta Score 1 -->
+        <div class="p-4 rounded-2xl bg-rose-50/80 border border-rose-200 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-rose-800">Lautaro Martínez (4° B)</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-rose-200 text-rose-800">84% Riesgo</span>
+          </div>
+          <div class="space-y-1 text-xs text-slate-700">
+            <p class="font-semibold text-rose-900 flex items-center gap-1.5">
+              <i class="fa-solid fa-triangle-exclamation text-rose-600"></i> Patrón Crítico Detectado:
+            </p>
+            <p class="text-[11px] text-slate-600 leading-relaxed">
+              Inasistencias sistemáticas los viernes (Matemática) y caída del 35% en entregas de trabajos prácticos.
+            </p>
+          </div>
+          <div class="pt-2 border-t border-rose-200/80 flex items-center justify-between">
+            <span class="text-[10px] font-bold text-slate-500">Acción sugerida:</span>
+            <button onclick="abrirModalBitacora('Lautaro Martínez')" class="text-xs font-bold text-[#0066FF] hover:underline">
+              Abrir Acuerdo Pedagógico →
+            </button>
+          </div>
+        </div>
+
+        <!-- Tarjeta Score 2 -->
+        <div class="p-4 rounded-2xl bg-amber-50/80 border border-amber-200 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-amber-800">Sofía Navarro (3° A)</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-200 text-amber-800">62% Riesgo</span>
+          </div>
+          <div class="space-y-1 text-xs text-slate-700">
+            <p class="font-semibold text-amber-900 flex items-center gap-1.5">
+              <i class="fa-solid fa-clock-rotate-left text-amber-600"></i> Discontinuidad en Lengua:
+            </p>
+            <p class="text-[11px] text-slate-600 leading-relaxed">
+              2 ausencias en días de examen diagnóstico. Tendencia de nota en 4.5. Sin justificación médica cargada.
+            </p>
+          </div>
+          <div class="pt-2 border-t border-amber-200/80 flex items-center justify-between">
+            <span class="text-[10px] font-bold text-slate-500">Acción sugerida:</span>
+            <button onclick="abrirModalBitacora('Sofía Navarro')" class="text-xs font-bold text-[#0066FF] hover:underline">
+              Citar a Preceptoría →
+            </button>
+          </div>
+        </div>
+
+        <!-- Tarjeta Score 3 -->
+        <div class="p-4 rounded-2xl bg-blue-50/80 border border-blue-200 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-blue-900">Thiago Gómez (1° C)</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-blue-200 text-blue-800">45% En Alerta</span>
+          </div>
+          <div class="space-y-1 text-xs text-slate-700">
+            <p class="font-semibold text-blue-900 flex items-center gap-1.5">
+              <i class="fa-solid fa-chart-line text-blue-600"></i> Descenso en Química:
+            </p>
+            <p class="text-[11px] text-slate-600 leading-relaxed">
+              Faltas dispersas acumuladas (4 totales). Familia no respondió al último aviso por WhatsApp.
+            </p>
+          </div>
+          <div class="pt-2 border-t border-blue-200/80 flex items-center justify-between">
+            <span class="text-[10px] font-bold text-slate-500">Acción sugerida:</span>
+            <button onclick="abrirModalBitacora('Thiago Gómez')" class="text-xs font-bold text-[#0066FF] hover:underline">
+              Contacto Telefónico →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL BITÁCORA DE INTERVENCIONES PEDAGÓGICAS (Diferencial 3: Trazabilidad y acuerdos) -->
+    <div id="panelBitacora" class="hidden bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-sm space-y-5">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-base font-bold">
+            <i class="fa-solid fa-clipboard-list"></i>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-[#001433]">Bitácora Institucional de Acuerdos Pedagógicos</h2>
+            <p class="text-xs text-slate-500">Trazabilidad histórica de entrevistas, compromisos y evolución del estudiante.</p>
+          </div>
+        </div>
+        <button onclick="abrirModalNuevoAcuerdo()" class="px-3.5 py-2 rounded-xl bg-[#0066FF] hover:bg-blue-700 text-white text-xs font-bold flex items-center gap-2 shadow-sm transition-all self-start sm:self-auto">
+          <i class="fa-solid fa-plus"></i> Registrar Nuevo Acuerdo
+        </button>
+      </div>
+
+      <!-- Timeline de Intervenciones -->
+      <div class="space-y-4" id="contenedorTimelineBitacora">
+        <!-- Entrada 1 -->
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+            <div class="flex items-center gap-2">
+              <span class="w-7 h-7 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-xs font-bold">DIR</span>
+              <strong class="text-xs text-slate-900">Directora Silvia Martínez • Entrevista con Padre</strong>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700">Lautaro Martínez (4° B)</span>
+            </div>
+            <span class="text-[11px] text-slate-400">14 de Agosto, 2026 - 10:15 hs</span>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed pl-9">
+            Se mantuvo reunión con el Sr. Carlos Martínez. El padre manifiesta inconvenientes de traslado los días viernes por cuestiones laborales. Se acordó: (1) Ingreso tolerado 08:00 hs sin cómputo de falta en 1° hora, (2) Entrega de trabajos prácticos de recuperación con el Prof. Roberto García antes del 28/08.
+          </p>
+          <div class="flex items-center gap-2 pl-9 text-[11px] text-emerald-700 font-semibold">
+            <i class="fa-solid fa-circle-check"></i> Compromiso firmado por padre y docente tutor.
+          </div>
+        </div>
+
+        <!-- Entrada 2 -->
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+            <div class="flex items-center gap-2">
+              <span class="w-7 h-7 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-bold">DOC</span>
+              <strong class="text-xs text-slate-900">Prof. Roberto García (Matemática) • Seguimiento</strong>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700">Lautaro Martínez (4° B)</span>
+            </div>
+            <span class="text-[11px] text-slate-400">19 de Agosto, 2026 - 11:30 hs</span>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed pl-9">
+            Lautaro asistió a la clase de apoyo del miércoles en contraturno. Realizó las actividades del módulo 2 con buena predisposición. Promedio en recuperación.
+          </p>
+        </div>
+      </div>
+    </div>
+
 
   </main>
 
@@ -707,23 +871,33 @@
     }
 
     function cambiarTabDirectivo(tab) {
-      document.getElementById('tabBtnDocentes').className = "py-2.5 px-4 text-slate-500 hover:text-slate-800";
-      document.getElementById('tabBtnAlumnos').className = "py-2.5 px-4 text-slate-500 hover:text-slate-800";
-      document.getElementById('tabBtnGerencia').className = "py-2.5 px-4 text-slate-500 hover:text-slate-800";
+      const tabs = ['radar', 'alumnos', 'bitacora', 'docentes', 'gerencia'];
+      tabs.forEach(t => {
+        const btn = document.getElementById('tabBtn' + t.charAt(0).toUpperCase() + t.slice(1));
+        if (btn) btn.className = "py-2.5 px-3 sm:px-4 text-slate-500 hover:text-slate-800 flex items-center gap-1.5";
+      });
 
       document.getElementById('panelDocentes').classList.add('hidden');
       document.getElementById('panelAlumnos').classList.add('hidden');
       document.getElementById('panelGerencia').classList.add('hidden');
+      document.getElementById('panelRadar').classList.add('hidden');
+      document.getElementById('panelBitacora').classList.add('hidden');
+
+      const activeBtn = document.getElementById('tabBtn' + tab.charAt(0).toUpperCase() + tab.slice(1));
+      if (activeBtn) {
+        activeBtn.className = "py-2.5 px-3 sm:px-4 text-[#0066FF] border-b-2 border-[#0066FF] font-bold flex items-center gap-1.5";
+      }
 
       if (tab === 'docentes') {
-        document.getElementById('tabBtnDocentes').className = "py-2.5 px-4 text-[#0066FF] border-b-2 border-[#0066FF] font-bold";
         document.getElementById('panelDocentes').classList.remove('hidden');
       } else if (tab === 'alumnos') {
-        document.getElementById('tabBtnAlumnos').className = "py-2.5 px-4 text-[#0066FF] border-b-2 border-[#0066FF] font-bold";
         document.getElementById('panelAlumnos').classList.remove('hidden');
       } else if (tab === 'gerencia') {
-        document.getElementById('tabBtnGerencia').className = "py-2.5 px-4 text-[#0066FF] border-b-2 border-[#0066FF] font-bold";
         document.getElementById('panelGerencia').classList.remove('hidden');
+      } else if (tab === 'radar') {
+        document.getElementById('panelRadar').classList.remove('hidden');
+      } else if (tab === 'bitacora') {
+        document.getElementById('panelBitacora').classList.remove('hidden');
       }
     }
 
@@ -956,15 +1130,58 @@
       toggleMenuMobile();
       if (seccion === 'indicadores') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (seccion === 'radar') {
+        cambiarTabDirectivo('radar');
+        const el = document.getElementById('panelRadar');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
       } else if (seccion === 'alumnos') {
         cambiarTabDirectivo('alumnos');
         const el = document.getElementById('panelAlumnos');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      } else if (seccion === 'bitacora') {
+        cambiarTabDirectivo('bitacora');
+        const el = document.getElementById('panelBitacora');
         if (el) el.scrollIntoView({ behavior: 'smooth' });
       } else if (seccion === 'docentes') {
         cambiarTabDirectivo('docentes');
         const el = document.getElementById('panelDocentes');
         if (el) el.scrollIntoView({ behavior: 'smooth' });
       }
+    }
+
+    function ejecutarAnalisisPredictivo() {
+      mostrarToast('Analizando 243 trayectorias con modelo predictivo...', 'info', 'Procesando Datos');
+      setTimeout(() => {
+        mostrarToast('Análisis actualizado: 3 casos críticos priorizados con intervenciones recomendadas.', 'success', 'Radar IA Actualizado');
+      }, 1000);
+    }
+
+    function abrirModalBitacora(alumno) {
+      cambiarTabDirectivo('bitacora');
+      const el = document.getElementById('panelBitacora');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      mostrarToast(`Acuerdo para ${alumno} cargado en la bitácora institucional.`, 'info', 'Ficha Pedagógica');
+    }
+
+    function abrirModalNuevoAcuerdo() {
+      const timeline = document.getElementById('contenedorTimelineBitacora');
+      const nuevo = document.createElement('div');
+      nuevo.className = 'p-4 rounded-2xl bg-emerald-50/80 border border-emerald-200 space-y-2';
+      nuevo.innerHTML = `
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+          <div class="flex items-center gap-2">
+            <span class="w-7 h-7 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xs font-bold">NUEVO</span>
+            <strong class="text-xs text-slate-900">Directora Silvia Martínez • Registro en Vivo</strong>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-200 text-emerald-800">Acuerdo Reciente</span>
+          </div>
+          <span class="text-[11px] text-slate-500 font-semibold">Hoy recién</span>
+        </div>
+        <p class="text-xs text-slate-700 leading-relaxed pl-9">
+          Se citó a la familia para revisión de inasistencias y rendimiento. Compromiso acordado de seguimiento quincenal con preceptores y docentes de área.
+        </p>
+      `;
+      timeline.prepend(nuevo);
+      mostrarToast('Nuevo acuerdo pedagógico incorporado a la bitácora escolar.', 'success', 'Registro Exitoso');
     }
 
     document.addEventListener('DOMContentLoaded', () => {

@@ -126,6 +126,10 @@
           <i class="fa-solid fa-school text-[#0066FF] w-4 text-center"></i>
           <span>Supervisión de los 5 Colegios</span>
         </button>
+        <button onclick="navegarAdmin('benchmarking')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-purple-50 text-purple-700 font-bold text-left">
+          <i class="fa-solid fa-chart-line text-purple-600 w-4 text-center"></i>
+          <span>Benchmarking & Ranking Red</span>
+        </button>
         <button onclick="navegarAdmin('detalle')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 text-slate-700 transition-colors text-left">
           <i class="fa-solid fa-user-tie text-emerald-600 w-4 text-center"></i>
           <span>Directivos, Docentes y Alumnos</span>
@@ -346,6 +350,157 @@
         </div>
       </div>
     </div>
+    </div>
+
+    <!-- SECCIÓN DIFERENCIAL: BENCHMARKING Y COMPARATIVA ESTRATÉGICA DE LA RED -->
+    <div id="seccionBenchmarking" class="bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-sm space-y-5">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-purple-100 text-purple-700 flex items-center justify-center text-base font-bold">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-base sm:text-lg font-bold text-[#001433]">Benchmarking y Eficacia de la Red</h2>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-100 text-purple-700">Auditoría Ejecutiva</span>
+            </div>
+            <p class="text-xs text-slate-500">Comparativa de retención, resolución de alertas y velocidad de respuesta institucional.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="exportarInformeBenchmarking()" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs flex items-center gap-1.5 transition-colors">
+            <i class="fa-solid fa-file-arrow-down text-purple-600"></i> Exportar Informe Ministerial
+          </button>
+        </div>
+      </div>
+
+      <!-- Tabla Comparativa de Rendimiento por Sede -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr class="border-b border-slate-200 text-slate-400 font-bold text-[11px] uppercase tracking-wider">
+              <th class="py-2.5 px-3">Institución Educativa</th>
+              <th class="py-2.5 px-3 text-center">Matrícula</th>
+              <th class="py-2.5 px-3 text-center">Tasa Asistencia</th>
+              <th class="py-2.5 px-3 text-center">Tiempo Respuesta Alerta</th>
+              <th class="py-2.5 px-3 text-center">Resolución Casos</th>
+              <th class="py-2.5 px-3 text-right">Desempeño Red</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 font-medium">
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="py-3 px-3 flex items-center gap-2">
+                <span class="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-[10px]">1°</span>
+                <div>
+                  <span class="font-bold text-slate-900 block">Instituto General Belgrano</span>
+                  <span class="text-[10px] text-slate-400">Sede Quilmes</span>
+                </div>
+              </td>
+              <td class="py-3 px-3 text-center font-bold text-slate-700">310</td>
+              <td class="py-3 px-3 text-center font-extrabold text-emerald-600">93.4%</td>
+              <td class="py-3 px-3 text-center text-slate-700 font-bold">18 horas</td>
+              <td class="py-3 px-3 text-center">
+                <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold text-[10px]">91.2% Resuelto</span>
+              </td>
+              <td class="py-3 px-3 text-right">
+                <span class="text-[11px] font-extrabold text-emerald-600">Sobresaliente ★</span>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="py-3 px-3 flex items-center gap-2">
+                <span class="w-6 h-6 rounded-lg bg-blue-100 text-[#0066FF] font-bold flex items-center justify-center text-[10px]">2°</span>
+                <div>
+                  <span class="font-bold text-slate-900 block">Colegio San Martín</span>
+                  <span class="text-[10px] text-slate-400">Sede Bernal</span>
+                </div>
+              </td>
+              <td class="py-3 px-3 text-center font-bold text-slate-700">285</td>
+              <td class="py-3 px-3 text-center font-extrabold text-emerald-600">91.8%</td>
+              <td class="py-3 px-3 text-center text-slate-700 font-bold">24 horas</td>
+              <td class="py-3 px-3 text-center">
+                <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold text-[10px]">86.5% Resuelto</span>
+              </td>
+              <td class="py-3 px-3 text-right">
+                <span class="text-[11px] font-extrabold text-[#0066FF]">Muy Bueno</span>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-slate-50 transition-colors bg-purple-50/30">
+              <td class="py-3 px-3 flex items-center gap-2">
+                <span class="w-6 h-6 rounded-lg bg-purple-100 text-purple-700 font-bold flex items-center justify-center text-[10px]">3°</span>
+                <div>
+                  <span class="font-bold text-slate-900 block">Escuela Secundaria N° 12</span>
+                  <span class="text-[10px] text-slate-400">Sede Avellaneda (Piloto)</span>
+                </div>
+              </td>
+              <td class="py-3 px-3 text-center font-bold text-slate-700">243</td>
+              <td class="py-3 px-3 text-center font-extrabold text-emerald-600">89.4%</td>
+              <td class="py-3 px-3 text-center text-slate-700 font-bold">36 horas</td>
+              <td class="py-3 px-3 text-center">
+                <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-bold text-[10px]">78.0% Resuelto</span>
+              </td>
+              <td class="py-3 px-3 text-right">
+                <span class="text-[11px] font-extrabold text-purple-700">Satisfactorio</span>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="py-3 px-3 flex items-center gap-2">
+                <span class="w-6 h-6 rounded-lg bg-slate-200 text-slate-700 font-bold flex items-center justify-center text-[10px]">4°</span>
+                <div>
+                  <span class="font-bold text-slate-900 block">Colegio San José Obrero</span>
+                  <span class="text-[10px] text-slate-400">Sede Lanús</span>
+                </div>
+              </td>
+              <td class="py-3 px-3 text-center font-bold text-slate-700">198</td>
+              <td class="py-3 px-3 text-center font-extrabold text-amber-600">87.1%</td>
+              <td class="py-3 px-3 text-center text-slate-700 font-bold">48 horas</td>
+              <td class="py-3 px-3 text-center">
+                <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-bold text-[10px]">72.4% Resuelto</span>
+              </td>
+              <td class="py-3 px-3 text-right">
+                <span class="text-[11px] font-extrabold text-amber-600">En Seguimiento</span>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="py-3 px-3 flex items-center gap-2">
+                <span class="w-6 h-6 rounded-lg bg-rose-100 text-rose-700 font-bold flex items-center justify-center text-[10px]">5°</span>
+                <div>
+                  <span class="font-bold text-slate-900 block">Escuela Técnica N° 4</span>
+                  <span class="text-[10px] text-slate-400">Sede Berazategui</span>
+                </div>
+              </td>
+              <td class="py-3 px-3 text-center font-bold text-slate-700">224</td>
+              <td class="py-3 px-3 text-center font-extrabold text-rose-600">84.2%</td>
+              <td class="py-3 px-3 text-center text-slate-700 font-bold">72 horas</td>
+              <td class="py-3 px-3 text-center">
+                <span class="px-2 py-0.5 rounded-full bg-rose-100 text-rose-700 font-bold text-[10px]">58.3% Resuelto</span>
+              </td>
+              <td class="py-3 px-3 text-right">
+                <span class="text-[11px] font-extrabold text-rose-600">Atención Crítica</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Insight Recomendado por Heurística -->
+      <div class="p-4 rounded-2xl bg-purple-50 border border-purple-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+        <div class="flex items-center gap-3">
+          <i class="fa-solid fa-lightbulb text-purple-600 text-lg"></i>
+          <div>
+            <strong class="text-purple-900 block">Hallazgo Clave de Gestión en la Red:</strong>
+            <span class="text-purple-800 leading-relaxed">
+              El Instituto Belgrano redujo el ausentismo un 14% mediante acuerdos pedagógicos en menos de 24 hs. Se sugiere coordinar jornada de transferencia con la Técnica N° 4.
+            </span>
+          </div>
+        </div>
+        <button onclick="mostrarToast('Recomendación enviada a supervisores de la Técnica N° 4.', 'success', 'Intervención Programada')" class="px-3.5 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold whitespace-nowrap self-start sm:self-auto">
+          Replicar Práctica
+        </button>
+      </div>
     </div>
 
     <!-- SECCIÓN INTERACTIVA POR COLEGIO -->
@@ -1196,10 +1351,20 @@
       } else if (destino === 'colegios') {
         const el = document.getElementById('tabsColegios');
         if (el) el.scrollIntoView({ behavior: 'smooth' });
+      } else if (destino === 'benchmarking') {
+        const el = document.getElementById('seccionBenchmarking');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
       } else if (destino === 'detalle') {
         const el = document.getElementById('detalleColegioActivo');
         if (el) el.scrollIntoView({ behavior: 'smooth' });
       }
+    }
+
+    function exportarInformeBenchmarking() {
+      mostrarToast('Generando informe ejecutivo consolidado en PDF para Supervisión Ministerial...', 'info', 'Descarga Preparada');
+      setTimeout(() => {
+        mostrarToast('Informe consolidado de los 5 colegios descargado con éxito.', 'success', 'Exportación Completa');
+      }, 1200);
     }
 
     document.addEventListener('DOMContentLoaded', () => {

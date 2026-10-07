@@ -136,6 +136,10 @@
             <i class="fa-solid fa-users text-slate-400 w-4 text-center"></i>
             <span>Nómina y Alertas del Curso</span>
           </button>
+          <button onclick="navegarDocente('bitacora')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-purple-50 text-purple-700 font-bold text-left">
+            <i class="fa-solid fa-clipboard-check text-purple-600 w-4 text-center"></i>
+            <span>Bitácora de Intervenciones</span>
+          </button>
           <button onclick="navegarDocente('resumen')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 text-slate-700 transition-colors text-left">
             <i class="fa-solid fa-chart-pie text-slate-400 w-4 text-center"></i>
             <span>Resumen General del Período</span>
@@ -411,6 +415,63 @@
         <a href="https://wa.me/5491155550102?text=Estimada%20Directora,%20le%20escribe%20el%20Prof.%20Garc%C3%ADa" target="_blank" class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-xs font-bold text-white flex items-center gap-1.5 shadow-sm">
           <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp
         </a>
+      </div>
+    </div>
+
+    <!-- SECCIÓN DIFERENCIAL: BITÁCORA DE INTERVENCIONES Y SEGUIMIENTO DOCENTE -->
+    <div id="seccionBitacoraDocente" class="bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-sm space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-purple-100 text-purple-700 flex items-center justify-center text-base font-bold">
+            <i class="fa-solid fa-clipboard-check"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="text-sm sm:text-base font-bold text-[#001433]">Bitácora de Intervenciones y Acuerdos</h3>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-100 text-purple-700">Trazabilidad Pedagógica</span>
+            </div>
+            <p class="text-xs text-slate-500">Registro articulado con el Equipo Directivo para estudiantes con trayectoria discontinua.</p>
+          </div>
+        </div>
+        <button onclick="abrirModalAcuerdoDocente()" class="px-3.5 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs flex items-center gap-2 transition-colors self-start sm:self-auto">
+          <i class="fa-solid fa-pen-to-square"></i> Cargar Evolución
+        </button>
+      </div>
+
+      <div class="space-y-3 text-xs" id="listaIntervencionesDocente">
+        <!-- Intervención 1: Lautaro Martínez -->
+        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700">Lautaro Martínez (4° B)</span>
+              <strong class="text-slate-900 font-bold">Compromiso de entrega TP N° 3 y Apoyo los Miércoles</strong>
+            </div>
+            <span class="text-slate-400 text-[11px]">19/08/2026 - Prof. Roberto García</span>
+          </div>
+          <p class="text-slate-600 leading-relaxed">
+            Lautaro asistió a la primera tutoría de recuperación tras el acuerdo firmado por la Dirección y el padre. Realizó los ejercicios de polinomios. Continúa en seguimiento hasta el parcial del 28/08.
+          </p>
+          <div class="flex items-center gap-2 text-[11px] text-emerald-700 font-semibold pt-1">
+            <i class="fa-solid fa-check-circle"></i> Estado: En cumplimiento positivo
+          </div>
+        </div>
+
+        <!-- Intervención 2: Sofía Navarro -->
+        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-100 text-purple-700">Sofía Navarro (3° A)</span>
+              <strong class="text-slate-900 font-bold">Plan individualizado de regularización</strong>
+            </div>
+            <span class="text-slate-400 text-[11px]">12/08/2026 - Conducción & Docente</span>
+          </div>
+          <p class="text-slate-600 leading-relaxed">
+            Se acordó entrega de guías de trabajo para compensar las clases perdidas. Pendiente de recepción del trabajo integrador.
+          </p>
+          <div class="flex items-center gap-2 text-[11px] text-amber-700 font-semibold pt-1">
+            <i class="fa-solid fa-clock"></i> Estado: Pendiente de entrega (Plazo: 25/08)
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1114,10 +1175,36 @@
       if (destino === 'nomina') {
         const el = document.getElementById('listaEstudiantesAlerta');
         if (el) el.scrollIntoView({ behavior: 'smooth' });
+      } else if (destino === 'bitacora') {
+        const el = document.getElementById('seccionBitacoraDocente');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
       } else if (destino === 'resumen') {
         const el = document.getElementById('graficoTortaContainer');
         if (el) el.scrollIntoView({ behavior: 'smooth' });
       }
+    }
+
+    function abrirModalAcuerdoDocente() {
+      const container = document.getElementById('listaIntervencionesDocente');
+      const nueva = document.createElement('div');
+      nueva.className = 'p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-2';
+      nueva.innerHTML = `
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-200 text-emerald-800">Lautaro Martínez (4° B)</span>
+            <strong class="text-slate-900 font-bold">Entrega y Devolución TP N° 3</strong>
+          </div>
+          <span class="text-emerald-700 font-semibold text-[11px]">Hoy recién - Prof. Roberto García</span>
+        </div>
+        <p class="text-slate-700 leading-relaxed">
+          Lautaro entregó el trabajo práctico de recuperación de Matemática. Nota asignada: 7.5 (Aprobado). Se actualizó su ponderación bimestral.
+        </p>
+        <div class="flex items-center gap-2 text-[11px] text-emerald-700 font-bold pt-1">
+          <i class="fa-solid fa-circle-check"></i> Intervención exitosa sincronizada con Dirección y Familia
+        </div>
+      `;
+      container.prepend(nueva);
+      mostrarToast('Evolución pedagógica registrada y notificada a Dirección.', 'success', 'Bitácora Actualizada');
     }
 
     document.addEventListener('DOMContentLoaded', () => {

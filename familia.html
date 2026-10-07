@@ -133,6 +133,10 @@
           <i class="fa-regular fa-calendar-days text-slate-400 w-4 text-center"></i>
           <span>Agenda de Exámenes</span>
         </button>
+        <button onclick="cambiarTab('comunicaciones'); toggleMenuMobile();" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-blue-50 hover:text-[#0066FF] transition-colors text-left">
+          <i class="fa-solid fa-envelope-open-text text-amber-500 w-4 text-center"></i>
+          <span>Cuaderno de Comunicados</span>
+        </button>
         <button onclick="cambiarTab('contactos'); toggleMenuMobile();" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-blue-50 hover:text-[#0066FF] transition-colors text-left">
           <i class="fa-solid fa-address-book text-slate-400 w-4 text-center"></i>
           <span>Contactos Escolares</span>
@@ -215,6 +219,10 @@
       </button>
       <button onclick="cambiarTab('agenda')" id="tabAgenda" class="flex-1 min-w-[65px] py-2 px-2 text-center rounded-xl text-slate-600 hover:text-slate-900 transition-all">
         Agenda
+      </button>
+      <button onclick="cambiarTab('comunicaciones')" id="tabComunicaciones" class="flex-1 min-w-[75px] py-2 px-2 text-center rounded-xl text-slate-600 hover:text-slate-900 transition-all relative">
+        <span>Cuaderno</span>
+        <span class="inline-block w-2 h-2 rounded-full bg-amber-500 absolute top-1.5 right-1.5"></span>
       </button>
       <button onclick="cambiarTab('contactos')" id="tabContactos" class="flex-1 min-w-[70px] py-2 px-2 text-center rounded-xl text-slate-600 hover:text-slate-900 transition-all">
         Contactos
@@ -491,6 +499,84 @@
           </div>
         </div>
       </div>
+    <!-- TAB 5: CUADERNO DE COMUNICACIONES DIGITAL CON ACUSE DE RECIBO -->
+    <div id="contentComunicaciones" class="space-y-4 hidden">
+      <div class="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-sm space-y-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-sm font-bold">
+              <i class="fa-solid fa-envelope-open-text"></i>
+            </div>
+            <div>
+              <h3 class="text-sm sm:text-base font-bold text-[#001433]">Cuaderno Digital Institucional</h3>
+              <p class="text-xs text-slate-500">Notificaciones oficiales con valor de acuse de recibo y conformidad</p>
+            </div>
+          </div>
+          <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-amber-100 text-amber-800">1 Pendiente de Firma</span>
+        </div>
+
+        <div class="space-y-3.5 text-xs">
+          <!-- Comunicado 1: Pendiente de Acuse / Autorización -->
+          <div id="comunicado1Card" class="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 space-y-3">
+            <div class="flex items-start justify-between gap-2">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-200 text-amber-800 uppercase">Salida Educativa</span>
+                  <span class="text-[11px] text-slate-500 font-medium">18 de Agosto, 2026</span>
+                </div>
+                <h4 class="font-bold text-slate-900 text-sm mt-1">Autorización: Visita Pedagógica al Museo de Ciencias Naturales</h4>
+                <p class="text-slate-600 mt-1 leading-relaxed">
+                  Estimadas familias de 4° Año B: El próximo viernes 28 de agosto realizaremos una salida didáctica complementaria a las asignaturas de Física y Química. Traslado en micro escolar contratado por cooperadora.
+                </p>
+              </div>
+            </div>
+
+            <div class="p-3 bg-white/80 rounded-xl border border-amber-200/60 text-[11px] text-slate-700 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-bus text-amber-600"></i>
+                <span>Horario: 08:30 a 14:30 hs • Vianda individual</span>
+              </div>
+              <span class="font-bold text-amber-700">Requiere conformidad</span>
+            </div>
+
+            <div id="comunicado1Acciones" class="flex flex-col sm:flex-row items-center justify-end gap-2 pt-1">
+              <button onclick="firmarComunicado(1, 'rechazado')" class="w-full sm:w-auto px-4 py-2 rounded-xl bg-white border border-slate-300 text-slate-600 hover:bg-slate-50 font-bold transition-colors">
+                No autorizo salida
+              </button>
+              <button onclick="firmarComunicado(1, 'autorizado')" class="w-full sm:w-auto px-5 py-2 rounded-xl bg-[#0066FF] hover:bg-blue-700 text-white font-bold transition-all shadow-sm flex items-center justify-center gap-2">
+                <i class="fa-solid fa-signature"></i>
+                <span>Firmar y Autorizar (Acuse Digital)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Comunicado 2: Ya Firmado / Conformidad asentada -->
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+            <div class="flex items-start justify-between gap-2">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-200 text-slate-700 uppercase">Institucional</span>
+                  <span class="text-[11px] text-slate-500 font-medium">01 de Agosto, 2026</span>
+                </div>
+                <h4 class="font-bold text-slate-900 text-sm mt-1">Nuevo Reglamento de Convivencia y Pautas de Asistencia</h4>
+                <p class="text-slate-600 mt-1 leading-relaxed">
+                  Se informa la actualización del régimen de asistencia, justificaciones médicas y uso de dispositivos móviles en el aula durante el ciclo 2026.
+                </p>
+              </div>
+              <span class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center flex-shrink-0 text-xs">
+                <i class="fa-solid fa-check"></i>
+              </span>
+            </div>
+
+            <div class="pt-2 border-t border-slate-200/60 flex items-center justify-between text-[11px] text-emerald-700 font-semibold">
+              <span class="flex items-center gap-1.5">
+                <i class="fa-solid fa-circle-check"></i> Conformidad firmada por Carlos Martínez
+              </span>
+              <span class="text-slate-400 font-normal">03/08/2026 19:42 hs</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Direct Action Buttons (Wireframe 3 Bottom Buttons) -->
@@ -704,7 +790,7 @@
 
     function cambiarTab(tab) {
       if (tab === 'boletin') tab = 'rendimiento';
-      const tabs = ['resumen', 'asistencia', 'rendimiento', 'agenda', 'contactos'];
+      const tabs = ['resumen', 'asistencia', 'rendimiento', 'agenda', 'comunicaciones', 'contactos'];
       tabs.forEach(t => {
         const btn = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
         if (btn) {
@@ -716,6 +802,7 @@
       document.getElementById('contentAsistencia').classList.add('hidden');
       document.getElementById('contentRendimiento').classList.add('hidden');
       document.getElementById('contentAgenda').classList.add('hidden');
+      document.getElementById('contentComunicaciones').classList.add('hidden');
 
       const activeBtn = document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1));
       if (activeBtn) {
@@ -730,10 +817,40 @@
         document.getElementById('contentRendimiento').classList.remove('hidden');
       } else if (tab === 'agenda') {
         document.getElementById('contentAgenda').classList.remove('hidden');
+      } else if (tab === 'comunicaciones') {
+        document.getElementById('contentComunicaciones').classList.remove('hidden');
       } else if (tab === 'contactos') {
         document.getElementById('contentResumen').classList.remove('hidden');
         const cont = document.getElementById('seccionContactos');
         if (cont) cont.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function firmarComunicado(id, respuesta) {
+      const card = document.getElementById('comunicado1Card');
+      const acciones = document.getElementById('comunicado1Acciones');
+      if (respuesta === 'autorizado') {
+        card.className = 'p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200 space-y-3';
+        acciones.innerHTML = `
+          <div class="w-full p-2.5 rounded-xl bg-emerald-100 text-emerald-800 text-xs font-bold flex items-center justify-between">
+            <span class="flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-check"></i> Autorización firmada y remitida a Dirección
+            </span>
+            <span class="text-[10px] text-emerald-700 font-medium">Ahora mismo</span>
+          </div>
+        `;
+        mostrarToast('Acuse de recibo y autorización firmados con éxito.', 'success', 'Conformidad Registrada');
+      } else {
+        card.className = 'p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3';
+        acciones.innerHTML = `
+          <div class="w-full p-2.5 rounded-xl bg-slate-200 text-slate-700 text-xs font-bold flex items-center justify-between">
+            <span class="flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-xmark"></i> Constancia de NO autorización enviada a Dirección
+            </span>
+            <span class="text-[10px] text-slate-500 font-medium">Ahora mismo</span>
+          </div>
+        `;
+        mostrarToast('Se notificó a Dirección la no asistencia del alumno a la salida.', 'info', 'Constancia Enviada');
       }
     }
 
