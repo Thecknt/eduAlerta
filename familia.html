@@ -31,7 +31,7 @@
   <header class="sticky top-0 z-40 bg-white border-b border-slate-200/80 px-4 sm:px-6 h-16 flex items-center justify-between">
     <div class="flex items-center space-x-3">
       <!-- Hamburger only on mobile / under 720px -->
-      <button class="block min-[720px]:hidden text-slate-700 hover:text-slate-900 text-lg p-1.5 rounded-lg focus:outline-none">
+      <button onclick="toggleMenuMobile()" class="block min-[720px]:hidden text-slate-700 hover:text-slate-900 text-lg p-2 rounded-xl hover:bg-slate-100 transition-colors focus:outline-none" title="Abrir Menú">
         <i class="fa-solid fa-bars"></i>
       </button>
 
@@ -63,6 +63,75 @@
       </a>
     </div>
   </header>
+
+  <!-- Mobile Off-Canvas Drawer (Menú Hamburguesa) -->
+  <div id="backdropMenuMobile" onclick="toggleMenuMobile()" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 hidden transition-opacity"></div>
+  
+  <aside id="drawerMenuMobile" class="fixed inset-y-0 left-0 w-72 max-w-[85vw] bg-white z-50 shadow-2xl flex flex-col justify-between transform -translate-x-full transition-transform duration-300 ease-in-out">
+    <div>
+      <!-- Drawer Header -->
+      <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <img src="WhatsApp Image 2026-10-04 at 11.24.07.jpeg" alt="EduAlerta" class="h-8 object-contain">
+          <span class="text-xs font-extrabold text-[#0066FF] uppercase tracking-wider">Familia</span>
+        </div>
+        <button onclick="toggleMenuMobile()" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100">
+          <i class="fa-solid fa-xmark text-base"></i>
+        </button>
+      </div>
+
+      <!-- User Card in Drawer -->
+      <div class="p-4 bg-slate-50 border-b border-slate-100 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-blue-100 text-[#0066FF] font-bold flex items-center justify-center text-xs border border-blue-200">
+          CM
+        </div>
+        <div class="min-w-0">
+          <p class="text-xs font-bold text-[#001433] truncate">Carlos Martínez</p>
+          <p class="text-[11px] text-slate-500 truncate">Hijo: Lautaro (4° Año B)</p>
+          <span class="inline-block mt-0.5 px-2 py-0.2 rounded-full text-[9px] font-bold bg-rose-100 text-rose-700">1 Alerta Activa</span>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="p-3 space-y-1 text-xs font-semibold text-slate-700">
+        <button onclick="cambiarTab('resumen'); toggleMenuMobile();" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-blue-50 hover:text-[#0066FF] transition-colors text-left">
+          <i class="fa-solid fa-chart-pie text-slate-400 w-4 text-center"></i>
+          <span>Resumen General</span>
+        </button>
+        <button onclick="cambiarTab('asistencia'); toggleMenuMobile();" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-blue-50 hover:text-[#0066FF] transition-colors text-left">
+          <i class="fa-regular fa-calendar-check text-slate-400 w-4 text-center"></i>
+          <span>Asistencia y Clases</span>
+        </button>
+        <button onclick="cambiarTab('boletin'); toggleMenuMobile();" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-blue-50 hover:text-[#0066FF] transition-colors text-left">
+          <i class="fa-solid fa-book-open text-slate-400 w-4 text-center"></i>
+          <span>Boletín de Notas</span>
+        </button>
+        <button onclick="cambiarTab('agenda'); toggleMenuMobile();" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-blue-50 hover:text-[#0066FF] transition-colors text-left">
+          <i class="fa-regular fa-calendar-days text-slate-400 w-4 text-center"></i>
+          <span>Agenda de Exámenes</span>
+        </button>
+        <button onclick="cambiarTab('contactos'); toggleMenuMobile();" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-blue-50 hover:text-[#0066FF] transition-colors text-left">
+          <i class="fa-solid fa-address-book text-slate-400 w-4 text-center"></i>
+          <span>Contactos Escolares</span>
+        </button>
+        <div class="pt-2 border-t border-slate-100">
+          <button onclick="abrirModalJustificar(); toggleMenuMobile();" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-blue-50 text-[#0066FF] font-bold text-left">
+            <i class="fa-solid fa-file-medical w-4 text-center"></i>
+            <span>Justificar Inasistencia</span>
+          </button>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Drawer Footer -->
+    <div class="p-4 border-t border-slate-100 bg-slate-50 space-y-2">
+      <a href="index.html" class="w-full py-2.5 px-3 rounded-xl bg-white border border-slate-200 text-rose-600 hover:bg-rose-50 font-bold text-xs flex items-center justify-center gap-2 transition-colors shadow-2xs">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        <span>Cerrar Sesión</span>
+      </a>
+      <p class="text-[10px] text-center text-slate-400">EduAlerta • Portal Familia</p>
+    </div>
+  </aside>
 
   <!-- Main Container (Matching Wireframe 3 layout) -->
   <main class="flex-grow max-w-2xl w-full mx-auto px-4 py-5 space-y-5">
@@ -938,6 +1007,22 @@
 
     function abrirModalContacto() {
       document.getElementById('seccionContactos').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function toggleMenuMobile() {
+      const drawer = document.getElementById('drawerMenuMobile');
+      const backdrop = document.getElementById('backdropMenuMobile');
+      if (!drawer || !backdrop) return;
+      const abierto = !drawer.classList.contains('-translate-x-full');
+      if (abierto) {
+        drawer.classList.add('-translate-x-full');
+        backdrop.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      } else {
+        drawer.classList.remove('-translate-x-full');
+        backdrop.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+      }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
