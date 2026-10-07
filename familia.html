@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduAlerta - Detalle del Estudiante (Familia)</title>
+  <link rel="icon" type="image/jpeg" href="WhatsApp Image 2026-10-04 at 11.24.07.jpeg">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
+          colors: {
+            brand: {
+              blue: '#0066FF',
+              dark: '#001433',
+              light: '#F8FAFC'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#F8FAFC] min-h-screen font-sans text-slate-800 flex flex-col selection:bg-blue-100 selection:text-blue-800">
+
+  <!-- Header (Matching Official Design) -->
+  <header class="sticky top-0 z-40 bg-white border-b border-slate-200/80 px-4 sm:px-6 h-16 flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <!-- Hamburger only on mobile / under 720px -->
+      <button class="block min-[720px]:hidden text-slate-700 hover:text-slate-900 text-lg p-1.5 rounded-lg focus:outline-none">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <!-- Official Logo Image (No Back button after login) -->
+      <a href="familia.html" class="flex items-center">
+        <img src="WhatsApp Image 2026-10-04 at 11.24.07.jpeg" alt="EduAlerta" class="h-9 sm:h-10 object-contain">
+      </a>
+      <span class="text-slate-300 hidden sm:inline">|</span>
+      <h1 class="text-xs sm:text-sm font-bold text-[#001433] hidden sm:inline">Portal Familia</h1>
+    </div>
+
+    <!-- Right: Notification & Profile Group -->
+    <div class="flex items-center space-x-3 sm:space-x-4">
+      <!-- Live Notifications Bell -->
+      <button onclick="abrirModalNotificaciones()" class="relative p-2 text-slate-600 hover:text-slate-900 rounded-xl hover:bg-slate-100 transition-colors" title="Centro de Notificaciones">
+        <i class="fa-regular fa-bell text-xl"></i>
+        <span id="badgeNotifCount" class="absolute top-1 right-1 w-4 h-4 bg-[#E53E3E] text-white rounded-full text-[10px] font-bold flex items-center justify-center animate-pulse">2</span>
+      </button>
+
+      <div class="flex items-center space-x-2">
+        <div class="w-9 h-9 rounded-full bg-blue-50 text-[#0066FF] font-bold flex items-center justify-center text-xs border border-blue-200">
+          CM
+        </div>
+        <span class="text-xs font-semibold text-slate-700 hidden sm:inline">Carlos Martínez</span>
+      </div>
+
+      <a href="index.html" class="p-2 text-slate-400 hover:text-rose-600 rounded-xl hover:bg-slate-100 transition-colors" title="Cerrar sesión">
+        <i class="fa-solid fa-arrow-right-from-bracket text-base"></i>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Container (Matching Wireframe 3 layout) -->
+  <main class="flex-grow max-w-2xl w-full mx-auto px-4 py-5 space-y-5">
+
+    <!-- Student Header (Wireframe 3) -->
+    <div class="flex items-center space-x-4 bg-white p-4 rounded-3xl border border-slate-200/80 shadow-sm">
+      <div class="w-16 h-16 rounded-full bg-[#FFE2E2] text-[#E53E3E] font-extrabold flex items-center justify-center text-xl flex-shrink-0">
+        LM
+      </div>
+      <div class="flex-grow">
+        <h2 class="text-xl sm:text-2xl font-bold text-[#001433]">Lautaro Martínez</h2>
+        <p class="text-xs sm:text-sm text-slate-500 font-medium">4° Año B &nbsp;|&nbsp; 16 años</p>
+        <p class="text-[11px] text-slate-400">Escuela Secundaria N° 12 • Ciclo 2026</p>
+      </div>
+
+      <!-- Bimestre Selector badge -->
+      <div class="text-right">
+        <select id="bimestreFamilia" onchange="actualizarBimestreFamilia()" class="bg-slate-50 border border-slate-200 text-xs font-bold text-slate-700 py-1.5 px-2.5 rounded-xl focus:outline-none cursor-pointer">
+          <option value="1">1° Bimestre</option>
+          <option value="2" selected>2° Bimestre [Actual]</option>
+          <option value="3">3° Bimestre</option>
+          <option value="4">4° Bimestre</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Alert Card (Aesthetic Refined Design) -->
+    <div class="bg-gradient-to-r from-rose-50/90 via-rose-50/60 to-white border border-rose-200/80 rounded-3xl p-4 sm:p-5 flex items-start justify-between gap-3 shadow-xs">
+      <div class="flex items-start space-x-3.5">
+        <div class="w-9 h-9 rounded-2xl bg-[#E53E3E] text-white flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5 shadow-sm">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h3 class="text-sm font-bold text-[#E53E3E]">Estudiante en alerta de asistencia</h3>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-100 text-rose-700">Prioridad Alta</span>
+          </div>
+          <p class="text-xs text-rose-800/90 mt-1 leading-relaxed">
+            Se detectaron 3 inasistencias en Matemática en las últimas semanas. Podés justificar ausencias o contactar a preceptoría.
+          </p>
+        </div>
+      </div>
+      <button onclick="abrirModalJustificar()" class="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold text-[#0066FF] hover:text-blue-700 bg-white px-3 py-1.5 rounded-xl border border-slate-200 shadow-xs flex-shrink-0">
+        <i class="fa-solid fa-file-medical text-blue-500"></i> Justificar
+      </button>
+    </div>
+
+    <!-- Navigation Tabs (Sleek Segmented Pill Bar - NO desborde, NO scrollbar) -->
+    <nav class="bg-slate-200/60 p-1 rounded-2xl flex flex-wrap sm:flex-nowrap gap-1 text-xs font-semibold">
+      <button onclick="cambiarTab('resumen')" id="tabResumen" class="flex-1 min-w-[65px] py-2 px-2 text-center rounded-xl bg-white text-[#0066FF] font-bold shadow-xs transition-all">
+        Resumen
+      </button>
+      <button onclick="cambiarTab('asistencia')" id="tabAsistencia" class="flex-1 min-w-[70px] py-2 px-2 text-center rounded-xl text-slate-600 hover:text-slate-900 transition-all">
+        Asistencia
+      </button>
+      <button onclick="cambiarTab('rendimiento')" id="tabRendimiento" class="flex-1 min-w-[75px] py-2 px-2 text-center rounded-xl text-slate-600 hover:text-slate-900 transition-all">
+        Boletín (9)
+      </button>
+      <button onclick="cambiarTab('agenda')" id="tabAgenda" class="flex-1 min-w-[65px] py-2 px-2 text-center rounded-xl text-slate-600 hover:text-slate-900 transition-all">
+        Agenda
+      </button>
+      <button onclick="cambiarTab('contactos')" id="tabContactos" class="flex-1 min-w-[70px] py-2 px-2 text-center rounded-xl text-slate-600 hover:text-slate-900 transition-all">
+        Contactos
+      </button>
+    </nav>
+
+    <!-- TAB 1: RESUMEN (Default) -->
+    <div id="contentResumen" class="space-y-5">
+      <!-- 3 Metrics Cards (Wireframe 3) -->
+      <div class="grid grid-cols-3 gap-3">
+        <!-- Card Asistencia -->
+        <div class="bg-white border border-slate-200/80 rounded-2xl p-3 sm:p-4 text-center shadow-sm">
+          <div class="w-8 h-8 rounded-xl bg-blue-50 text-[#0066FF] flex items-center justify-center mx-auto mb-1 text-sm">
+            <i class="fa-regular fa-calendar"></i>
+          </div>
+          <span class="text-[11px] text-slate-500 font-medium block">Asistencia</span>
+          <span id="metricFaltas" class="text-base sm:text-lg font-extrabold text-[#001433] block">3 faltas</span>
+          <span class="text-[10px] text-slate-400 block">Última semana</span>
+        </div>
+
+        <!-- Card Rendimiento -->
+        <div class="bg-white border border-slate-200/80 rounded-2xl p-3 sm:p-4 text-center shadow-sm">
+          <div class="w-8 h-8 rounded-xl bg-amber-50 text-[#D97706] flex items-center justify-center mx-auto mb-1 text-sm">
+            <i class="fa-solid fa-chart-simple"></i>
+          </div>
+          <span class="text-[11px] text-slate-500 font-medium block">Rendimiento</span>
+          <span id="metricPromedio" class="text-base sm:text-lg font-extrabold text-[#001433] block">6,2</span>
+          <span class="text-[10px] text-slate-400 block">Promedio general</span>
+        </div>
+
+        <!-- Card Participación -->
+        <div class="bg-white border border-slate-200/80 rounded-2xl p-3 sm:p-4 text-center shadow-sm">
+          <div class="w-8 h-8 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center mx-auto mb-1 text-sm">
+            <i class="fa-solid fa-user-group"></i>
+          </div>
+          <span class="text-[11px] text-slate-500 font-medium block">Participación</span>
+          <span class="text-base sm:text-lg font-extrabold text-rose-600 block">Baja</span>
+          <span class="text-[10px] text-slate-400 block">En clase</span>
+        </div>
+      </div>
+
+      <!-- Evolución de asistencia con Selector de Gráfico (Línea vs Torta) -->
+      <div class="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-sm space-y-3">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm sm:text-base font-bold text-[#001433]">Evolución de asistencia</h3>
+          
+          <div class="flex items-center gap-2">
+            <!-- Toggle Línea vs Torta (Torta Default) -->
+            <div class="flex items-center bg-slate-100 p-0.5 rounded-xl border border-slate-200 text-[11px]">
+              <button id="btnFamCurva" onclick="cambiarGraficoFamilia('curva')" class="px-2.5 py-1 rounded-lg font-bold text-slate-600 hover:text-slate-900">
+                Curva
+              </button>
+              <button id="btnFamTorta" onclick="cambiarGraficoFamilia('torta')" class="px-2.5 py-1 rounded-lg font-bold bg-white text-[#0066FF] shadow-xs">
+                Torta
+              </button>
+            </div>
+            <span class="text-xs font-semibold text-slate-500 bg-slate-50 border border-slate-200 px-2 py-1 rounded-xl hidden sm:inline-block">
+              Últimos 3 meses
+            </span>
+          </div>
+        </div>
+
+        <!-- VISTA CURVA (Wireframe 3 Line Chart) -->
+        <div id="famGraficoCurva" class="hidden py-2">
+          <div class="relative w-full h-36">
+            <svg viewBox="0 0 340 120" class="w-full h-full overflow-visible">
+              <line x1="30" y1="10" x2="330" y2="10" stroke="#F1F5F9" stroke-width="1"/>
+              <text x="22" y="13" font-size="9" fill="#94A3B8" text-anchor="end">100%</text>
+
+              <line x1="30" y1="40" x2="330" y2="40" stroke="#F1F5F9" stroke-width="1"/>
+              <text x="22" y="43" font-size="9" fill="#94A3B8" text-anchor="end">75%</text>
+
+              <line x1="30" y1="70" x2="330" y2="70" stroke="#F1F5F9" stroke-width="1"/>
+              <text x="22" y="73" font-size="9" fill="#94A3B8" text-anchor="end">50%</text>
+
+              <line x1="30" y1="100" x2="330" y2="100" stroke="#F1F5F9" stroke-width="1"/>
+              <text x="22" y="103" font-size="9" fill="#94A3B8" text-anchor="end">0%</text>
+
+              <polyline fill="none" stroke="#0066FF" stroke-width="2.5" points="60,20 140,38 220,62 300,85" />
+              
+              <circle cx="60" cy="20" r="4.5" fill="#0066FF"/>
+              <circle cx="140" cy="38" r="4.5" fill="#0066FF"/>
+              <circle cx="220" cy="62" r="4.5" fill="#0066FF"/>
+              <circle cx="300" cy="85" r="5.5" fill="#E53E3E"/>
+              <rect x="286" y="65" width="28" height="15" rx="4" fill="#FEE2E2"/>
+              <text x="300" y="76" font-size="9" font-weight="bold" fill="#E53E3E" text-anchor="middle">30%</text>
+
+              <text x="60" y="115" font-size="9" fill="#64748B" text-anchor="middle">Ene</text>
+              <text x="140" y="115" font-size="9" fill="#64748B" text-anchor="middle">Feb</text>
+              <text x="220" y="115" font-size="9" fill="#64748B" text-anchor="middle">Mar</text>
+              <text x="300" y="115" font-size="9" fill="#64748B" text-anchor="middle">Abr</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- VISTA TORTA / DONUT DE ASISTENCIA (Default) -->
+        <div id="famGraficoTorta" class="py-3 flex items-center justify-center gap-6">
+          <div class="relative w-32 h-32">
+            <svg viewBox="0 0 42 42" class="w-full h-full transform -rotate-90">
+              <circle cx="21" cy="21" r="15.91549430918954" fill="#fff" stroke="#F1F5F9" stroke-width="6"/>
+              <!-- Presentes: 91% -->
+              <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#52B788" stroke-width="6" stroke-dasharray="91 9" stroke-dashoffset="0"/>
+              <!-- Faltas: 9% -->
+              <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#E53E3E" stroke-width="6" stroke-dasharray="9 91" stroke-dashoffset="-91"/>
+            </svg>
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+              <span class="text-xl font-extrabold text-[#001433]">91%</span>
+              <span class="text-[9px] text-slate-400 font-semibold uppercase">Asist.</span>
+            </div>
+          </div>
+
+          <div class="space-y-1.5 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#52B788]"></span>
+              <span class="font-bold text-slate-700">42 clases presentes</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#E53E3E]"></span>
+              <span class="font-bold text-slate-700">4 inasistencias (1 injustificada)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Observaciones recientes (Wireframe 3) -->
+      <div class="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-sm space-y-3">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm sm:text-base font-bold text-[#001433]">Observaciones recientes</h3>
+          <a href="#" onclick="mostrarToast('Historial completo disponible en secretaría académica.', 'info', 'Observaciones'); return false;" class="text-xs font-bold text-[#0066FF] hover:underline">Ver todas</a>
+        </div>
+
+        <div class="space-y-2 text-xs">
+          <div class="p-3 rounded-2xl bg-slate-50 flex items-start space-x-3">
+            <i class="fa-regular fa-calendar text-slate-400 mt-0.5 text-sm"></i>
+            <div>
+              <span class="font-bold text-slate-700">12/4</span> &nbsp;
+              <span class="text-slate-600">Faltó a 3 clases consecutivas en Matemática.</span>
+            </div>
+          </div>
+
+          <div class="p-3 rounded-2xl bg-slate-50 flex items-start space-x-3">
+            <i class="fa-regular fa-file-lines text-slate-400 mt-0.5 text-sm"></i>
+            <div>
+              <span class="font-bold text-slate-700">5/4</span> &nbsp;
+              <span class="text-slate-600">Se observa desmotivación y entrega incompleta de trabajos prácticos.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: ASISTENCIA DETALLE -->
+    <div id="contentAsistencia" class="hidden space-y-4">
+      <div class="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-sm space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="text-base font-bold text-[#001433]">Registro Bimestral de Asistencia</h3>
+            <p class="text-xs text-slate-500">Total inasistencias en el período: 4 (1 injustificada)</p>
+          </div>
+          <button onclick="abrirModalJustificar()" class="px-3 py-1.5 rounded-xl bg-[#0066FF] text-white text-xs font-bold shadow-sm">
+            Justificar falta
+          </button>
+        </div>
+
+        <div class="space-y-2.5 text-xs">
+          <div class="p-3 rounded-2xl bg-slate-50 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-xs">
+                <i class="fa-solid fa-check"></i>
+              </span>
+              <div>
+                <p class="font-bold text-slate-800">12 de Junio de 2026</p>
+                <p class="text-slate-500 text-[11px]">Certificado médico presentado • Aprobado</p>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">Justificada</span>
+          </div>
+
+          <div class="p-3 rounded-2xl bg-slate-50 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-xs">
+                <i class="fa-solid fa-check"></i>
+              </span>
+              <div>
+                <p class="font-bold text-slate-800">3 de Julio de 2026</p>
+                <p class="text-slate-500 text-[11px]">Fiebre y reposo médico 48hs • Aprobado</p>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">Justificada</span>
+          </div>
+
+          <div class="p-3 rounded-2xl bg-[#FFF0F0] border border-rose-100 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="w-8 h-8 rounded-full bg-[#FFE2E2] text-[#E53E3E] font-bold flex items-center justify-center text-xs">
+                !
+              </span>
+              <div>
+                <p class="font-bold text-slate-800">14 de Agosto de 2026</p>
+                <p class="text-rose-700 text-[11px]">Inasistencia sin comprobante (Matemática)</p>
+              </div>
+            </div>
+            <button onclick="abrirModalJustificar()" class="text-[11px] font-bold text-[#0066FF] hover:underline">
+              Cargar certificado
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: RENDIMIENTO DETALLE -->
+    <div id="contentRendimiento" class="hidden space-y-4">
+      <div class="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-sm space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="text-base font-bold text-[#001433]">Calificaciones por Materia</h3>
+            <p class="text-xs text-slate-500" id="subtituloRendimiento">Cierre del 2° Bimestre 2026 (Promedio general: 6,2)</p>
+          </div>
+          <span class="text-xs font-bold px-3 py-1 bg-slate-100 text-slate-700 rounded-full">
+            Escala 1 a 10
+          </span>
+        </div>
+
+        <div id="listaMateriasFamilia" class="divide-y divide-slate-100 text-xs">
+          <!-- Rellenado dinámicamente por JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: AGENDA DE EXÁMENES Y COMUNICADOS -->
+    <div id="contentAgenda" class="hidden space-y-4">
+      <div class="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-sm space-y-4">
+        <h3 class="text-base font-bold text-[#001433] flex items-center gap-2">
+          <i class="fa-regular fa-calendar-check text-[#0066FF]"></i> Próximas Evaluaciones del Bimestre
+        </h3>
+
+        <div class="space-y-2.5 text-xs">
+          <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="w-10 h-10 rounded-xl bg-blue-100 text-[#0066FF] font-bold flex flex-col items-center justify-center text-xs">
+                <span>28</span><span class="text-[9px] uppercase">Ago</span>
+              </span>
+              <div>
+                <p class="font-bold text-slate-800">Matemática - Examen Parcial</p>
+                <p class="text-slate-500 text-[11px]">Tema: Ecuaciones cuadráticas y funciones polinómicas</p>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700">En 2 días</span>
+          </div>
+
+          <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 font-bold flex flex-col items-center justify-center text-xs">
+                <span>02</span><span class="text-[9px] uppercase">Sep</span>
+              </span>
+              <div>
+                <p class="font-bold text-slate-800">Lengua y Literatura - Entrega de Monografía</p>
+                <p class="text-slate-500 text-[11px]">Análisis literario de cuentos latinoamericanos</p>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-200 text-slate-700">Próxima semana</span>
+          </div>
+
+          <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 font-bold flex flex-col items-center justify-center text-xs">
+                <span>08</span><span class="text-[9px] uppercase">Sep</span>
+              </span>
+              <div>
+                <p class="font-bold text-slate-800">Física - Laboratorio Práctico</p>
+                <p class="text-slate-500 text-[11px]">Cinemática y movimiento rectilíneo</p>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-200 text-slate-700">Pendiente</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Direct Action Buttons (Wireframe 3 Bottom Buttons) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+      <!-- Secondary Outline Button: Justificar / Registrar observacion -->
+      <button onclick="abrirModalJustificar()" class="w-full py-3.5 px-4 rounded-2xl bg-white hover:bg-blue-50 border-2 border-[#0066FF] text-[#0066FF] font-bold text-xs sm:text-sm transition-colors flex items-center justify-center gap-2">
+        <i class="fa-solid fa-file-arrow-up"></i>
+        <span>Justificar inasistencia</span>
+      </button>
+
+      <!-- Primary Solid Blue Button: Contactar familia / escuela -->
+      <button onclick="abrirModalContacto()" class="w-full py-3.5 px-4 rounded-2xl bg-[#0066FF] hover:bg-blue-700 text-white font-bold text-xs sm:text-sm shadow-sm transition-colors flex items-center justify-center gap-2">
+        <i class="fa-solid fa-phone"></i>
+        <span>Contactar docentes</span>
+      </button>
+    </div>
+
+    <!-- Canales Institucionales de Contacto Directo -->
+    <div id="seccionContactos" class="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-sm space-y-3">
+      <h3 class="text-sm font-bold text-[#001433] flex items-center gap-2">
+        <i class="fa-solid fa-address-book text-[#0066FF]"></i> Canales de Comunicación Escolar
+      </h3>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+        <!-- Docente -->
+        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
+          <div class="font-bold text-slate-800">Prof. Roberto García</div>
+          <p class="text-[11px] text-slate-500">Matemática (Tutor 4° B)</p>
+          <div class="flex gap-1.5 pt-1">
+            <a href="tel:+5491155550101" class="flex-1 py-1.5 px-2 text-center rounded-xl bg-white border border-slate-200 font-bold text-slate-700 hover:text-[#0066FF]">
+              <i class="fa-solid fa-phone"></i>
+            </a>
+            <a href="https://wa.me/5491155550101?text=Hola%20Prof.%20Garc%C3%ADa,%20le%20escribe%20Carlos%20Mart%C3%ADnez%20(Padre%20de%20Lautaro)" target="_blank" class="flex-1 py-1.5 px-2 text-center rounded-xl bg-emerald-500 text-white font-bold hover:bg-emerald-600">
+              <i class="fa-brands fa-whatsapp"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Directora -->
+        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
+          <div class="font-bold text-slate-800">Directora Silvia Martínez</div>
+          <p class="text-[11px] text-slate-500">Dirección Institucional</p>
+          <div class="flex gap-1.5 pt-1">
+            <a href="tel:+5491155550102" class="flex-1 py-1.5 px-2 text-center rounded-xl bg-white border border-slate-200 font-bold text-slate-700 hover:text-[#0066FF]">
+              <i class="fa-solid fa-phone"></i>
+            </a>
+            <a href="https://wa.me/5491155550102?text=Estimada%20Directora,%20le%20escribe%20Carlos%20Mart%C3%ADnez%20(Familia%20Lautaro)" target="_blank" class="flex-1 py-1.5 px-2 text-center rounded-xl bg-emerald-500 text-white font-bold hover:bg-emerald-600">
+              <i class="fa-brands fa-whatsapp"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Cooperadora -->
+        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
+          <div class="font-bold text-slate-800">Cooperadora Escolar</div>
+          <p class="text-[11px] text-slate-500">Cuota al día: $3.500</p>
+          <div class="flex gap-1.5 pt-1">
+            <a href="tel:+5491155550103" class="flex-1 py-1.5 px-2 text-center rounded-xl bg-white border border-slate-200 font-bold text-slate-700 hover:text-[#0066FF]">
+              <i class="fa-solid fa-phone"></i>
+            </a>
+            <a href="https://wa.me/5491155550103?text=Hola,%20consulta%20desde%20familia%20Lautaro%20Mart%C3%ADnez" target="_blank" class="flex-1 py-1.5 px-2 text-center rounded-xl bg-emerald-500 text-white font-bold hover:bg-emerald-600">
+              <i class="fa-brands fa-whatsapp"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- MODAL: CENTRO DE NOTIFICACIONES EN VIVO (Conectado con el Docente) -->
+  <div id="modalNotificaciones" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 rounded-3xl max-w-lg w-full p-5 sm:p-6 shadow-2xl relative space-y-4 max-h-[90vh] flex flex-col">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3 flex-shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-blue-50 text-[#0066FF] flex items-center justify-center text-sm font-bold">
+            <i class="fa-solid fa-bell"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-[#001433]">Centro de Notificaciones</h3>
+            <p class="text-[11px] text-slate-500">Avisos escolares y novedades de Lautaro</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span id="contadorNoLeidasFamilia" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-[#0066FF]">2 no leídas</span>
+          <button onclick="cerrarModalNotificaciones()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between text-xs px-1 flex-shrink-0">
+        <span class="text-slate-400 text-[11px]">Bandeja familiar</span>
+        <button onclick="marcarTodasLeidasFamilia()" class="text-xs font-bold text-[#0066FF] hover:underline flex items-center gap-1">
+          <i class="fa-solid fa-check-double"></i> Marcar todas como leídas
+        </button>
+      </div>
+
+      <div id="contenedorListaNotificaciones" class="space-y-2.5 overflow-y-auto text-xs flex-grow pr-1">
+        <!-- Rellenado dinámicamente con las notificaciones de localStorage -->
+      </div>
+
+      <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs flex-shrink-0">
+        <button onclick="limpiarHistorialFamilia()" class="text-slate-400 hover:text-rose-600 font-semibold transition-colors">
+          <i class="fa-regular fa-trash-can"></i> Vaciar bandeja
+        </button>
+        <button onclick="cerrarModalNotificaciones()" class="px-4 py-2 rounded-xl bg-[#0066FF] hover:bg-blue-700 text-white font-bold">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Justificar Inasistencia -->
+  <div id="modalJustificar" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 rounded-3xl max-w-md w-full p-6 shadow-xl relative space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="text-base font-bold text-[#001433] flex items-center gap-2">
+          <i class="fa-solid fa-file-medical text-[#0066FF]"></i> Justificar Inasistencia
+        </h3>
+        <button onclick="cerrarModalJustificar()" class="text-slate-400 hover:text-slate-600">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <form onsubmit="enviarJustificativo(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Fecha</label>
+          <input type="date" value="2026-08-14" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-800 font-medium text-xs">
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Motivo</label>
+          <select class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-800 text-xs">
+            <option>Atención Médica / Reposo</option>
+            <option>Trámite Personal Impostergable</option>
+            <option>Motivo de Fuerza Mayor</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Adjuntar Certificado (Foto / PDF)</label>
+          <input type="file" class="w-full text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:bg-blue-50 file:text-[#0066FF] hover:file:bg-blue-100">
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+          <button type="button" onclick="cerrarModalJustificar()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold">Cancelar</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-[#0066FF] hover:bg-blue-700 text-white font-bold shadow-sm">Enviar justificativo</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="w-full py-4 px-6 text-center text-xs text-slate-400">
+    <p>© 2026 EduAlerta • Escuela Secundaria N° 12 • Portal Familia</p>
+  </footer>
+
+  <script>
+    // Toast Notification System
+    function mostrarToast(mensaje, tipo = 'info', titulo = '') {
+      let container = document.getElementById('toastContainer');
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'toastContainer';
+        container.className = 'fixed top-4 right-4 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-full px-4 sm:px-0';
+        document.body.appendChild(container);
+      }
+
+      const toast = document.createElement('div');
+      const bgColors = {
+        success: 'bg-emerald-50 border-emerald-200 text-emerald-900',
+        error: 'bg-rose-50 border-rose-200 text-rose-900',
+        warning: 'bg-amber-50 border-amber-200 text-amber-900',
+        info: 'bg-blue-50 border-blue-200 text-blue-900'
+      };
+      const iconColors = {
+        success: 'text-emerald-500 fa-circle-check',
+        error: 'text-rose-500 fa-circle-exclamation',
+        warning: 'text-amber-500 fa-triangle-exclamation',
+        info: 'text-[#0066FF] fa-circle-info'
+      };
+
+      const currentBg = bgColors[tipo] || bgColors.info;
+      const currentIcon = iconColors[tipo] || iconColors.info;
+
+      toast.className = `pointer-events-auto p-3.5 rounded-2xl border shadow-lg flex items-start gap-3 transition-all duration-300 transform translate-y-[-10px] opacity-0 ${currentBg}`;
+      toast.innerHTML = `
+        <div class="text-base flex-shrink-0 mt-0.5">
+          <i class="fa-solid ${currentIcon}"></i>
+        </div>
+        <div class="flex-grow text-xs">
+          ${titulo ? `<strong class="block font-bold mb-0.5">${titulo}</strong>` : ''}
+          <span class="leading-relaxed font-medium">${mensaje}</span>
+        </div>
+        <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-slate-600 text-xs p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      `;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-[-10px]', 'opacity-0');
+        toast.classList.add('translate-y-0', 'opacity-100');
+      });
+
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0', 'translate-y-[-10px]');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    function cambiarTab(tab) {
+      const tabs = ['resumen', 'asistencia', 'rendimiento', 'agenda', 'contactos'];
+      tabs.forEach(t => {
+        const btn = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
+        if (btn) {
+          btn.className = "flex-1 min-w-[65px] py-2 px-2 text-center rounded-xl text-slate-600 hover:text-slate-900 transition-all font-semibold";
+        }
+      });
+
+      document.getElementById('contentResumen').classList.add('hidden');
+      document.getElementById('contentAsistencia').classList.add('hidden');
+      document.getElementById('contentRendimiento').classList.add('hidden');
+      document.getElementById('contentAgenda').classList.add('hidden');
+
+      const activeBtn = document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1));
+      if (activeBtn) {
+        activeBtn.className = "flex-1 min-w-[65px] py-2 px-2 text-center rounded-xl bg-white text-[#0066FF] font-bold shadow-xs transition-all";
+      }
+
+      if (tab === 'resumen') {
+        document.getElementById('contentResumen').classList.remove('hidden');
+      } else if (tab === 'asistencia') {
+        document.getElementById('contentAsistencia').classList.remove('hidden');
+      } else if (tab === 'rendimiento') {
+        document.getElementById('contentRendimiento').classList.remove('hidden');
+      } else if (tab === 'agenda') {
+        document.getElementById('contentAgenda').classList.remove('hidden');
+      } else if (tab === 'contactos') {
+        document.getElementById('contentResumen').classList.remove('hidden');
+        document.getElementById('seccionContactos').scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function cambiarGraficoFamilia(tipo) {
+      const btnCurva = document.getElementById('btnFamCurva');
+      const btnTorta = document.getElementById('btnFamTorta');
+      const contCurva = document.getElementById('famGraficoCurva');
+      const contTorta = document.getElementById('famGraficoTorta');
+
+      if (tipo === 'curva') {
+        btnCurva.className = "px-2.5 py-1 rounded-lg font-bold bg-white text-[#0066FF] shadow-xs";
+        btnTorta.className = "px-2.5 py-1 rounded-lg font-bold text-slate-600 hover:text-slate-900";
+        contCurva.classList.remove('hidden');
+        contTorta.classList.add('hidden');
+      } else {
+        btnTorta.className = "px-2.5 py-1 rounded-lg font-bold bg-white text-[#0066FF] shadow-xs";
+        btnCurva.className = "px-2.5 py-1 rounded-lg font-bold text-slate-600 hover:text-slate-900";
+        contCurva.classList.add('hidden');
+        contTorta.classList.remove('hidden');
+      }
+    }
+
+    const MATERIAS_POR_BIMESTRE = {
+      1: [
+        { nombre: "Matemática", docente: "Prof. Roberto García", nota: 6.0, estado: "Aprobado", faltas: 1 },
+        { nombre: "Lengua y Literatura", docente: "Prof. María Paz", nota: 8.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Física", docente: "Prof. Alberto Conti", nota: 7.0, estado: "Aprobado", faltas: 1 },
+        { nombre: "Química", docente: "Prof. Viviana Sosa", nota: 6.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Historia", docente: "Prof. Fernando Díaz", nota: 8.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Geografía", docente: "Prof. Patricia Rey", nota: 7.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Inglés", docente: "Prof. Kevin Brown", nota: 9.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Educación Física", docente: "Prof. Lucas Romano", nota: 9.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Informática", docente: "Prof. Carla Bianchi", nota: 8.0, estado: "Aprobado", faltas: 0 }
+      ],
+      2: [
+        { nombre: "Matemática", docente: "Prof. Roberto García", nota: 5.0, estado: "En recuperación", faltas: 3 },
+        { nombre: "Lengua y Literatura", docente: "Prof. María Paz", nota: 9.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Física", docente: "Prof. Alberto Conti", nota: 8.0, estado: "Aprobado", faltas: 1 },
+        { nombre: "Química", docente: "Prof. Viviana Sosa", nota: 7.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Historia", docente: "Prof. Fernando Díaz", nota: 8.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Geografía", docente: "Prof. Patricia Rey", nota: 7.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Inglés", docente: "Prof. Kevin Brown", nota: 9.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Educación Física", docente: "Prof. Lucas Romano", nota: 9.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Informática", docente: "Prof. Carla Bianchi", nota: 8.0, estado: "Aprobado", faltas: 0 }
+      ],
+      3: [
+        { nombre: "Matemática", docente: "Prof. Roberto García", nota: 7.0, estado: "Aprobado", faltas: 1 },
+        { nombre: "Lengua y Literatura", docente: "Prof. María Paz", nota: 9.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Física", docente: "Prof. Alberto Conti", nota: 8.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Química", docente: "Prof. Viviana Sosa", nota: 8.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Historia", docente: "Prof. Fernando Díaz", nota: 8.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Geografía", docente: "Prof. Patricia Rey", nota: 8.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Inglés", docente: "Prof. Kevin Brown", nota: 9.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Educación Física", docente: "Prof. Lucas Romano", nota: 10.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Informática", docente: "Prof. Carla Bianchi", nota: 9.0, estado: "Aprobado", faltas: 0 }
+      ],
+      4: [
+        { nombre: "Matemática", docente: "Prof. Roberto García", nota: 8.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Lengua y Literatura", docente: "Prof. María Paz", nota: 9.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Física", docente: "Prof. Alberto Conti", nota: 8.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Química", docente: "Prof. Viviana Sosa", nota: 8.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Historia", docente: "Prof. Fernando Díaz", nota: 9.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Geografía", docente: "Prof. Patricia Rey", nota: 8.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Inglés", docente: "Prof. Kevin Brown", nota: 10.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Educación Física", docente: "Prof. Lucas Romano", nota: 10.0, estado: "Aprobado", faltas: 0 },
+        { nombre: "Informática", docente: "Prof. Carla Bianchi", nota: 9.0, estado: "Aprobado", faltas: 0 }
+      ]
+    };
+
+    function renderMateriasFamilia(bim) {
+      const cont = document.getElementById('listaMateriasFamilia');
+      const mats = MATERIAS_POR_BIMESTRE[bim] || MATERIAS_POR_BIMESTRE[2];
+      cont.innerHTML = '';
+
+      mats.forEach(m => {
+        const div = document.createElement('div');
+        div.className = 'py-2.5 flex items-center justify-between';
+        div.innerHTML = `
+          <div>
+            <span class="font-bold text-slate-800">${m.nombre}</span>
+            <p class="text-[11px] text-slate-500">${m.docente} • Inasistencias: <strong class="${m.faltas > 1 ? 'text-[#E53E3E]' : 'text-slate-600'}">${m.faltas}</strong></p>
+          </div>
+          <div class="text-right">
+            <span class="text-sm font-extrabold ${m.nota < 6 ? 'text-[#E53E3E]' : 'text-[#059669]'}">${m.nota.toFixed(1)}</span>
+            <span class="text-[10px] block font-bold ${m.nota < 6 ? 'text-rose-600' : 'text-emerald-600'}">${m.estado}</span>
+          </div>
+        `;
+        cont.appendChild(div);
+      });
+    }
+
+    function actualizarBimestreFamilia() {
+      const bim = parseInt(document.getElementById('bimestreFamilia').value) || 2;
+      const sub = document.getElementById('subtituloRendimiento');
+
+      if (bim === 1) {
+        document.getElementById('metricFaltas').textContent = "2 faltas";
+        document.getElementById('metricPromedio').textContent = "7,4";
+        sub.textContent = "Cierre del 1° Bimestre 2026 (Promedio general: 7,4)";
+      } else if (bim === 2) {
+        document.getElementById('metricFaltas').textContent = "3 faltas";
+        document.getElementById('metricPromedio').textContent = "6,2";
+        sub.textContent = "Cierre del 2° Bimestre 2026 (Promedio general: 6,2)";
+      } else if (bim === 3) {
+        document.getElementById('metricFaltas').textContent = "1 falta";
+        document.getElementById('metricPromedio').textContent = "8,1";
+        sub.textContent = "Cierre del 3° Bimestre 2026 (Promedio general: 8,1)";
+      } else if (bim === 4) {
+        document.getElementById('metricFaltas').textContent = "0 faltas";
+        document.getElementById('metricPromedio').textContent = "8,6";
+        sub.textContent = "Cierre del 4° Bimestre 2026 (Promedio general: 8,6)";
+      }
+
+      renderMateriasFamilia(bim);
+    }
+
+    // GESTIÓN DE NOTIFICACIONES RECIBIDAS (Docente -> Familia)
+    const NOTIFICACIONES_FAMILIA_DEFAULT = [
+      {
+        id: 1,
+        tipo: 'falta',
+        alumno: 'Lautaro Martínez',
+        titulo: 'Inasistencia Registrada en Matemática',
+        detalle: 'El Prof. Roberto García registró inasistencia injustificada en la 3ra y 4ta hora.',
+        fecha: 'Hoy 10:15',
+        leida: false
+      },
+      {
+        id: 2,
+        tipo: 'nota',
+        alumno: 'Lautaro Martínez',
+        titulo: 'Calificación Cargada: 5.0 (Recuperatorio)',
+        detalle: 'Se cargó nota en 2° Parcial Álgebra. El docente recomienda coordinar apoyo escolar.',
+        fecha: 'Ayer 15:30',
+        leida: false
+      }
+    ];
+
+    function obtenerNotificacionesFamilia() {
+      const data = localStorage.getItem('edualerta_notificaciones');
+      if (data === null) {
+        localStorage.setItem('edualerta_notificaciones', JSON.stringify(NOTIFICACIONES_FAMILIA_DEFAULT));
+        return NOTIFICACIONES_FAMILIA_DEFAULT;
+      }
+      try {
+        return JSON.parse(data);
+      } catch (e) {
+        return NOTIFICACIONES_FAMILIA_DEFAULT;
+      }
+    }
+
+    function guardarNotificacionesFamilia(notifs) {
+      localStorage.setItem('edualerta_notificaciones', JSON.stringify(notifs));
+      actualizarBadgeFamilia(notifs);
+    }
+
+    function actualizarBadgeFamilia(notifs) {
+      if (!notifs) notifs = obtenerNotificacionesFamilia();
+      const noLeidas = notifs.filter(n => !n.leida).length;
+      const badge = document.getElementById('badgeNotifCount');
+      const contador = document.getElementById('contadorNoLeidasFamilia');
+
+      if (badge) {
+        if (noLeidas > 0) {
+          badge.textContent = noLeidas;
+          badge.classList.remove('hidden');
+        } else {
+          badge.classList.add('hidden');
+        }
+      }
+
+      if (contador) {
+        contador.textContent = `${noLeidas} no leída${noLeidas === 1 ? '' : 's'}`;
+      }
+    }
+
+    function cargarNotificaciones() {
+      const notifs = obtenerNotificacionesFamilia();
+      const cont = document.getElementById('contenedorListaNotificaciones');
+      if (!cont) return;
+      cont.innerHTML = '';
+
+      if (notifs.length === 0) {
+        cont.innerHTML = `
+          <div class="text-center py-8 text-slate-400">
+            <i class="fa-regular fa-bell-slash text-2xl mb-2 block"></i>
+            <p>No tenés notificaciones en tu bandeja.</p>
+          </div>
+        `;
+        actualizarBadgeFamilia(notifs);
+        return;
+      }
+
+      notifs.forEach(n => {
+        const item = document.createElement('div');
+        const iconColor = n.tipo === 'falta' ? 'bg-[#FFE2E2] text-[#E53E3E]' : 'bg-blue-100 text-[#0066FF]';
+        const iconFa = n.tipo === 'falta' ? 'fa-user-xmark' : 'fa-file-pen';
+
+        item.className = `p-3.5 rounded-2xl border transition-all ${
+          n.leida 
+            ? 'bg-slate-50 border-slate-200/60 opacity-80' 
+            : 'bg-blue-50/50 border-blue-200/90 shadow-xs'
+        }`;
+
+        item.innerHTML = `
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 rounded-xl ${iconColor} flex items-center justify-center flex-shrink-0 text-xs mt-0.5 font-bold">
+              <i class="fa-solid ${iconFa}"></i>
+            </div>
+            <div class="flex-grow min-w-0">
+              <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center gap-1.5 min-w-0">
+                  ${!n.leida ? '<span class="w-2 h-2 rounded-full bg-[#0066FF] flex-shrink-0 animate-pulse"></span>' : ''}
+                  <span class="font-bold text-[#001433] truncate">${n.titulo}</span>
+                </div>
+                <span class="text-[10px] text-slate-400 font-semibold flex-shrink-0">${n.fecha}</span>
+              </div>
+              <p class="text-slate-600 text-[11px] mt-0.5 leading-snug">${n.detalle}</p>
+              <div class="mt-2.5 flex items-center justify-between pt-1.5 border-t border-slate-100">
+                ${!n.leida ? `
+                  <button onclick="marcarNotifLeida(${n.id})" class="text-[11px] font-bold text-[#0066FF] hover:underline flex items-center gap-1">
+                    <i class="fa-solid fa-check"></i> Marcar como leída
+                  </button>
+                ` : `
+                  <span class="text-[10px] text-slate-400 font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-check-double text-emerald-500"></i> Leída
+                  </span>
+                `}
+                <button onclick="eliminarNotifFamilia(${n.id})" class="text-[11px] text-slate-400 hover:text-rose-600 p-1" title="Eliminar">
+                  <i class="fa-regular fa-trash-can"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+        cont.appendChild(item);
+      });
+
+      actualizarBadgeFamilia(notifs);
+    }
+
+    function abrirModalNotificaciones() {
+      cargarNotificaciones();
+      document.getElementById('modalNotificaciones').classList.remove('hidden');
+    }
+
+    function cerrarModalNotificaciones() {
+      document.getElementById('modalNotificaciones').classList.add('hidden');
+    }
+
+    function marcarNotifLeida(id) {
+      const notifs = obtenerNotificacionesFamilia();
+      const target = notifs.find(n => n.id === id);
+      if (target) {
+        target.leida = true;
+        guardarNotificacionesFamilia(notifs);
+        cargarNotificaciones();
+        mostrarToast('Notificación marcada como leída.', 'info', 'Centro de Alertas');
+      }
+    }
+
+    function marcarTodasLeidasFamilia() {
+      const notifs = obtenerNotificacionesFamilia();
+      notifs.forEach(n => n.leida = true);
+      guardarNotificacionesFamilia(notifs);
+      cargarNotificaciones();
+      mostrarToast('Todas las notificaciones marcadas como leídas.', 'success', 'Bandeja Actualizada');
+    }
+
+    function eliminarNotifFamilia(id) {
+      let notifs = obtenerNotificacionesFamilia();
+      notifs = notifs.filter(n => n.id !== id);
+      guardarNotificacionesFamilia(notifs);
+      cargarNotificaciones();
+    }
+
+    function limpiarHistorialFamilia() {
+      guardarNotificacionesFamilia([]);
+      cargarNotificaciones();
+      mostrarToast('Bandeja de notificaciones vaciada.', 'info');
+    }
+
+    function abrirModalJustificar() {
+      document.getElementById('modalJustificar').classList.remove('hidden');
+    }
+
+    function cerrarModalJustificar() {
+      document.getElementById('modalJustificar').classList.add('hidden');
+    }
+
+    function enviarJustificativo(e) {
+      e.preventDefault();
+      cerrarModalJustificar();
+      mostrarToast('Certificado médico enviado a preceptoría y al Prof. García.', 'success', 'Justificativo Registrado');
+    }
+
+    function abrirModalContacto() {
+      document.getElementById('seccionContactos').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      actualizarBimestreFamilia();
+      cargarNotificaciones();
+
+      // Al ingresar, si hay alertas sin leer, lanzar notificación flotante estética que se auto-cierra
+      const notifs = obtenerNotificacionesFamilia();
+      const alertaReciente = notifs.find(n => !n.leida);
+      if (alertaReciente && !sessionStorage.getItem('edualerta_familia_toast_vista')) {
+        sessionStorage.setItem('edualerta_familia_toast_vista', 'true');
+        setTimeout(() => {
+          mostrarToast(alertaReciente.detalle, 'warning', alertaReciente.titulo);
+        }, 500);
+      }
+    });
+  </script>
+</body>
+</html>

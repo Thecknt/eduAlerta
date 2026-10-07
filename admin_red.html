@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduAlerta - Gerencia Red de Colegios del Sur</title>
+  <link rel="icon" type="image/jpeg" href="WhatsApp Image 2026-10-04 at 11.24.07.jpeg">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
+          colors: {
+            brand: {
+              blue: '#0066FF',
+              dark: '#001433',
+              light: '#F8FAFC'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#F8FAFC] min-h-screen font-sans text-slate-800 flex flex-col selection:bg-blue-100 selection:text-blue-800">
+
+  <!-- Top Navbar (Organized & Aligned) -->
+  <header class="sticky top-0 z-40 bg-white border-b border-slate-200/80 px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <!-- Hamburger only on mobile / under 720px -->
+      <button class="block min-[720px]:hidden text-slate-700 hover:text-slate-900 text-lg p-1.5 rounded-lg focus:outline-none">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      
+      <!-- Official Logo Image -->
+      <a href="admin_red.html" class="flex items-center">
+        <img src="WhatsApp Image 2026-10-04 at 11.24.07.jpeg" alt="EduAlerta" class="h-9 sm:h-10 object-contain">
+      </a>
+      <span class="text-slate-300 hidden sm:inline">|</span>
+      <h1 class="text-xs sm:text-sm font-bold text-[#001433] hidden sm:inline">Gerencia de Red</h1>
+    </div>
+
+    <!-- Right: Notification & Profile Group (Correctly Grouped) -->
+    <div class="flex items-center space-x-3 sm:space-x-4">
+      <!-- Notification Bell with unread counter -->
+      <button onclick="abrirModalNotificacionesAdmin()" class="relative p-2 text-slate-600 hover:text-slate-900 rounded-xl hover:bg-slate-100 transition-colors" title="Centro de Notificaciones">
+        <i class="fa-regular fa-bell text-xl"></i>
+        <span id="badgeAdminNotif" class="absolute top-1 right-1 w-4 h-4 bg-purple-600 text-white rounded-full text-[10px] font-bold flex items-center justify-center animate-pulse">3</span>
+      </button>
+
+      <div class="flex items-center space-x-2">
+        <div class="w-9 h-9 rounded-full bg-purple-100 text-purple-700 font-extrabold flex items-center justify-center text-xs border border-purple-200">
+          AR
+        </div>
+        <span class="hidden sm:inline text-xs font-bold text-slate-700">Lic. Rossi (Gerencia Red)</span>
+      </div>
+
+      <!-- Logout -->
+      <a href="index.html" class="p-2 text-slate-400 hover:text-rose-600 rounded-xl hover:bg-slate-100 transition-colors" title="Cerrar sesión">
+        <i class="fa-solid fa-arrow-right-from-bracket text-base"></i>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-grow max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+
+    <!-- Greeting & Period Selector -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#001433]">Hola, Lic. Alejandro Rossi</h1>
+        <p class="text-xs sm:text-sm text-slate-500 font-medium">Gerente & Tutor Legal • Red de Colegios del Sur (5 Colegios Piloto)</p>
+      </div>
+
+      <div class="flex items-center gap-2 self-start sm:self-auto bg-white border border-slate-200 px-3 py-1.5 rounded-2xl shadow-sm">
+        <i class="fa-regular fa-calendar text-[#0066FF] text-xs"></i>
+        <select id="bimestreAdmin" onchange="actualizarBimestreAdmin()" class="bg-transparent text-xs font-bold text-slate-700 focus:outline-none cursor-pointer">
+          <option value="1">1° Bimestre (Enero - Mayo)</option>
+          <option value="2" selected>2° Bimestre (Junio - Agosto) [Actual]</option>
+          <option value="3">3° Bimestre (Septiembre - Octubre)</option>
+          <option value="4">4° Bimestre (Noviembre - Diciembre)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- 3 Status KPI Cards (Consortium overview) -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+      
+      <!-- Card 1: Alertas activas red (Rose pastel) -->
+      <div class="bg-[#FFF0F0] border border-rose-100 rounded-3xl p-4 sm:p-5 flex items-center justify-between shadow-sm">
+        <div>
+          <span id="kpiAdminAlertas" class="text-3xl sm:text-4xl font-extrabold text-[#E53E3E] block">32</span>
+          <span class="text-xs sm:text-sm font-semibold text-rose-700">Alertas activas en la red (2.2%)</span>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-[#E53E3E] text-white flex items-center justify-center text-sm font-bold shadow-sm">
+          !
+        </div>
+      </div>
+
+      <!-- Card 2: En revinculación (Amber pastel) -->
+      <div class="bg-[#FFFBEB] border border-amber-100 rounded-3xl p-4 sm:p-5 flex items-center justify-between shadow-sm">
+        <div>
+          <span id="kpiAdminSeguimiento" class="text-3xl sm:text-4xl font-extrabold text-[#D97706] block">58</span>
+          <span class="text-xs sm:text-sm font-semibold text-amber-700">En revinculación asistida</span>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-[#D97706] text-white flex items-center justify-center text-sm font-bold shadow-sm">
+          <i class="fa-regular fa-clock"></i>
+        </div>
+      </div>
+
+      <!-- Card 3: Retención consolidada (Emerald pastel) -->
+      <div class="bg-[#F0FDF4] border border-emerald-100 rounded-3xl p-4 sm:p-5 flex items-center justify-between shadow-sm">
+        <div>
+          <span id="kpiAdminRetencion" class="text-3xl sm:text-4xl font-extrabold text-[#059669] block">96.8%</span>
+          <span class="text-xs sm:text-sm font-semibold text-emerald-700">Tasa de retención consolidada</span>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-[#059669] text-white flex items-center justify-center text-sm font-bold shadow-sm">
+          <i class="fa-solid fa-users text-xs"></i>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Financial Summary Cards (from EduAlerta_V4.pdf) -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+      <div class="bg-white border border-slate-200/80 rounded-3xl p-4 sm:p-5 shadow-sm">
+        <span class="text-xs font-semibold text-slate-500">Presupuesto Aprobado</span>
+        <div class="text-2xl font-extrabold text-[#001433] mt-1">USD 127.000</div>
+        <p class="text-[11px] text-slate-500 mt-1">Ejecutado al período: <strong class="text-slate-800" id="kpiEjecutado">USD 58.400</strong></p>
+      </div>
+
+      <div class="bg-white border border-slate-200/80 rounded-3xl p-4 sm:p-5 shadow-sm">
+        <span class="text-xs font-semibold text-slate-500">Modelo SaaS Anual</span>
+        <div class="text-2xl font-extrabold text-emerald-600 mt-1">USD 42.600</div>
+        <p class="text-[11px] text-slate-500 mt-1">Punto de equilibrio: <strong>Mes 14</strong></p>
+      </div>
+
+      <div class="bg-white border border-slate-200/80 rounded-3xl p-4 sm:p-5 shadow-sm">
+        <span class="text-xs font-semibold text-slate-500">Matrícula Total Consorcio</span>
+        <div class="text-2xl font-extrabold text-[#0066FF] mt-1">1.420 alumnos</div>
+        <p class="text-[11px] text-slate-500 mt-1">148 docentes • 12 directivos en 5 sedes</p>
+      </div>
+    </div>
+
+    <!-- Comparative Network Chart of 5 Schools (Toggle Bars vs Pie) -->
+    <div class="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-sm space-y-3">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h3 class="text-sm sm:text-base font-bold text-[#001433]">Desempeño y Retención por Sede</h3>
+          <p class="text-xs text-slate-500">Distribución de estudiantes y alertas en los 5 colegios del consorcio</p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <!-- Toggle Barras vs Torta (Torta Default) -->
+          <div class="flex items-center bg-slate-100 p-1 rounded-2xl border border-slate-200 text-xs">
+            <button id="btnAdminBarras" onclick="cambiarGraficoAdmin('barras')" class="px-3 py-1 rounded-xl font-bold text-slate-600 hover:text-slate-900">
+              <i class="fa-solid fa-chart-column"></i> Barras
+            </button>
+            <button id="btnAdminTorta" onclick="cambiarGraficoAdmin('torta')" class="px-3 py-1 rounded-xl font-bold bg-white text-[#0066FF] shadow-sm">
+              <i class="fa-solid fa-chart-pie"></i> Torta
+            </button>
+          </div>
+
+          <div class="hidden sm:flex items-center gap-2 text-xs font-semibold text-slate-600">
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-[#E53E3E]"></span> Alerta</span>
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-[#D97706]"></span> Seguimiento</span>
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-[#52B788]"></span> Regular</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- VISTA BARRAS -->
+      <div id="adminGraficoBarras" class="hidden grid grid-cols-5 gap-3 pt-3 pb-1 text-center">
+        <!-- Palermo -->
+        <button onclick="seleccionarColegio(0)" class="flex flex-col items-center group cursor-pointer">
+          <div class="h-28 w-10 sm:w-12 bg-slate-100 rounded-xl overflow-hidden flex flex-col-reverse shadow-inner group-hover:ring-2 group-hover:ring-[#0066FF] transition-all">
+            <div style="height: 12%" class="bg-[#E53E3E] w-full" title="Alertas: 8"></div>
+            <div style="height: 18%" class="bg-[#D97706] w-full" title="Seguimiento: 15"></div>
+            <div style="height: 70%" class="bg-[#52B788] w-full" title="Regular: 220"></div>
+          </div>
+          <span class="text-xs font-bold text-slate-700 mt-2 truncate max-w-full group-hover:text-[#0066FF]">Palermo</span>
+          <span class="text-[10px] text-slate-400">243 al.</span>
+        </button>
+
+        <!-- Belgrano -->
+        <button onclick="seleccionarColegio(1)" class="flex flex-col items-center group cursor-pointer">
+          <div class="h-28 w-10 sm:w-12 bg-slate-100 rounded-xl overflow-hidden flex flex-col-reverse shadow-inner group-hover:ring-2 group-hover:ring-[#0066FF] transition-all">
+            <div style="height: 10%" class="bg-[#E53E3E] w-full" title="Alertas: 6"></div>
+            <div style="height: 15%" class="bg-[#D97706] w-full" title="Seguimiento: 12"></div>
+            <div style="height: 75%" class="bg-[#52B788] w-full" title="Regular: 292"></div>
+          </div>
+          <span class="text-xs font-bold text-slate-700 mt-2 truncate max-w-full group-hover:text-[#0066FF]">Belgrano</span>
+          <span class="text-[10px] text-slate-400">310 al.</span>
+        </button>
+
+        <!-- San Isidro -->
+        <button onclick="seleccionarColegio(2)" class="flex flex-col items-center group cursor-pointer">
+          <div class="h-28 w-10 sm:w-12 bg-slate-100 rounded-xl overflow-hidden flex flex-col-reverse shadow-inner group-hover:ring-2 group-hover:ring-[#0066FF] transition-all">
+            <div style="height: 11%" class="bg-[#E53E3E] w-full" title="Alertas: 7"></div>
+            <div style="height: 14%" class="bg-[#D97706] w-full" title="Seguimiento: 10"></div>
+            <div style="height: 75%" class="bg-[#52B788] w-full" title="Regular: 268"></div>
+          </div>
+          <span class="text-xs font-bold text-slate-700 mt-2 truncate max-w-full group-hover:text-[#0066FF]">San Isidro</span>
+          <span class="text-[10px] text-slate-400">285 al.</span>
+        </button>
+
+        <!-- Quilmes -->
+        <button onclick="seleccionarColegio(3)" class="flex flex-col items-center group cursor-pointer">
+          <div class="h-28 w-10 sm:w-12 bg-slate-100 rounded-xl overflow-hidden flex flex-col-reverse shadow-inner group-hover:ring-2 group-hover:ring-[#0066FF] transition-all">
+            <div style="height: 12%" class="bg-[#E53E3E] w-full" title="Alertas: 7"></div>
+            <div style="height: 16%" class="bg-[#D97706] w-full" title="Seguimiento: 13"></div>
+            <div style="height: 72%" class="bg-[#52B788] w-full" title="Regular: 300"></div>
+          </div>
+          <span class="text-xs font-bold text-slate-700 mt-2 truncate max-w-full group-hover:text-[#0066FF]">Quilmes</span>
+          <span class="text-[10px] text-slate-400">320 al.</span>
+        </button>
+
+        <!-- Lomas de Zamora -->
+        <button onclick="seleccionarColegio(4)" class="flex flex-col items-center group cursor-pointer">
+          <div class="h-28 w-10 sm:w-12 bg-slate-100 rounded-xl overflow-hidden flex flex-col-reverse shadow-inner group-hover:ring-2 group-hover:ring-[#0066FF] transition-all">
+            <div style="height: 8%" class="bg-[#E53E3E] w-full" title="Alertas: 4"></div>
+            <div style="height: 12%" class="bg-[#D97706] w-full" title="Seguimiento: 8"></div>
+            <div style="height: 80%" class="bg-[#52B788] w-full" title="Regular: 250"></div>
+          </div>
+          <span class="text-xs font-bold text-slate-700 mt-2 truncate max-w-full group-hover:text-[#0066FF]">Lomas</span>
+          <span class="text-[10px] text-slate-400">262 al.</span>
+        </button>
+      </div>
+
+      <!-- VISTA TORTA / DONUT DE LA RED COMPLETA (Default) -->
+      <div id="adminGraficoTorta" class="py-4 flex flex-col sm:flex-row items-center justify-center gap-8">
+        <div class="relative w-40 h-40">
+          <svg viewBox="0 0 42 42" class="w-full h-full transform -rotate-90">
+            <circle cx="21" cy="21" r="15.91549430918954" fill="#fff" stroke="#F1F5F9" stroke-width="6"/>
+            <!-- Retención Consolidada: 96.8% -->
+            <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#52B788" stroke-width="6" stroke-dasharray="96.8 3.2" stroke-dashoffset="0"/>
+            <!-- Alertas Críticas Red: 3.2% -->
+            <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#E53E3E" stroke-width="6" stroke-dasharray="3.2 96.8" stroke-dashoffset="-96.8"/>
+          </svg>
+          <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+            <span class="text-xl font-extrabold text-[#001433]">1.420</span>
+            <span class="text-[9px] text-slate-400 font-bold uppercase">Red Sur</span>
+          </div>
+        </div>
+
+        <div class="space-y-2 text-xs">
+          <div class="p-2.5 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-between gap-6">
+            <span class="font-bold text-emerald-800">Alumnos Regulares en Red</span>
+            <span class="font-extrabold text-emerald-700">1.374 al. (96.8%)</span>
+          </div>
+          <div class="p-2.5 rounded-2xl bg-amber-50 border border-amber-100 flex items-center justify-between gap-6">
+            <span class="font-bold text-amber-800">En Revinculación Asistida</span>
+            <span class="font-extrabold text-amber-700">58 al. (4.1%)</span>
+          </div>
+          <div class="p-2.5 rounded-2xl bg-rose-50 border border-rose-100 flex items-center justify-between gap-6">
+            <span class="font-bold text-rose-800">Alertas Críticas Activas</span>
+            <span class="font-extrabold text-rose-700">32 al. (2.2%)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <!-- SECCIÓN INTERACTIVA POR COLEGIO -->
+    <div class="bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-sm space-y-5">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-base sm:text-lg font-bold text-[#001433]">Supervisión Detallada por Colegio</h2>
+          <p class="text-xs text-slate-500">Hacé clic en cualquier colegio para ver su desglose de métricas, directivos y docentes.</p>
+        </div>
+      </div>
+
+      <!-- Selector Tabs de los 5 Colegios (Sin sobreposición, espacio claro) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3" id="tabsColegios">
+        <!-- Rellenado dinámicamente por JS -->
+      </div>
+
+      <!-- Detalle del Colegio Seleccionado -->
+      <div id="detalleColegioActivo" class="space-y-4">
+        <!-- Rellenado dinámicamente con JS -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- MODAL: CENTRO DE NOTIFICACIONES (Gerencia de Red) -->
+  <div id="modalNotificacionesAdmin" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 rounded-3xl max-w-lg w-full p-5 sm:p-6 shadow-2xl relative space-y-4 max-h-[90vh] flex flex-col">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3 flex-shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-sm font-bold">
+            <i class="fa-solid fa-bell"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-[#001433]">Centro de Notificaciones</h3>
+            <p class="text-[11px] text-slate-500">Alertas y avisos ejecutivos de la red</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span id="contadorNoLeidasAdmin" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-purple-50 text-purple-700">3 no leídas</span>
+          <button onclick="cerrarModalNotificacionesAdmin()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between text-xs px-1 flex-shrink-0">
+        <span class="text-slate-400 text-[11px]">Bandeja institucional</span>
+        <button onclick="marcarTodasLeidasAdmin()" class="text-xs font-bold text-[#0066FF] hover:underline flex items-center gap-1">
+          <i class="fa-solid fa-check-double"></i> Marcar todas como leídas
+        </button>
+      </div>
+
+      <div id="contenedorListaNotificacionesAdmin" class="space-y-2.5 overflow-y-auto text-xs flex-grow pr-1">
+        <!-- Rellenado dinámicamente -->
+      </div>
+
+      <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs flex-shrink-0">
+        <button onclick="limpiarHistorialAdmin()" class="text-slate-400 hover:text-rose-600 font-semibold transition-colors">
+          <i class="fa-regular fa-trash-can"></i> Vaciar bandeja
+        </button>
+        <button onclick="cerrarModalNotificacionesAdmin()" class="px-4 py-2 rounded-xl bg-[#0066FF] hover:bg-blue-700 text-white font-bold">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="w-full py-4 px-6 text-center text-xs text-slate-400">
+    <p>© 2026 EduAlerta • Red de Colegios del Sur • Gerencia Central</p>
+  </footer>
+
+  <script>
+    const COLEGIOS_RED = [
+      {
+        id: 0,
+        nombre: "Escuela Secundaria N° 12",
+        sede: "Sede Palermo (CABA)",
+        direccion: "Av. Santa Fe 3420, CABA",
+        alumnos: 243,
+        docentesCount: 26,
+        retencion: "96.4%",
+        alertas: 8,
+        seguimiento: 15,
+        asistencia: "89.4%",
+        presupuesto: "USD 24.500",
+        director: "Directora Silvia Martínez",
+        directorCargo: "Directora Titular de Nivel Secundario",
+        tel: "+5491155550102",
+        wa: "5491155550102",
+        mail: "directora.martinez@escuela12.edu.ar",
+        directivos: [
+          { cargo: "Directora Titular", nombre: "Lic. Silvia Martínez", mail: "directora.martinez@escuela12.edu.ar", tel: "+5491155550102" },
+          { cargo: "Vicedirector Académico", nombre: "Prof. Daniel Benítez", mail: "vicedireccion@escuela12.edu.ar", tel: "+5491155550103" },
+          { cargo: "Secretaria General", nombre: "Prof. Marcela Ríos", mail: "secretaria@escuela12.edu.ar", tel: "+5491155550104" }
+        ],
+        gradosDivisiones: [
+          { grado: "1° Año A", turno: "Mañana", preceptor: "Laura Gómez", alumnos: 25, asistencia: "92%", alertas: 0 },
+          { grado: "1° Año B", turno: "Tarde", preceptor: "Carlos Ruiz", alumnos: 23, asistencia: "89%", alertas: 1 },
+          { grado: "2° Año A", turno: "Mañana", preceptor: "Laura Gómez", alumnos: 24, asistencia: "91%", alertas: 1 },
+          { grado: "2° Año B", turno: "Tarde", preceptor: "Carlos Ruiz", alumnos: 24, asistencia: "88%", alertas: 1 },
+          { grado: "3° Año A", turno: "Mañana", preceptor: "Mariana Paz", alumnos: 25, asistencia: "90%", alertas: 0 },
+          { grado: "3° Año B", turno: "Tarde", preceptor: "Mariana Paz", alumnos: 23, asistencia: "91%", alertas: 1 },
+          { grado: "4° Año A", turno: "Mañana", preceptor: "Esteban Costa", alumnos: 26, asistencia: "89%", alertas: 1 },
+          { grado: "4° Año B", turno: "Tarde", preceptor: "Esteban Costa", alumnos: 24, asistencia: "82%", alertas: 3 },
+          { grado: "5° Año A", turno: "Mañana", preceptor: "Esteban Costa", alumnos: 25, asistencia: "93%", alertas: 0 },
+          { grado: "5° Año B", turno: "Tarde", preceptor: "Esteban Costa", alumnos: 24, asistencia: "90%", alertas: 0 }
+        ],
+        plantelDocente: [
+          { nombre: "Prof. Roberto García", materia: "Matemática", cursos: "4° B, 5° A", alumnos: 58, email: "r.garcia@escuela12.edu.ar" },
+          { nombre: "Prof. María Paz", materia: "Lengua y Literatura", cursos: "1° A, 2° B, 4° B", alumnos: 84, email: "m.paz@escuela12.edu.ar" },
+          { nombre: "Prof. Alberto Conti", materia: "Física", cursos: "3° A, 4° B", alumnos: 54, email: "a.conti@escuela12.edu.ar" },
+          { nombre: "Prof. Viviana Sosa", materia: "Química", cursos: "4° A, 4° B", alumnos: 56, email: "v.sosa@escuela12.edu.ar" },
+          { nombre: "Prof. Fernando Díaz", materia: "Historia", cursos: "2° A, 3° B, 4° B", alumnos: 78, email: "f.diaz@escuela12.edu.ar" }
+        ],
+        alumnosNomina: [
+          { nombre: "Lautaro Martínez", curso: "4° Año B", estado: "En Alerta", estadoClase: "bg-rose-100 text-[#E53E3E]", asistencia: "74%", promedio: "5.0", tutor: "Carlos Martínez", emailTutor: "carlos.martinez@gmail.com" },
+          { nombre: "Camila Vega", curso: "3° Año A", estado: "En Seguimiento", estadoClase: "bg-amber-100 text-[#D97706]", asistencia: "84%", promedio: "6.2", tutor: "Laura Vega", emailTutor: "laura.vega@gmail.com" },
+          { nombre: "Tomás Ruiz", curso: "2° Año B", estado: "En Seguimiento", estadoClase: "bg-amber-100 text-[#D97706]", asistencia: "82%", promedio: "6.0", tutor: "Marcos Ruiz", emailTutor: "marcos.ruiz@gmail.com" },
+          { nombre: "Sofía Navarro", curso: "5° Año A", estado: "Regular", estadoClase: "bg-emerald-100 text-emerald-700", asistencia: "96%", promedio: "8.9", tutor: "Ana Navarro", emailTutor: "ana.navarro@gmail.com" },
+          { nombre: "Lucas Acuña", curso: "4° Año B", estado: "En Alerta", estadoClase: "bg-rose-100 text-[#E53E3E]", asistencia: "71%", promedio: "4.8", tutor: "Marcos Acuña", emailTutor: "marcos.acuna@gmail.com" }
+        ]
+      },
+      {
+        id: 1,
+        nombre: "Colegio San Martín",
+        sede: "Sede Belgrano (CABA)",
+        direccion: "Av. Cabildo 1820, CABA",
+        alumnos: 310,
+        docentesCount: 32,
+        retencion: "97.1%",
+        alertas: 6,
+        seguimiento: 12,
+        asistencia: "91.8%",
+        presupuesto: "USD 28.000",
+        director: "Lic. Marcos Benítez",
+        directorCargo: "Rector Institucional",
+        tel: "+5491155550301",
+        wa: "5491155550301",
+        mail: "direccion@sanmartin.edu.ar",
+        directivos: [
+          { cargo: "Rector Institucional", nombre: "Lic. Marcos Benítez", mail: "direccion@sanmartin.edu.ar", tel: "+5491155550301" },
+          { cargo: "Vicerrectora Académica", nombre: "Prof. Clara Domínguez", mail: "vicerrectoria@sanmartin.edu.ar", tel: "+5491155550305" },
+          { cargo: "Secretario Docente", nombre: "Lic. Joaquín Peralta", mail: "secretaria@sanmartin.edu.ar", tel: "+5491155550306" }
+        ],
+        gradosDivisiones: [
+          { grado: "1° Año A", turno: "Mañana", preceptor: "Martín Suárez", alumnos: 32, asistencia: "94%", alertas: 0 },
+          { grado: "1° Año B", turno: "Tarde", preceptor: "Martín Suárez", alumnos: 30, asistencia: "91%", alertas: 1 },
+          { grado: "2° Año A", turno: "Mañana", preceptor: "Silvina Torres", alumnos: 31, asistencia: "93%", alertas: 0 },
+          { grado: "2° Año B", turno: "Tarde", preceptor: "Silvina Torres", alumnos: 31, asistencia: "90%", alertas: 1 },
+          { grado: "3° Año A", turno: "Mañana", preceptor: "Romina Cáceres", alumnos: 32, asistencia: "92%", alertas: 1 },
+          { grado: "3° Año B", turno: "Tarde", preceptor: "Romina Cáceres", alumnos: 30, asistencia: "89%", alertas: 1 },
+          { grado: "4° Año A", turno: "Mañana", preceptor: "Javier Blanco", alumnos: 32, asistencia: "93%", alertas: 0 },
+          { grado: "4° Año B", turno: "Tarde", preceptor: "Javier Blanco", alumnos: 31, asistencia: "88%", alertas: 2 },
+          { grado: "5° Año A", turno: "Mañana", preceptor: "Javier Blanco", alumnos: 31, asistencia: "95%", alertas: 0 },
+          { grado: "5° Año B", turno: "Tarde", preceptor: "Javier Blanco", alumnos: 30, asistencia: "92%", alertas: 0 }
+        ],
+        plantelDocente: [
+          { nombre: "Prof. Diego Morales", materia: "Matemática", cursos: "1° A, 2° A", alumnos: 63, email: "d.morales@sanmartin.edu.ar" },
+          { nombre: "Prof. Cecilia Rossi", materia: "Biología", cursos: "3° A, 3° B", alumnos: 62, email: "c.rossi@sanmartin.edu.ar" },
+          { nombre: "Prof. Hernán Silva", materia: "Economía", cursos: "4° y 5° Año", alumnos: 70, email: "h.silva@sanmartin.edu.ar" },
+          { nombre: "Prof. Andrea López", materia: "Lengua", cursos: "1° B, 2° B", alumnos: 61, email: "a.lopez@sanmartin.edu.ar" }
+        ],
+        alumnosNomina: [
+          { nombre: "Thiago Almada", curso: "4° Año B", estado: "En Alerta", estadoClase: "bg-rose-100 text-[#E53E3E]", asistencia: "76%", promedio: "5.1", tutor: "Marta Almada", emailTutor: "marta.almada@gmail.com" },
+          { nombre: "Catalina Ramos", curso: "3° Año B", estado: "En Seguimiento", estadoClase: "bg-amber-100 text-[#D97706]", asistencia: "83%", promedio: "6.4", tutor: "Esteban Ramos", emailTutor: "esteban.ramos@gmail.com" },
+          { nombre: "Facundo Medina", curso: "5° Año A", estado: "Regular", estadoClase: "bg-emerald-100 text-emerald-700", asistencia: "97%", promedio: "9.2", tutor: "Silvana Medina", emailTutor: "silvana.medina@gmail.com" }
+        ]
+      },
+      {
+        id: 2,
+        nombre: "Instituto Belgrano Sur",
+        sede: "Sede San Isidro (GBA Norte)",
+        direccion: "Av. Centenario 750, San Isidro",
+        alumnos: 285,
+        docentesCount: 30,
+        retencion: "96.9%",
+        alertas: 7,
+        seguimiento: 10,
+        asistencia: "90.2%",
+        presupuesto: "USD 26.200",
+        director: "Prof. Elena Castro",
+        directorCargo: "Directora General de Estudios",
+        tel: "+5491155550302",
+        wa: "5491155550302",
+        mail: "direccion@belgranosur.edu.ar",
+        directivos: [
+          { cargo: "Directora General", nombre: "Prof. Elena Castro", mail: "direccion@belgranosur.edu.ar", tel: "+5491155550302" },
+          { cargo: "Vicedirector", nombre: "Lic. Pablo Varela", mail: "vicedireccion@belgranosur.edu.ar", tel: "+5491155550307" },
+          { cargo: "Secretaria de Estudios", nombre: "Prof. Natalia Giménez", mail: "estudios@belgranosur.edu.ar", tel: "+5491155550308" }
+        ],
+        gradosDivisiones: [
+          { grado: "1° Año A", turno: "Mañana", preceptor: "Gonzalo Rey", alumnos: 29, asistencia: "91%", alertas: 1 },
+          { grado: "1° Año B", turno: "Tarde", preceptor: "Gonzalo Rey", alumnos: 28, asistencia: "89%", alertas: 1 },
+          { grado: "2° Año A", turno: "Mañana", preceptor: "Florencia Paz", alumnos: 29, asistencia: "92%", alertas: 0 },
+          { grado: "2° Año B", turno: "Tarde", preceptor: "Florencia Paz", alumnos: 28, asistencia: "87%", alertas: 2 },
+          { grado: "3° Año A", turno: "Mañana", preceptor: "Matías Solís", alumnos: 29, asistencia: "90%", alertas: 0 },
+          { grado: "3° Año B", turno: "Tarde", preceptor: "Matías Solís", alumnos: 28, asistencia: "88%", alertas: 1 },
+          { grado: "4° Año A", turno: "Mañana", preceptor: "Matías Solís", alumnos: 29, asistencia: "93%", alertas: 0 },
+          { grado: "4° Año B", turno: "Tarde", preceptor: "Matías Solís", alumnos: 28, asistencia: "85%", alertas: 2 },
+          { grado: "5° Año A", turno: "Mañana", preceptor: "Gonzalo Rey", alumnos: 29, asistencia: "94%", alertas: 0 },
+          { grado: "5° Año B", turno: "Tarde", preceptor: "Gonzalo Rey", alumnos: 28, asistencia: "92%", alertas: 0 }
+        ],
+        plantelDocente: [
+          { nombre: "Prof. Patricia Rey", materia: "Geografía", cursos: "1° a 4° Año", alumnos: 95, email: "p.rey@belgranosur.edu.ar" },
+          { nombre: "Prof. Gonzalo Vidal", materia: "Filosofía", cursos: "4° y 5° Año", alumnos: 68, email: "g.vidal@belgranosur.edu.ar" },
+          { nombre: "Prof. Lucía Castro", materia: "Química", cursos: "2° y 3° Año", alumnos: 72, email: "l.castro@belgranosur.edu.ar" }
+        ],
+        alumnosNomina: [
+          { nombre: "Valentín Rivas", curso: "4° Año B", estado: "En Alerta", estadoClase: "bg-rose-100 text-[#E53E3E]", asistencia: "72%", promedio: "4.9", tutor: "Jorge Rivas", emailTutor: "jorge.rivas@gmail.com" },
+          { nombre: "Delfina Quiroga", curso: "2° Año B", estado: "En Seguimiento", estadoClase: "bg-amber-100 text-[#D97706]", asistencia: "81%", promedio: "6.1", tutor: "Sonia Quiroga", emailTutor: "sonia.quiroga@gmail.com" },
+          { nombre: "Benjamín Romero", curso: "5° Año A", estado: "Regular", estadoClase: "bg-emerald-100 text-emerald-700", asistencia: "98%", promedio: "9.5", tutor: "Fabián Romero", emailTutor: "fabian.romero@gmail.com" }
+        ]
+      },
+      {
+        id: 3,
+        nombre: "Escuela Técnica N° 4",
+        sede: "Sede Quilmes (GBA Sur)",
+        direccion: "Calle Mitre 450, Quilmes",
+        alumnos: 320,
+        docentesCount: 34,
+        retencion: "95.8%",
+        alertas: 7,
+        seguimiento: 13,
+        asistencia: "88.6%",
+        presupuesto: "USD 27.800",
+        director: "Ing. Javier López",
+        directorCargo: "Director de Escuela Técnica",
+        tel: "+5491155550303",
+        wa: "5491155550303",
+        mail: "direccion@tecnica4quilmes.edu.ar",
+        directivos: [
+          { cargo: "Director General", nombre: "Ing. Javier López", mail: "direccion@tecnica4quilmes.edu.ar", tel: "+5491155550303" },
+          { cargo: "Regente Técnico", nombre: "Ing. Mario Bustos", mail: "regente@tecnica4quilmes.edu.ar", tel: "+5491155550309" },
+          { cargo: "Jefe de Taller", nombre: "Prof. Carlos Fontana", mail: "taller@tecnica4quilmes.edu.ar", tel: "+5491155550310" }
+        ],
+        gradosDivisiones: [
+          { grado: "1° Año 1°", turno: "Doble Turno", preceptor: "Aníbal Duarte", alumnos: 34, asistencia: "90%", alertas: 1 },
+          { grado: "1° Año 2°", turno: "Doble Turno", preceptor: "Aníbal Duarte", alumnos: 32, asistencia: "87%", alertas: 1 },
+          { grado: "2° Año 1°", turno: "Doble Turno", preceptor: "Paula Godoy", alumnos: 33, asistencia: "89%", alertas: 0 },
+          { grado: "2° Año 2°", turno: "Doble Turno", preceptor: "Paula Godoy", alumnos: 31, asistencia: "86%", alertas: 2 },
+          { grado: "3° Año 1°", turno: "Doble Turno", preceptor: "Esteban Roldán", alumnos: 32, asistencia: "88%", alertas: 1 },
+          { grado: "3° Año 2°", turno: "Doble Turno", preceptor: "Esteban Roldán", alumnos: 31, asistencia: "87%", alertas: 0 },
+          { grado: "4° Año Electromec.", turno: "Doble Turno", preceptor: "Sergio Paez", alumnos: 33, asistencia: "85%", alertas: 1 },
+          { grado: "4° Año Informática", turno: "Doble Turno", preceptor: "Sergio Paez", alumnos: 32, asistencia: "91%", alertas: 0 },
+          { grado: "5° Año Electromec.", turno: "Doble Turno", preceptor: "Sergio Paez", alumnos: 31, asistencia: "89%", alertas: 1 },
+          { grado: "5° Año Informática", turno: "Doble Turno", preceptor: "Sergio Paez", alumnos: 31, asistencia: "92%", alertas: 0 }
+        ],
+        plantelDocente: [
+          { nombre: "Ing. Lucas Romano", materia: "Taller y Electromecánica", cursos: "Ciclo Superior", alumnos: 85, email: "l.romano@tecnica4quilmes.edu.ar" },
+          { nombre: "Prof. Marina Ortiz", materia: "Fisicoquímica", cursos: "2° y 3° Año", alumnos: 72, email: "m.ortiz@tecnica4quilmes.edu.ar" },
+          { nombre: "Ing. Damián Flores", materia: "Programación Aplicada", cursos: "4° y 5° Año", alumnos: 63, email: "d.flores@tecnica4quilmes.edu.ar" }
+        ],
+        alumnosNomina: [
+          { nombre: "Nicolás Giménez", curso: "4° Año Electromec.", estado: "En Alerta", estadoClase: "bg-rose-100 text-[#E53E3E]", asistencia: "71%", promedio: "4.7", tutor: "Pedro Giménez", emailTutor: "pedro.gimenez@gmail.com" },
+          { nombre: "Agustina Carrizo", curso: "3° Año 1°", estado: "En Seguimiento", estadoClase: "bg-amber-100 text-[#D97706]", asistencia: "82%", promedio: "6.3", tutor: "Gladys Carrizo", emailTutor: "gladys.carrizo@gmail.com" },
+          { nombre: "Joaquín Pereyra", curso: "5° Año Informática", estado: "Regular", estadoClase: "bg-emerald-100 text-emerald-700", asistencia: "95%", promedio: "8.8", tutor: "Ricardo Pereyra", emailTutor: "ricardo.pereyra@gmail.com" }
+        ]
+      },
+      {
+        id: 4,
+        nombre: "Colegio San José",
+        sede: "Sede Lomas de Zamora (GBA Sur)",
+        direccion: "Av. Meeks 320, Lomas de Zamora",
+        alumnos: 262,
+        docentesCount: 26,
+        retencion: "97.5%",
+        alertas: 4,
+        seguimiento: 8,
+        asistencia: "92.5%",
+        presupuesto: "USD 20.500",
+        director: "Lic. Claudia Méndez",
+        directorCargo: "Directora de Nivel Secundario",
+        tel: "+5491155550304",
+        wa: "5491155550304",
+        mail: "direccion@sanjose-lomas.edu.ar",
+        directivos: [
+          { cargo: "Directora de Nivel Secundario", nombre: "Lic. Claudia Méndez", mail: "direccion@sanjose-lomas.edu.ar", tel: "+5491155550304" },
+          { cargo: "Vicedirectora", nombre: "Prof. Beatriz Salgado", mail: "vicedireccion@sanjose-lomas.edu.ar", tel: "+5491155550311" },
+          { cargo: "Secretario Docente", nombre: "Prof. Raúl Acosta", mail: "secretaria@sanjose-lomas.edu.ar", tel: "+5491155550312" }
+        ],
+        gradosDivisiones: [
+          { grado: "1° Año A", turno: "Mañana", preceptor: "Lorena Arce", alumnos: 27, asistencia: "93%", alertas: 0 },
+          { grado: "1° Año B", turno: "Tarde", preceptor: "Lorena Arce", alumnos: 26, asistencia: "91%", alertas: 0 },
+          { grado: "2° Año A", turno: "Mañana", preceptor: "Diego Funes", alumnos: 27, asistencia: "94%", alertas: 0 },
+          { grado: "2° Año B", turno: "Tarde", preceptor: "Diego Funes", alumnos: 25, asistencia: "90%", alertas: 1 },
+          { grado: "3° Año A", turno: "Mañana", preceptor: "Verónica Ledesma", alumnos: 27, asistencia: "93%", alertas: 0 },
+          { grado: "3° Año B", turno: "Tarde", preceptor: "Verónica Ledesma", alumnos: 26, asistencia: "91%", alertas: 1 },
+          { grado: "4° Año A", turno: "Mañana", preceptor: "Mariano Galeano", alumnos: 27, asistencia: "92%", alertas: 1 },
+          { grado: "4° Año B", turno: "Tarde", preceptor: "Mariano Galeano", alumnos: 25, asistencia: "89%", alertas: 1 },
+          { grado: "5° Año A", turno: "Mañana", preceptor: "Mariano Galeano", alumnos: 26, asistencia: "96%", alertas: 0 },
+          { grado: "5° Año B", turno: "Tarde", preceptor: "Mariano Galeano", alumnos: 26, asistencia: "94%", alertas: 0 }
+        ],
+        plantelDocente: [
+          { nombre: "Prof. Andrés Godoy", materia: "Educación Cívica", cursos: "1° a 3° Año", alumnos: 80, email: "a.godoy@sanjose-lomas.edu.ar" },
+          { nombre: "Prof. Valeria Quintana", materia: "Inglés Técnico", cursos: "4° y 5° Año", alumnos: 64, email: "v.quintana@sanjose-lomas.edu.ar" },
+          { nombre: "Prof. Marcelo Rossi", materia: "Matemática", cursos: "2° y 4° Año", alumnos: 52, email: "m.rossi@sanjose-lomas.edu.ar" }
+        ],
+        alumnosNomina: [
+          { nombre: "Franco Molina", curso: "4° Año B", estado: "En Alerta", estadoClase: "bg-rose-100 text-[#E53E3E]", asistencia: "75%", promedio: "5.3", tutor: "Susana Molina", emailTutor: "susana.molina@gmail.com" },
+          { nombre: "Milagros Cabrera", curso: "3° Año B", estado: "En Seguimiento", estadoClase: "bg-amber-100 text-[#D97706]", asistencia: "85%", promedio: "6.5", tutor: "Horacio Cabrera", emailTutor: "horacio.cabrera@gmail.com" },
+          { nombre: "Agustín Ferrari", curso: "5° Año A", estado: "Regular", estadoClase: "bg-emerald-100 text-emerald-700", asistencia: "97%", promedio: "9.1", tutor: "Mónica Ferrari", emailTutor: "monica.ferrari@gmail.com" }
+        ]
+      }
+    ];
+
+    let colegioSeleccionadoId = 0;
+
+    // Toast Notification System
+    function mostrarToast(mensaje, tipo = 'info', titulo = '') {
+      let container = document.getElementById('toastContainer');
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'toastContainer';
+        container.className = 'fixed top-4 right-4 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-full px-4 sm:px-0';
+        document.body.appendChild(container);
+      }
+
+      const toast = document.createElement('div');
+      const bgColors = {
+        success: 'bg-emerald-50 border-emerald-200 text-emerald-900',
+        error: 'bg-rose-50 border-rose-200 text-rose-900',
+        warning: 'bg-amber-50 border-amber-200 text-amber-900',
+        info: 'bg-blue-50 border-blue-200 text-blue-900'
+      };
+      const iconColors = {
+        success: 'text-emerald-500 fa-circle-check',
+        error: 'text-rose-500 fa-circle-exclamation',
+        warning: 'text-amber-500 fa-triangle-exclamation',
+        info: 'text-[#0066FF] fa-circle-info'
+      };
+
+      const currentBg = bgColors[tipo] || bgColors.info;
+      const currentIcon = iconColors[tipo] || iconColors.info;
+
+      toast.className = `pointer-events-auto p-3.5 rounded-2xl border shadow-lg flex items-start gap-3 transition-all duration-300 transform translate-y-[-10px] opacity-0 ${currentBg}`;
+      toast.innerHTML = `
+        <div class="text-base flex-shrink-0 mt-0.5">
+          <i class="fa-solid ${currentIcon}"></i>
+        </div>
+        <div class="flex-grow text-xs">
+          ${titulo ? `<strong class="block font-bold mb-0.5">${titulo}</strong>` : ''}
+          <span class="leading-relaxed font-medium">${mensaje}</span>
+        </div>
+        <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-slate-600 text-xs p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      `;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-[-10px]', 'opacity-0');
+        toast.classList.add('translate-y-0', 'opacity-100');
+      });
+
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0', 'translate-y-[-10px]');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    function cambiarGraficoAdmin(tipo) {
+      const btnBarras = document.getElementById('btnAdminBarras');
+      const btnTorta = document.getElementById('btnAdminTorta');
+      const contBarras = document.getElementById('adminGraficoBarras');
+      const contTorta = document.getElementById('adminGraficoTorta');
+
+      if (tipo === 'barras') {
+        btnBarras.className = "px-3 py-1 rounded-xl font-bold bg-white text-[#0066FF] shadow-sm";
+        btnTorta.className = "px-3 py-1 rounded-xl font-bold text-slate-600 hover:text-slate-900";
+        contBarras.classList.remove('hidden');
+        contTorta.classList.add('hidden');
+      } else {
+        btnTorta.className = "px-3 py-1 rounded-xl font-bold bg-white text-[#0066FF] shadow-sm";
+        btnBarras.className = "px-3 py-1 rounded-xl font-bold text-slate-600 hover:text-slate-900";
+        contBarras.classList.add('hidden');
+        contTorta.classList.remove('hidden');
+      }
+    }
+
+    function renderTabsColegios() {
+      const container = document.getElementById('tabsColegios');
+      container.innerHTML = '';
+
+      COLEGIOS_RED.forEach((c, idx) => {
+        const btn = document.createElement('button');
+        const activo = idx === colegioSeleccionadoId;
+        btn.className = `p-3.5 rounded-2xl transition-all border text-left flex flex-col justify-between gap-2.5 min-w-0 ${
+          activo 
+            ? 'bg-[#0066FF] text-white font-bold shadow-md border-[#0066FF]' 
+            : 'bg-white hover:bg-slate-50 text-slate-700 font-semibold border-slate-200 shadow-xs'
+        }`;
+        btn.onclick = () => seleccionarColegio(idx);
+        btn.innerHTML = `
+          <div class="space-y-1.5 w-full min-w-0">
+            <div class="flex items-center justify-between gap-1 w-full">
+              <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md ${
+                activo ? 'bg-white/20 text-white' : 'bg-blue-50 text-[#0066FF]'
+              }">${c.sede.replace('Sede ', '')}</span>
+              <span class="text-[11px] font-bold whitespace-nowrap flex-shrink-0 ${
+                activo ? 'text-blue-100' : 'text-slate-500'
+              }">${c.alumnos} alumnos</span>
+            </div>
+            <div class="text-xs font-bold leading-snug truncate ${
+              activo ? 'text-white' : 'text-[#001433]'
+            }" title="${c.nombre}">${c.nombre}</div>
+          </div>
+          <div class="pt-2 border-t ${activo ? 'border-white/20 text-white/80' : 'border-slate-100 text-slate-500'} flex items-center justify-between text-[10px]">
+            <span class="flex items-center gap-1 ${activo ? 'text-rose-200' : 'text-rose-600'}">
+              <i class="fa-solid fa-triangle-exclamation"></i> ${c.alertas} alertas
+            </span>
+            <span class="${activo ? 'text-emerald-200' : 'text-emerald-600'} font-bold">
+              ${c.retencion}
+            </span>
+          </div>
+        `;
+        container.appendChild(btn);
+      });
+    }
+
+    function seleccionarColegio(id) {
+      colegioSeleccionadoId = id;
+      renderTabsColegios();
+      renderDetalleColegio();
+    }
+
+    function renderDetalleColegio() {
+      const col = COLEGIOS_RED[colegioSeleccionadoId];
+      const cont = document.getElementById('detalleColegioActivo');
+
+      cont.innerHTML = `
+        <!-- Tarjeta de Cabecera del Colegio -->
+        <div class="p-4 sm:p-5 rounded-3xl bg-slate-50 border border-slate-200 space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-3">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-[#0066FF] uppercase tracking-wider">${col.sede}</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Sede Activa</span>
+              </div>
+              <h3 class="text-lg font-bold text-[#001433] mt-0.5">${col.nombre}</h3>
+              <p class="text-xs text-slate-500 flex items-center gap-1 mt-0.5">
+                <i class="fa-solid fa-location-dot text-slate-400"></i> ${col.direccion}
+              </p>
+            </div>
+
+            <!-- Botones contacto director de la sede -->
+            <div class="flex items-center gap-2 self-start sm:self-auto">
+              <a href="tel:${col.tel}" class="px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 hover:text-[#0066FF] text-xs font-bold flex items-center gap-1.5 shadow-sm">
+                <i class="fa-solid fa-phone text-emerald-600"></i>
+                <span>Llamar Directora/or</span>
+              </a>
+              <a href="https://wa.me/${col.wa}?text=Estimado/a%20${encodeURIComponent(col.director)},%20le%20escribe%20el%20Lic.%20Alejandro%20Rossi%20(Gerencia%20Red)" target="_blank" class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm">
+                <i class="fa-brands fa-whatsapp text-sm"></i>
+                <span>WhatsApp</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Métricas Específicas de la Sede -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
+            <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Matrícula Sede:</span>
+              <p class="text-lg font-extrabold text-[#001433] mt-0.5">${col.alumnos} <span class="text-xs font-normal text-slate-500">alumnos</span></p>
+            </div>
+
+            <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Retención Escolar:</span>
+              <p class="text-lg font-extrabold text-emerald-600 mt-0.5">${col.retencion}</p>
+            </div>
+
+            <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Alertas Críticas:</span>
+              <p class="text-lg font-extrabold text-[#E53E3E] mt-0.5">${col.alertas} <span class="text-xs font-normal text-slate-500">casos</span></p>
+            </div>
+
+            <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Presupuesto Asignado:</span>
+              <p class="text-lg font-extrabold text-[#0066FF] mt-0.5">${col.presupuesto}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1. Equipo Directivo y 2. Plantel Docente -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+          <!-- 1. Equipo Directivo Responsable (col-span-5) -->
+          <div class="md:col-span-5 p-4 rounded-3xl bg-white border border-slate-200/90 shadow-sm space-y-3">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-user-tie text-[#0066FF]"></i> Equipo Directivo Sede
+              </h4>
+              <span class="text-[10px] font-bold bg-blue-50 text-[#0066FF] px-2 py-0.5 rounded-full">${col.directivos.length} directivos</span>
+            </div>
+
+            <div class="space-y-2.5 pt-1 text-xs">
+              ${col.directivos.map(dir => `
+                <div class="p-2.5 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-between gap-2">
+                  <div class="min-w-0">
+                    <span class="text-[10px] font-bold uppercase text-slate-400 block">${dir.cargo}</span>
+                    <strong class="text-slate-800 text-xs truncate block">${dir.nombre}</strong>
+                    <span class="text-[11px] text-slate-500 block truncate">${dir.mail}</span>
+                  </div>
+                  <div class="flex items-center gap-1 flex-shrink-0">
+                    <a href="tel:${dir.tel}" class="p-2 rounded-xl bg-white hover:bg-emerald-50 text-slate-600 hover:text-emerald-700 border border-slate-200" title="Llamar">
+                      <i class="fa-solid fa-phone text-xs"></i>
+                    </a>
+                    <a href="mailto:${dir.mail}" class="p-2 rounded-xl bg-white hover:bg-blue-50 text-slate-600 hover:text-[#0066FF] border border-slate-200" title="Enviar Email">
+                      <i class="fa-regular fa-envelope text-xs"></i>
+                    </a>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+
+            <div class="p-2.5 rounded-2xl bg-slate-50 text-[11px] text-slate-600 space-y-1">
+              <p><strong>Cuerpo Docente a cargo:</strong> ${col.docentesCount} profesores</p>
+              <p><strong>Asistencia promedio de la sede:</strong> ${col.asistencia}</p>
+            </div>
+          </div>
+
+          <!-- 2. Plantel Docente y Cátedras (col-span-7) -->
+          <div class="md:col-span-7 p-4 rounded-3xl bg-white border border-slate-200/90 shadow-sm space-y-3">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-chalkboard-user text-emerald-600"></i> Plantel Docente y Cátedras
+              </h4>
+              <span class="text-[10px] font-bold bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full">${col.plantelDocente.length} cátedras clave</span>
+            </div>
+
+            <div class="space-y-2 text-xs max-h-72 overflow-y-auto pr-1">
+              ${col.plantelDocente.map(d => `
+                <div class="p-2.5 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-between gap-2">
+                  <div class="min-w-0">
+                    <span class="font-bold text-slate-800 text-xs truncate block">${d.nombre}</span>
+                    <p class="text-[11px] text-slate-500">${d.materia} • <span class="font-semibold text-slate-600">${d.cursos}</span></p>
+                    <span class="text-[10px] text-slate-400">${d.email || ''}</span>
+                  </div>
+                  <div class="text-right flex-shrink-0">
+                    <span class="text-[11px] font-semibold text-slate-600 bg-white px-2 py-1 rounded-lg border border-slate-200 block">
+                      ${d.alumnos} alumnos
+                    </span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Grados, Divisiones y Cupos -->
+        <div class="p-4 sm:p-5 rounded-3xl bg-white border border-slate-200/90 shadow-sm space-y-3">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+            <div>
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-layer-group text-purple-600"></i> Grados, Divisiones y Asistencia de la Sede
+              </h4>
+              <p class="text-xs text-slate-500">Distribución de comisiones de 1° a 5° Año con sus respectivos preceptores y alertas activas</p>
+            </div>
+            <span class="text-xs font-bold bg-purple-50 text-purple-700 px-2.5 py-1 rounded-xl self-start sm:self-auto">
+              ${col.gradosDivisiones.length} Divisiones Habilitadas
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5 pt-1">
+            ${col.gradosDivisiones.map(gd => `
+              <div class="p-3 rounded-2xl border ${gd.alertas > 0 ? 'bg-rose-50/40 border-rose-200' : 'bg-slate-50 border-slate-200/80'} text-xs space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <strong class="font-extrabold text-[#001433]">${gd.grado}</strong>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded font-bold ${gd.alertas > 0 ? 'bg-rose-100 text-rose-700' : 'bg-slate-200 text-slate-600'}">
+                    ${gd.alertas > 0 ? `${gd.alertas} alerta${gd.alertas > 1 ? 's' : ''}` : 'Al día'}
+                  </span>
+                </div>
+                <div class="text-[11px] text-slate-500 space-y-0.5">
+                  <p class="truncate"><i class="fa-regular fa-sun text-amber-500 text-[10px]"></i> ${gd.turno}</p>
+                  <p class="truncate"><i class="fa-regular fa-user text-slate-400 text-[10px]"></i> Prec: ${gd.preceptor}</p>
+                </div>
+                <div class="pt-1.5 border-t border-slate-200/60 flex items-center justify-between text-[11px]">
+                  <span class="font-bold text-slate-700">${gd.alumnos} al.</span>
+                  <span class="font-bold ${parseFloat(gd.asistencia) < 90 ? 'text-[#D97706]' : 'text-emerald-600'}">${gd.asistencia}</span>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- 4. Nómina de Alumnos en Seguimiento / Alertas del Colegio -->
+        <div class="p-4 sm:p-5 rounded-3xl bg-white border border-slate-200/90 shadow-sm space-y-3">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+            <div>
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-user-graduate text-blue-600"></i> Alumnos en Seguimiento y Casos Prioritarios
+              </h4>
+              <p class="text-xs text-slate-500">Estudiantes monitoreados por el equipo psicopedagógico y directivo de ${col.nombre}</p>
+            </div>
+            <span class="text-xs font-bold text-slate-500">${col.alumnosNomina.length} casos listados</span>
+          </div>
+
+          <div class="space-y-2 text-xs pt-1">
+            ${col.alumnosNomina.map(al => `
+              <div class="p-3 rounded-2xl bg-slate-50 border border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                <div class="flex items-center space-x-3">
+                  <div class="w-9 h-9 rounded-xl ${al.estado === 'En Alerta' ? 'bg-rose-100 text-[#E53E3E]' : al.estado === 'En Seguimiento' ? 'bg-amber-100 text-[#D97706]' : 'bg-emerald-100 text-emerald-700'} font-extrabold flex items-center justify-center text-xs flex-shrink-0">
+                    ${al.nombre.split(' ').map(n=>n[0]).join('')}
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <span class="font-bold text-[#001433] text-xs sm:text-sm">${al.nombre}</span>
+                      <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${al.estadoClase}">${al.estado}</span>
+                    </div>
+                    <p class="text-[11px] text-slate-500">
+                      ${al.curso} • Tutor: <strong class="text-slate-700">${al.tutor}</strong> (${al.emailTutor})
+                    </p>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-3 self-end sm:self-auto text-right">
+                  <div>
+                    <span class="text-[10px] text-slate-400 block font-semibold">Asistencia / Nota:</span>
+                    <span class="font-bold text-slate-700">${al.asistencia} • Prom. ${al.promedio}</span>
+                  </div>
+                  <a href="mailto:${al.emailTutor}?subject=EduAlerta%20-%20Supervisi%C3%B3n%20Institucional%20${encodeURIComponent(al.nombre)}" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-blue-50 text-[#0066FF] border border-slate-200 font-bold text-xs flex items-center gap-1 shadow-2xs" title="Enviar mail al tutor">
+                    <i class="fa-regular fa-envelope"></i>
+                    <span class="hidden sm:inline">Contactar Familia</span>
+                  </a>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function actualizarBimestreAdmin() {
+      const bim = document.getElementById('bimestreAdmin').value;
+      if (bim === "1") {
+        document.getElementById('kpiEjecutado').textContent = "USD 32.100";
+        document.getElementById('kpiAdminAlertas').textContent = "41";
+      } else if (bim === "2") {
+        document.getElementById('kpiEjecutado').textContent = "USD 58.400";
+        document.getElementById('kpiAdminAlertas').textContent = "32";
+      } else if (bim === "3") {
+        document.getElementById('kpiEjecutado').textContent = "USD 89.200";
+        document.getElementById('kpiAdminAlertas').textContent = "22";
+      } else if (bim === "4") {
+        document.getElementById('kpiEjecutado').textContent = "USD 121.500";
+        document.getElementById('kpiAdminAlertas').textContent = "14";
+      }
+      renderDetalleColegio();
+    }
+
+    // GESTIÓN DE NOTIFICACIONES (Gerencia de Red)
+    const NOTIFICACIONES_ADMIN_DEFAULT = [
+      {
+        id: 1,
+        tipo: 'presupuesto',
+        titulo: 'Aprobación Presupuestaria Q2',
+        detalle: 'Sede San Isidro cerró ejecución de USD 26.200 dentro de los parámetros previstos.',
+        fecha: 'Hoy 09:30',
+        leida: false
+      },
+      {
+        id: 2,
+        tipo: 'alerta',
+        titulo: 'Riesgo de Deserción: 8 casos en Palermo',
+        detalle: 'Directora Silvia Martínez activó protocolo de revinculación para 4° Año.',
+        fecha: 'Hoy 08:15',
+        leida: false
+      },
+      {
+        id: 3,
+        tipo: 'reporte',
+        titulo: 'Retención Consolidada: 96.8% en Red',
+        detalle: '1.374 alumnos regulares de los 1.420 totales en las 5 sedes educativas.',
+        fecha: 'Ayer 18:00',
+        leida: false
+      },
+      {
+        id: 4,
+        tipo: 'obras',
+        titulo: 'Plan de Infraestructura Edilicia 2026',
+        detalle: 'Informes de mantenimiento recibidos para Lomas de Zamora y Quilmes.',
+        fecha: '2 Octubre',
+        leida: true
+      }
+    ];
+
+    function obtenerNotificacionesAdmin() {
+      const data = localStorage.getItem('edualerta_notificaciones_admin');
+      if (data === null) {
+        localStorage.setItem('edualerta_notificaciones_admin', JSON.stringify(NOTIFICACIONES_ADMIN_DEFAULT));
+        return NOTIFICACIONES_ADMIN_DEFAULT;
+      }
+      try {
+        return JSON.parse(data);
+      } catch (e) {
+        return NOTIFICACIONES_ADMIN_DEFAULT;
+      }
+    }
+
+    function guardarNotificacionesAdmin(notifs) {
+      localStorage.setItem('edualerta_notificaciones_admin', JSON.stringify(notifs));
+      actualizarBadgeAdmin(notifs);
+    }
+
+    function actualizarBadgeAdmin(notifs) {
+      if (!notifs) notifs = obtenerNotificacionesAdmin();
+      const noLeidas = notifs.filter(n => !n.leida).length;
+      const badge = document.getElementById('badgeAdminNotif');
+      const contador = document.getElementById('contadorNoLeidasAdmin');
+      if (badge) {
+        if (noLeidas > 0) {
+          badge.textContent = noLeidas;
+          badge.classList.remove('hidden');
+        } else {
+          badge.classList.add('hidden');
+        }
+      }
+      if (contador) {
+        contador.textContent = `${noLeidas} no leída${noLeidas === 1 ? '' : 's'}`;
+      }
+    }
+
+    function renderNotificacionesAdmin() {
+      const notifs = obtenerNotificacionesAdmin();
+      const cont = document.getElementById('contenedorListaNotificacionesAdmin');
+      if (!cont) return;
+      cont.innerHTML = '';
+
+      if (notifs.length === 0) {
+        cont.innerHTML = `
+          <div class="text-center py-8 text-slate-400">
+            <i class="fa-regular fa-bell-slash text-2xl mb-2 block"></i>
+            <p>No tenés notificaciones en tu bandeja.</p>
+          </div>
+        `;
+        actualizarBadgeAdmin(notifs);
+        return;
+      }
+
+      notifs.forEach(n => {
+        const item = document.createElement('div');
+        const iconBg = n.tipo === 'alerta' ? 'bg-rose-100 text-rose-600' : (n.tipo === 'presupuesto' ? 'bg-emerald-100 text-emerald-600' : 'bg-purple-100 text-purple-600');
+        const iconFa = n.tipo === 'alerta' ? 'fa-triangle-exclamation' : (n.tipo === 'presupuesto' ? 'fa-dollar-sign' : 'fa-chart-pie');
+
+        item.className = `p-3.5 rounded-2xl border transition-all ${
+          n.leida 
+            ? 'bg-slate-50 border-slate-200/60 opacity-80' 
+            : 'bg-purple-50/40 border-purple-200/90 shadow-xs'
+        }`;
+
+        item.innerHTML = `
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 rounded-xl ${iconBg} flex items-center justify-center flex-shrink-0 text-xs mt-0.5 font-bold">
+              <i class="fa-solid ${iconFa}"></i>
+            </div>
+            <div class="flex-grow min-w-0">
+              <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center gap-1.5 min-w-0">
+                  ${!n.leida ? '<span class="w-2 h-2 rounded-full bg-purple-600 flex-shrink-0 animate-pulse"></span>' : ''}
+                  <span class="font-bold text-[#001433] truncate">${n.titulo}</span>
+                </div>
+                <span class="text-[10px] text-slate-400 font-semibold flex-shrink-0">${n.fecha}</span>
+              </div>
+              <p class="text-slate-600 text-[11px] mt-0.5 leading-snug">${n.detalle}</p>
+              <div class="mt-2.5 flex items-center justify-between pt-1.5 border-t border-slate-100">
+                ${!n.leida ? `
+                  <button onclick="marcarLeidaAdmin(${n.id})" class="text-[11px] font-bold text-purple-700 hover:text-purple-900 flex items-center gap-1">
+                    <i class="fa-solid fa-check"></i> Marcar como leída
+                  </button>
+                ` : `
+                  <span class="text-[10px] text-slate-400 font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-check-double text-emerald-500"></i> Leída
+                  </span>
+                `}
+                <button onclick="eliminarNotifAdmin(${n.id})" class="text-[11px] text-slate-400 hover:text-rose-600 p-1" title="Eliminar">
+                  <i class="fa-regular fa-trash-can"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+        cont.appendChild(item);
+      });
+
+      actualizarBadgeAdmin(notifs);
+    }
+
+    function abrirModalNotificacionesAdmin() {
+      renderNotificacionesAdmin();
+      document.getElementById('modalNotificacionesAdmin').classList.remove('hidden');
+    }
+
+    function cerrarModalNotificacionesAdmin() {
+      document.getElementById('modalNotificacionesAdmin').classList.add('hidden');
+    }
+
+    function marcarLeidaAdmin(id) {
+      const notifs = obtenerNotificacionesAdmin();
+      const target = notifs.find(n => n.id === id);
+      if (target) {
+        target.leida = true;
+        guardarNotificacionesAdmin(notifs);
+        renderNotificacionesAdmin();
+        mostrarToast('Notificación marcada como leída.', 'info', 'Centro de Alertas');
+      }
+    }
+
+    function marcarTodasLeidasAdmin() {
+      const notifs = obtenerNotificacionesAdmin();
+      notifs.forEach(n => n.leida = true);
+      guardarNotificacionesAdmin(notifs);
+      renderNotificacionesAdmin();
+      mostrarToast('Todas las alertas marcadas como leídas.', 'success', 'Bandeja Actualizada');
+    }
+
+    function eliminarNotifAdmin(id) {
+      let notifs = obtenerNotificacionesAdmin();
+      notifs = notifs.filter(n => n.id !== id);
+      guardarNotificacionesAdmin(notifs);
+      renderNotificacionesAdmin();
+    }
+
+    function limpiarHistorialAdmin() {
+      guardarNotificacionesAdmin([]);
+      renderNotificacionesAdmin();
+      mostrarToast('Bandeja de notificaciones vaciada.', 'info');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTabsColegios();
+      renderDetalleColegio();
+      actualizarBadgeAdmin();
+    });
+  </script>
+</body>
+</html>

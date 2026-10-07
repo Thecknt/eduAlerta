@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduAlerta - Acceso Institucional</title>
+  <link rel="icon" type="image/jpeg" href="WhatsApp Image 2026-10-04 at 11.24.07.jpeg">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
+          colors: {
+            brand: {
+              blue: '#0066FF',
+              dark: '#001433',
+              light: '#F8FAFC'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#F8FAFC] min-h-screen font-sans text-slate-800 flex flex-col justify-between selection:bg-blue-100 selection:text-blue-800">
+
+  <!-- Main Container -->
+  <main class="flex-grow flex items-center justify-center px-4 py-4 sm:py-8">
+    <div class="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+
+      <!-- LEFT COLUMN (Desktop only: 2 roles) -->
+      <div class="hidden lg:flex lg:col-span-3 flex-col gap-3.5">
+        <div class="text-xs uppercase tracking-wider font-extrabold text-slate-400 mb-1 flex items-center gap-1.5">
+          <i class="fa-solid fa-users text-[#0066FF]"></i> Comunidad
+        </div>
+
+        <!-- Role 1: Familia -->
+        <button type="button" onclick="quickFill('familia')" class="group p-4 rounded-3xl bg-white hover:border-[#0066FF] border border-slate-200/80 shadow-sm text-left transition-all hover:shadow-md">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-bold text-[#0066FF] flex items-center gap-2">
+              <span class="w-7 h-7 rounded-xl bg-blue-50 text-[#0066FF] flex items-center justify-center text-xs">
+                <i class="fa-solid fa-people-roof"></i>
+              </span>
+              Familia / Tutor
+            </span>
+            <i class="fa-solid fa-arrow-right text-[11px] text-slate-400 group-hover:text-[#0066FF] group-hover:translate-x-1 transition-all"></i>
+          </div>
+          <p class="text-xs font-semibold text-slate-700">Carlos Martínez</p>
+          <p class="text-[11px] text-slate-400 truncate">carlos.martinez@gmail.com</p>
+        </button>
+
+        <!-- Role 2: Docente -->
+        <button type="button" onclick="quickFill('docente')" class="group p-4 rounded-3xl bg-white hover:border-[#0066FF] border border-slate-200/80 shadow-sm text-left transition-all hover:shadow-md">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-bold text-emerald-600 flex items-center gap-2">
+              <span class="w-7 h-7 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs">
+                <i class="fa-solid fa-chalkboard-user"></i>
+              </span>
+              Docente Titular
+            </span>
+            <i class="fa-solid fa-arrow-right text-[11px] text-slate-400 group-hover:text-emerald-600 group-hover:translate-x-1 transition-all"></i>
+          </div>
+          <p class="text-xs font-semibold text-slate-700">Prof. Roberto García</p>
+          <p class="text-[11px] text-slate-400 truncate">prof.garcia@escuela12.edu.ar</p>
+        </button>
+      </div>
+
+      <!-- CENTER COLUMN: Official Card & Login Form (col-span-6) -->
+      <div class="lg:col-span-6 w-full max-w-md mx-auto flex flex-col items-center">
+
+        <!-- Quick Selector for Mobile view to avoid vertical scrolling -->
+        <div class="w-full lg:hidden mb-4 bg-white p-2.5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-2">
+          <span class="text-xs font-bold text-[#0066FF] flex items-center gap-1 pl-1">
+            <i class="fa-solid fa-bolt"></i> Demo:
+          </span>
+          <select id="mobileRoleSelect" onchange="quickFill(this.value)" class="flex-grow bg-slate-50 text-xs font-semibold text-slate-700 py-1.5 px-2 rounded-xl border border-slate-200 focus:outline-none">
+            <option value="" disabled selected>Seleccionar rol de prueba...</option>
+            <option value="familia">Familia (Carlos Martínez)</option>
+            <option value="docente">Docente (Prof. García)</option>
+            <option value="directivo">Directivo (Directora Martínez)</option>
+            <option value="admin">Gerente Red (Lic. Rossi)</option>
+          </select>
+        </div>
+
+        <!-- Official Logo Image & Tagline -->
+        <div class="text-center mb-3 flex flex-col items-center">
+          <div class="w-44 sm:w-52 mb-0.5 flex items-center justify-center">
+            <img src="WhatsApp Image 2026-10-04 at 11.24.07.jpeg" alt="EduAlerta" class="w-full object-contain max-h-20">
+          </div>
+          <p class="text-slate-500 text-xs font-medium tracking-tight">
+            Detectando hoy, más oportunidades para mañana
+          </p>
+        </div>
+
+        <!-- School Illustration (Matching Wireframe 1) -->
+        <div class="w-full max-w-[280px] mb-[-10px] relative z-0 flex justify-center">
+          <svg viewBox="0 0 340 105" class="w-full h-auto drop-shadow-sm">
+            <ellipse cx="170" cy="85" rx="150" ry="20" fill="#E2E8F0" opacity="0.6"/>
+            <!-- Trees on sides -->
+            <circle cx="45" cy="60" r="20" fill="#52B788"/>
+            <circle cx="35" cy="50" r="16" fill="#40916C"/>
+            <rect x="42" y="70" width="6" height="20" fill="#8D6E63" rx="2"/>
+            <circle cx="295" cy="60" r="20" fill="#52B788"/>
+            <circle cx="305" cy="50" r="16" fill="#40916C"/>
+            <rect x="292" y="70" width="6" height="20" fill="#8D6E63" rx="2"/>
+            <!-- School Building -->
+            <rect x="75" y="38" width="190" height="52" fill="#E2E8F0" rx="4"/>
+            <rect x="135" y="28" width="70" height="62" fill="#CBD5E1" rx="3"/>
+            <polygon points="130,28 170,12 210,28" fill="#3B82F6"/>
+            <rect x="146" y="34" width="48" height="12" fill="#FFFFFF" rx="2"/>
+            <text x="170" y="43" font-size="7" font-weight="700" fill="#1E293B" text-anchor="middle" letter-spacing="0.5">ESCUELA</text>
+            <rect x="145" y="50" width="14" height="14" fill="#60A5FA" rx="2"/>
+            <rect x="181" y="50" width="14" height="14" fill="#60A5FA" rx="2"/>
+            <rect x="160" y="69" width="20" height="21" fill="#334155" rx="3 3 0 0"/>
+            <rect x="88" y="46" width="14" height="14" fill="#93C5FD" rx="2"/>
+            <rect x="110" y="46" width="14" height="14" fill="#93C5FD" rx="2"/>
+            <rect x="88" y="66" width="14" height="14" fill="#93C5FD" rx="2"/>
+            <rect x="110" y="66" width="14" height="14" fill="#93C5FD" rx="2"/>
+            <rect x="216" y="46" width="14" height="14" fill="#93C5FD" rx="2"/>
+            <rect x="238" y="46" width="14" height="14" fill="#93C5FD" rx="2"/>
+            <rect x="216" y="66" width="14" height="14" fill="#93C5FD" rx="2"/>
+            <rect x="238" y="66" width="14" height="14" fill="#93C5FD" rx="2"/>
+          </svg>
+        </div>
+
+        <!-- Login Card (White Card with curved border, exactly like Wireframe 1) -->
+        <div class="w-full bg-white rounded-3xl p-6 sm:p-7 shadow-sm border border-slate-200/80 relative z-10 space-y-4">
+          <div class="text-center">
+            <h1 class="text-xl font-bold text-[#001433]">Acceso Institucional</h1>
+            <p class="text-slate-500 text-xs mt-0.5">Ingresá con tu cuenta de la institución</p>
+          </div>
+
+          <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-3.5">
+            <!-- Institutional Email -->
+            <div>
+              <label for="email" class="block text-xs font-semibold text-slate-700 mb-1">Correo institucional</label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
+                  <i class="fa-regular fa-envelope text-xs"></i>
+                </span>
+                <input type="email" id="email" required placeholder="usuario@escuela.edu.ar"
+                  class="w-full bg-white border border-slate-200 rounded-2xl pl-9 pr-3 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0066FF] transition-all">
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div>
+              <label for="password" class="block text-xs font-semibold text-slate-700 mb-1">Contraseña</label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
+                  <i class="fa-solid fa-lock text-xs"></i>
+                </span>
+                <input type="password" id="password" required placeholder="••••••••"
+                  class="w-full bg-white border border-slate-200 rounded-2xl pl-9 pr-10 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0066FF] transition-all">
+                <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 hover:text-slate-600">
+                  <i id="toggleIcon" class="fa-regular fa-eye-slash text-xs"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Remember me checkbox -->
+            <div class="flex items-center justify-between text-xs">
+              <label class="flex items-center space-x-2 text-slate-600 cursor-pointer">
+                <input type="checkbox" checked class="w-3.5 h-3.5 rounded border-slate-300 text-[#0066FF] focus:ring-[#0066FF]">
+                <span>Recordar mi usuario</span>
+              </label>
+              <a href="#" onclick="mostrarToast('Hacé clic en cualquiera de los 4 perfiles a los costados para autocompletar.', 'info', 'Demo EduAlerta'); return false;" class="text-[11px] font-semibold text-[#0066FF] hover:underline">
+                ¿Olvidaste tu contraseña?
+              </a>
+            </div>
+
+            <!-- Error Alert -->
+            <div id="errorAlert" class="hidden p-2.5 rounded-xl bg-red-50 border border-red-200 text-red-600 text-xs flex items-center gap-2">
+              <i class="fa-solid fa-circle-exclamation"></i>
+              <span id="errorMessage">Credenciales incorrectas.</span>
+            </div>
+
+            <!-- Blue Login Button (Wireframe 1) -->
+            <button type="submit" id="submitBtn" class="w-full py-3 px-4 rounded-2xl bg-[#0066FF] hover:bg-blue-700 active:bg-blue-800 font-bold text-white text-xs shadow-sm transition-all flex items-center justify-center gap-2">
+              <span>Iniciar sesión</span>
+            </button>
+          </form>
+
+          <!-- Secure Platform footer badge (Wireframe 1) -->
+          <div class="pt-2 border-t border-slate-100 flex items-center justify-center gap-2 text-slate-500 text-[11px]">
+            <i class="fa-solid fa-lock text-slate-400"></i>
+            <span>Plataforma segura para instituciones educativas</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN (Desktop only: 2 roles) -->
+      <div class="hidden lg:flex lg:col-span-3 flex-col gap-3.5">
+        <div class="text-xs uppercase tracking-wider font-extrabold text-slate-400 mb-1 flex items-center gap-1.5">
+          <i class="fa-solid fa-building-columns text-[#0066FF]"></i> Gestión
+        </div>
+
+        <!-- Role 3: Directivo -->
+        <button type="button" onclick="quickFill('directivo')" class="group p-4 rounded-3xl bg-white hover:border-[#0066FF] border border-slate-200/80 shadow-sm text-left transition-all hover:shadow-md">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-bold text-amber-600 flex items-center gap-2">
+              <span class="w-7 h-7 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xs">
+                <i class="fa-solid fa-school-flag"></i>
+              </span>
+              Equipo Directivo
+            </span>
+            <i class="fa-solid fa-arrow-right text-[11px] text-slate-400 group-hover:text-amber-600 group-hover:translate-x-1 transition-all"></i>
+          </div>
+          <p class="text-xs font-semibold text-slate-700">Directora Silvia Martínez</p>
+          <p class="text-[11px] text-slate-400 truncate">directora.martinez@escuela12.edu.ar</p>
+        </button>
+
+        <!-- Role 4: Gerente Red -->
+        <button type="button" onclick="quickFill('admin')" class="group p-4 rounded-3xl bg-white hover:border-[#0066FF] border border-slate-200/80 shadow-sm text-left transition-all hover:shadow-md">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-bold text-purple-600 flex items-center gap-2">
+              <span class="w-7 h-7 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xs">
+                <i class="fa-solid fa-sitemap"></i>
+              </span>
+              Gerente Tutor Legal
+            </span>
+            <i class="fa-solid fa-arrow-right text-[11px] text-slate-400 group-hover:text-purple-600 group-hover:translate-x-1 transition-all"></i>
+          </div>
+          <p class="text-xs font-semibold text-slate-700">Lic. Alejandro Rossi (Red Sur)</p>
+          <p class="text-[11px] text-slate-400 truncate">admin@colegiosdelsur.edu.ar</p>
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="w-full py-3 px-6 text-center text-xs text-slate-400">
+    <p>© 2026 EduAlerta • Sistema de Detección Temprana y Vinculación Escolar</p>
+  </footer>
+
+  <script>
+    // Toast Notification System
+    function mostrarToast(mensaje, tipo = 'info', titulo = '') {
+      let container = document.getElementById('toastContainer');
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'toastContainer';
+        container.className = 'fixed top-4 right-4 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-full px-4 sm:px-0';
+        document.body.appendChild(container);
+      }
+
+      const toast = document.createElement('div');
+      const bgColors = {
+        success: 'bg-emerald-50 border-emerald-200 text-emerald-900',
+        error: 'bg-rose-50 border-rose-200 text-rose-900',
+        warning: 'bg-amber-50 border-amber-200 text-amber-900',
+        info: 'bg-blue-50 border-blue-200 text-blue-900'
+      };
+      const iconColors = {
+        success: 'text-emerald-500 fa-circle-check',
+        error: 'text-rose-500 fa-circle-exclamation',
+        warning: 'text-amber-500 fa-triangle-exclamation',
+        info: 'text-[#0066FF] fa-circle-info'
+      };
+
+      const currentBg = bgColors[tipo] || bgColors.info;
+      const currentIcon = iconColors[tipo] || iconColors.info;
+
+      toast.className = `pointer-events-auto p-3.5 rounded-2xl border shadow-lg flex items-start gap-3 transition-all duration-300 transform translate-y-[-10px] opacity-0 ${currentBg}`;
+      toast.innerHTML = `
+        <div class="text-base flex-shrink-0 mt-0.5">
+          <i class="fa-solid ${currentIcon}"></i>
+        </div>
+        <div class="flex-grow text-xs">
+          ${titulo ? `<strong class="block font-bold mb-0.5">${titulo}</strong>` : ''}
+          <span class="leading-relaxed font-medium">${mensaje}</span>
+        </div>
+        <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-slate-600 text-xs p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      `;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-[-10px]', 'opacity-0');
+        toast.classList.add('translate-y-0', 'opacity-100');
+      });
+
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0', 'translate-y-[-10px]');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    const USERS_DB = {
+      "carlos.martinez@gmail.com": { pass: "familia123", target: "familia.html" },
+      "prof.garcia@escuela12.edu.ar": { pass: "docente123", target: "docente.html" },
+      "directora.martinez@escuela12.edu.ar": { pass: "directivo123", target: "directivo.html" },
+      "admin@colegiosdelsur.edu.ar": { pass: "admin123", target: "admin_red.html" }
+    };
+
+    function togglePassword() {
+      const pass = document.getElementById('password');
+      const icon = document.getElementById('toggleIcon');
+      if (pass.type === 'password') {
+        pass.type = 'text';
+        icon.className = 'fa-regular fa-eye text-xs';
+      } else {
+        pass.type = 'password';
+        icon.className = 'fa-regular fa-eye-slash text-xs';
+      }
+    }
+
+    function quickFill(role) {
+      const email = document.getElementById('email');
+      const pass = document.getElementById('password');
+
+      if (role === 'familia') {
+        email.value = 'carlos.martinez@gmail.com';
+        pass.value = 'familia123';
+      } else if (role === 'docente') {
+        email.value = 'prof.garcia@escuela12.edu.ar';
+        pass.value = 'docente123';
+      } else if (role === 'directivo') {
+        email.value = 'directora.martinez@escuela12.edu.ar';
+        pass.value = 'directivo123';
+      } else if (role === 'admin') {
+        email.value = 'admin@colegiosdelsur.edu.ar';
+        pass.value = 'admin123';
+      }
+
+      handleLogin(new Event('submit'));
+    }
+
+    function handleLogin(e) {
+      if (e) e.preventDefault();
+      const email = document.getElementById('email').value.trim().toLowerCase();
+      const pass = document.getElementById('password').value;
+      const errorBox = document.getElementById('errorAlert');
+      const errorMsg = document.getElementById('errorMessage');
+
+      errorBox.classList.add('hidden');
+
+      if (USERS_DB[email]) {
+        if (USERS_DB[email].pass === pass || pass === "123456" || pass === "demo123") {
+          window.location.href = USERS_DB[email].target;
+        } else {
+          errorMsg.textContent = "Contraseña incorrecta para este usuario.";
+          errorBox.classList.remove('hidden');
+        }
+      } else {
+        errorMsg.textContent = "Usuario no registrado. Utilizá los accesos de prueba.";
+        errorBox.classList.remove('hidden');
+      }
+    }
+  </script>
+</body>
+</html>

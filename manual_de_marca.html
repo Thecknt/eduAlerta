@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduAlerta • Manual de Identidad de Marca y UI Design System</title>
+  <!-- Favicon Oficial EduAlerta -->
+  <link rel="icon" type="image/jpeg" href="WhatsApp Image 2026-10-04 at 11.24.07.jpeg">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <!-- FontAwesome 6 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Google Font: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .swatch-card:hover .copy-hint {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="bg-[#F8FAFC] min-h-screen text-slate-800 flex flex-col selection:bg-blue-100 selection:text-blue-800">
+
+  <!-- Top Sticky Header -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <a href="index.html" class="flex items-center gap-2">
+        <img src="WhatsApp Image 2026-10-04 at 11.24.07.jpeg" alt="EduAlerta" class="h-9 sm:h-10 object-contain">
+      </a>
+      <span class="text-slate-300 hidden sm:inline">|</span>
+      <span class="text-xs sm:text-sm font-bold text-[#001433] hidden sm:inline">Manual de Identidad y Sistema de Diseño</span>
+    </div>
+
+    <div class="flex items-center space-x-3">
+      <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-blue-50 text-[#0066FF] border border-blue-200">
+        Versión 1.0 • 2026
+      </span>
+      <a href="index.html" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors flex items-center gap-1.5">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Volver a la App</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero Header -->
+  <section class="bg-white border-b border-slate-200/80 py-10 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-5xl mx-auto space-y-4">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-[#0066FF]">
+        <i class="fa-solid fa-book-bookmark"></i>
+        <span>Guía Oficial de Marca & Design System</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-[#001433] tracking-tight">
+        Manual de Identidad de Marca EduAlerta
+      </h1>
+      <p class="text-slate-500 text-sm sm:text-base max-w-3xl leading-relaxed">
+        Este documento establece los principios de diseño, el sistema cromático, la escala tipográfica, la iconografía y los estándares de componentes que garantizan una experiencia pedagógica intuitiva, empática y rigurosa en todos los puntos de contacto.
+      </p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="flex-grow max-w-5xl w-full mx-auto px-4 sm:px-6 py-8 space-y-12">
+
+    <!-- 1. MANIFIESTO Y PILARES -->
+    <section class="space-y-4">
+      <div class="flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-blue-50 text-[#0066FF] flex items-center justify-center font-bold text-xs">1</span>
+        <h2 class="text-xl font-bold text-[#001433]">Manifiesto y Pilares de Marca</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-xs space-y-2">
+          <div class="w-10 h-10 rounded-2xl bg-blue-50 text-[#0066FF] flex items-center justify-center text-base">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <h3 class="font-bold text-sm text-[#001433]">Prevención Temprana</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Actuamos antes de que una falta o baja calificación se transforme en deserción escolar.
+          </p>
+        </div>
+
+        <div class="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-xs space-y-2">
+          <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-base">
+            <i class="fa-solid fa-heart-pulse"></i>
+          </div>
+          <h3 class="font-bold text-sm text-[#001433]">Claridad Empática</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Traducción constructiva de métricas pedagógicas; el tono orienta, nunca acusa ni sanciona.
+          </p>
+        </div>
+
+        <div class="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-xs space-y-2">
+          <div class="w-10 h-10 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-base">
+            <i class="fa-solid fa-scale-balanced"></i>
+          </div>
+          <h3 class="font-bold text-sm text-[#001433]">Rigor Institucional</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Permisos estrictos por rol: docentes vinculan por correo y directores por llamada de urgencia.
+          </p>
+        </div>
+
+        <div class="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-xs space-y-2">
+          <div class="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-base">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <h3 class="font-bold text-sm text-[#001433]">Acción de 1 Clic</h3>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Interfaces despojadas de burocracia, diseñadas para directivos y docentes con alta exigencia.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. LOGOTIPO Y ZONA DE SEGURIDAD -->
+    <section class="space-y-4">
+      <div class="flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-blue-50 text-[#0066FF] flex items-center justify-center font-bold text-xs">2</span>
+        <h2 class="text-xl font-bold text-[#001433]">Identidad Visual y Logotipo Oficial</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Logo Display Box -->
+        <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-xs space-y-4 flex flex-col justify-between">
+          <div>
+            <span class="text-xs uppercase font-extrabold text-slate-400 block mb-1">Logotipo Oficial Máster</span>
+            <div class="p-8 rounded-2xl bg-slate-50 border border-dashed border-slate-300 flex items-center justify-center relative">
+              <img src="WhatsApp Image 2026-10-04 at 11.24.07.jpeg" alt="Logotipo EduAlerta" class="h-16 object-contain">
+              <!-- Clear space indicator -->
+              <span class="absolute top-2 left-2 text-[9px] font-bold text-slate-400">Área de Seguridad: 1X (Altura 'E')</span>
+            </div>
+          </div>
+          <div class="text-xs text-slate-500 space-y-1">
+            <p><strong>Composición:</strong> Isotipo de birrete con vector de conectividad + Tipografía sans-serif.</p>
+            <p><strong>Uso:</strong> Cabeceras principales, login, emails institucionales y reportes PDF.</p>
+          </div>
+        </div>
+
+        <!-- Reglas de Uso y Prohibiciones -->
+        <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-xs space-y-3">
+          <span class="text-xs uppercase font-extrabold text-slate-400 block">Reglas de Integridad del Logo</span>
+          <div class="space-y-2 text-xs">
+            <div class="p-3 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-start gap-2.5">
+              <i class="fa-solid fa-circle-check text-emerald-600 mt-0.5"></i>
+              <div>
+                <strong class="text-emerald-900 block">Usos Correctos</strong>
+                <span class="text-emerald-800">Sobre fondo blanco o `#F8FAFC`, conservando siempre las proporciones y márgenes de seguridad.</span>
+              </div>
+            </div>
+
+            <div class="p-3 rounded-2xl bg-rose-50 border border-rose-200 flex items-start gap-2.5">
+              <i class="fa-solid fa-circle-xmark text-rose-600 mt-0.5"></i>
+              <div>
+                <strong class="text-rose-900 block">Prohibiciones Estrictas</strong>
+                <span class="text-rose-800">No deformar aspecto, no alterar los colores corporativos, no añadir sombras pesadas ni colocar sobre fondos saturados.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. SISTEMA CROMÁTICO (PALETA) -->
+    <section class="space-y-4">
+      <div class="flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-blue-50 text-[#0066FF] flex items-center justify-center font-bold text-xs">3</span>
+        <h2 class="text-xl font-bold text-[#001433]">Sistema Cromático y Semáforo Pedagógico</h2>
+      </div>
+
+      <!-- Primarios de Marca -->
+      <div>
+        <h3 class="text-xs uppercase font-extrabold text-slate-400 mb-3 tracking-wider">Colores Institucionales Primarios</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3.5">
+          <!-- Azul Eléctrico -->
+          <div class="bg-white p-4 rounded-3xl border border-slate-200 shadow-xs space-y-3">
+            <div class="h-20 w-full rounded-2xl bg-[#0066FF] flex items-end p-2.5 text-white font-bold text-xs shadow-inner">
+              #0066FF
+            </div>
+            <div>
+              <strong class="text-xs text-[#001433] block">Azul Eléctrico EduAlerta</strong>
+              <span class="text-[11px] text-slate-500 block">RGB: 0, 102, 255</span>
+              <span class="text-[10px] text-slate-400 block mt-1">Acción, botones y branding</span>
+            </div>
+          </div>
+
+          <!-- Azul Marino -->
+          <div class="bg-white p-4 rounded-3xl border border-slate-200 shadow-xs space-y-3">
+            <div class="h-20 w-full rounded-2xl bg-[#001433] flex items-end p-2.5 text-white font-bold text-xs shadow-inner">
+              #001433
+            </div>
+            <div>
+              <strong class="text-xs text-[#001433] block">Azul Marino Institucional</strong>
+              <span class="text-[11px] text-slate-500 block">RGB: 0, 20, 51</span>
+              <span class="text-[10px] text-slate-400 block mt-1">Titulares H1/H2 y texto principal</span>
+            </div>
+          </div>
+
+          <!-- Superficie Slate -->
+          <div class="bg-white p-4 rounded-3xl border border-slate-200 shadow-xs space-y-3">
+            <div class="h-20 w-full rounded-2xl bg-[#F8FAFC] border border-slate-200 flex items-end p-2.5 text-slate-700 font-bold text-xs">
+              #F8FAFC
+            </div>
+            <div>
+              <strong class="text-xs text-[#001433] block">Superficie Base (Slate 50)</strong>
+              <span class="text-[11px] text-slate-500 block">RGB: 248, 250, 252</span>
+              <span class="text-[10px] text-slate-400 block mt-1">Fondo general descansado</span>
+            </div>
+          </div>
+
+          <!-- Blanco Puro -->
+          <div class="bg-white p-4 rounded-3xl border border-slate-200 shadow-xs space-y-3">
+            <div class="h-20 w-full rounded-2xl bg-white border border-slate-200 flex items-end p-2.5 text-slate-700 font-bold text-xs">
+              #FFFFFF
+            </div>
+            <div>
+              <strong class="text-xs text-[#001433] block">Blanco Puro</strong>
+              <span class="text-[11px] text-slate-500 block">RGB: 255, 255, 255</span>
+              <span class="text-[10px] text-slate-400 block mt-1">Tarjetas, modales y entradas</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Semáforo Pedagógico -->
+      <div class="pt-2">
+        <h3 class="text-xs uppercase font-extrabold text-slate-400 mb-3 tracking-wider">Semáforo de Estados Pedagógicos</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+          <!-- Alerta Crítica -->
+          <div class="bg-[#FFF0F0] border border-rose-200 p-4 rounded-3xl space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#E53E3E] text-white">Alerta Crítica</span>
+              <span class="text-xs font-mono font-bold text-[#E53E3E]">#E53E3E</span>
+            </div>
+            <p class="text-xs text-rose-900 font-medium leading-relaxed">
+              Inasistencias reiteradas, riesgo de deserción o nota reprobatoria (&lt;6). Fondo pastel `#FFF0F0`.
+            </p>
+          </div>
+
+          <!-- Seguimiento -->
+          <div class="bg-[#FFFBEB] border border-amber-200 p-4 rounded-3xl space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#D97706] text-white">En Seguimiento</span>
+              <span class="text-xs font-mono font-bold text-[#D97706]">#D97706</span>
+            </div>
+            <p class="text-xs text-amber-900 font-medium leading-relaxed">
+              Atención preventiva, refuerzo pedagógico o ausencias aisladas. Fondo pastel `#FFFBEB`.
+            </p>
+          </div>
+
+          <!-- Trayectoria Regular -->
+          <div class="bg-[#F0FDF4] border border-emerald-200 p-4 rounded-3xl space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#059669] text-white">Trayectoria Regular</span>
+              <span class="text-xs font-mono font-bold text-[#059669]">#059669</span>
+            </div>
+            <p class="text-xs text-emerald-900 font-medium leading-relaxed">
+              Asistencia al día (&gt;90%), materias aprobadas y continuidad asegurada. Fondo pastel `#F0FDF4`.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. TIPOGRAFÍA Y ESCALA -->
+    <section class="space-y-4">
+      <div class="flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-blue-50 text-[#0066FF] flex items-center justify-center font-bold text-xs">4</span>
+        <h2 class="text-xl font-bold text-[#001433]">Tipografía: Plus Jakarta Sans</h2>
+      </div>
+
+      <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-xs space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
+          <div>
+            <h3 class="text-lg font-bold text-[#001433]">Plus Jakarta Sans (Google Fonts)</h3>
+            <p class="text-xs text-slate-500">Alternativa del sistema: Inter / sans-serif</p>
+          </div>
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700">Pesos: 500, 600, 700, 800</span>
+        </div>
+
+        <div class="space-y-4">
+          <div class="border-b border-slate-100 pb-3">
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">H1 Titular Principal (28-32px / 800 ExtraBold)</span>
+            <p class="text-2xl sm:text-3xl font-extrabold text-[#001433]">Hola, Directora Silvia Martínez</p>
+          </div>
+
+          <div class="border-b border-slate-100 pb-3">
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">H2 Título de Sección (18-20px / 700 Bold)</span>
+            <p class="text-lg font-bold text-[#001433]">Nómina del Curso y Estudiantes en Alerta</p>
+          </div>
+
+          <div class="border-b border-slate-100 pb-3">
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">H3 Subtítulo / Nombre de Tarjeta (14-16px / 700 Bold)</span>
+            <p class="text-sm sm:text-base font-bold text-[#001433]">Lautaro Martínez • 4° Año División B</p>
+          </div>
+
+          <div>
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Cuerpo de Texto y Metadatos (13px / 500 Medium & 10px / 700 Bold)</span>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              El Prof. García registró una inasistencia en Matemática en las últimas semanas. Podés justificar ausencias o contactar a preceptoría.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. COMPONENTES Y DESIGN SYSTEM -->
+    <section class="space-y-4">
+      <div class="flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-blue-50 text-[#0066FF] flex items-center justify-center font-bold text-xs">5</span>
+        <h2 class="text-xl font-bold text-[#001433]">Componentes Clave de Interfaz</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Botones y Controles -->
+        <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-xs space-y-4">
+          <h3 class="text-xs uppercase font-extrabold text-slate-400 tracking-wider">Botones y Acciones</h3>
+          <div class="flex flex-wrap items-center gap-2.5">
+            <button class="px-4 py-2 rounded-2xl bg-[#0066FF] text-white font-bold text-xs shadow-sm hover:bg-blue-700 transition-colors">
+              Botón Primario
+            </button>
+
+            <button class="px-4 py-2 rounded-2xl bg-white border border-slate-200 text-slate-700 font-bold text-xs shadow-xs hover:bg-slate-50 transition-colors">
+              Botón Neutro
+            </button>
+
+            <button class="px-4 py-2 rounded-2xl bg-[#E53E3E] text-white font-bold text-xs shadow-sm hover:bg-red-700 transition-colors">
+              <i class="fa-solid fa-user-xmark mr-1"></i> Falta
+            </button>
+          </div>
+
+          <h3 class="text-xs uppercase font-extrabold text-slate-400 tracking-wider pt-2">Controles Segmentados (Pills)</h3>
+          <div class="flex items-center bg-slate-100 p-1 rounded-2xl border border-slate-200 text-xs w-fit">
+            <span class="px-3 py-1 rounded-xl font-bold bg-white text-[#0066FF] shadow-xs">
+              <i class="fa-solid fa-chart-pie mr-1"></i> Torta (Default)
+            </span>
+            <span class="px-3 py-1 rounded-xl font-bold text-slate-600">
+              <i class="fa-solid fa-chart-column mr-1"></i> Barras
+            </span>
+          </div>
+        </div>
+
+        <!-- Canales de Contacto por Rol -->
+        <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-xs space-y-4">
+          <h3 class="text-xs uppercase font-extrabold text-slate-400 tracking-wider">Protocolo de Contacto por Rol</h3>
+          <div class="space-y-3 text-xs">
+            <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+              <div>
+                <strong class="text-slate-800 block">Docente Titular</strong>
+                <span class="text-slate-500">Contacta exclusivamente por email institucional</span>
+              </div>
+              <span class="px-2.5 py-1.5 rounded-xl bg-blue-50 text-[#0066FF] border border-blue-200 font-bold flex items-center gap-1">
+                <i class="fa-regular fa-envelope"></i> mailto:
+              </span>
+            </div>
+
+            <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+              <div>
+                <strong class="text-slate-800 block">Equipo Directivo</strong>
+                <span class="text-slate-500">Autorizado para llamadas telefónicas directas</span>
+              </div>
+              <span class="px-2.5 py-1.5 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold flex items-center gap-1">
+                <i class="fa-solid fa-phone"></i> tel:
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full py-6 px-6 text-center text-xs text-slate-400 border-t border-slate-200/80 bg-white">
+    <p>© 2026 EduAlerta • Sistema Oficial de Identidad de Marca y UI Design System</p>
+  </footer>
+
+</body>
+</html>

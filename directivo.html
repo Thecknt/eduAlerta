@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduAlerta - Dashboard Directivo</title>
+  <link rel="icon" type="image/jpeg" href="WhatsApp Image 2026-10-04 at 11.24.07.jpeg">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
+          colors: {
+            brand: {
+              blue: '#0066FF',
+              dark: '#001433',
+              light: '#F8FAFC'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#F8FAFC] min-h-screen font-sans text-slate-800 flex flex-col selection:bg-blue-100 selection:text-blue-800">
+
+  <!-- Top Navbar (Matching Wireframe 2 Header) -->
+  <header class="sticky top-0 z-40 bg-white border-b border-slate-200/80 px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <!-- Hamburger only on mobile / under 720px -->
+      <button class="block min-[720px]:hidden text-slate-700 hover:text-slate-900 text-lg p-1.5 rounded-lg focus:outline-none">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      
+      <!-- Official Logo Image -->
+      <a href="directivo.html" class="flex items-center">
+        <img src="WhatsApp Image 2026-10-04 at 11.24.07.jpeg" alt="EduAlerta" class="h-9 sm:h-10 object-contain">
+      </a>
+      <span class="text-slate-300 hidden sm:inline">|</span>
+      <h1 class="text-xs sm:text-sm font-bold text-[#001433] hidden sm:inline">Equipo Directivo</h1>
+    </div>
+
+    <!-- Right: Notification & Profile Group (Wireframe 2) -->
+    <div class="flex items-center space-x-3 sm:space-x-4">
+      <!-- Notification Bell with unread badge -->
+      <button onclick="abrirModalNotificacionesDirectivo()" class="relative p-2 text-slate-600 hover:text-slate-900 rounded-xl hover:bg-slate-100 transition-colors" title="Centro de Notificaciones">
+        <i class="fa-regular fa-bell text-xl"></i>
+        <span id="badgeDirectivoNotif" class="absolute top-1 right-1 w-4 h-4 bg-rose-500 text-white rounded-full text-[10px] font-bold flex items-center justify-center animate-pulse">4</span>
+      </button>
+
+      <div class="flex items-center space-x-2">
+        <div class="w-9 h-9 rounded-full bg-slate-100 border border-slate-300 flex items-center justify-center text-xs font-bold text-slate-700">
+          SM
+        </div>
+        <span class="hidden sm:inline text-xs font-bold text-slate-700">Directora Martínez</span>
+      </div>
+
+      <!-- Logout -->
+      <a href="index.html" class="p-2 text-slate-400 hover:text-rose-600 rounded-xl hover:bg-slate-100 transition-colors" title="Cerrar sesión">
+        <i class="fa-solid fa-arrow-right-from-bracket text-base"></i>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-grow max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+
+    <!-- Greeting & Period Selector -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#001433]">Hola, Directora Silvia Martínez</h1>
+        <p class="text-xs sm:text-sm text-slate-500 font-medium">Escuela Secundaria N° 12 • 243 Alumnos Matriculados • 26 Docentes</p>
+      </div>
+
+      <div class="flex items-center gap-2 self-start sm:self-auto bg-white border border-slate-200 px-3 py-1.5 rounded-2xl shadow-sm">
+        <i class="fa-regular fa-calendar text-[#0066FF] text-xs"></i>
+        <select id="bimestreDirectivo" onchange="actualizarBimestreDirectivo()" class="bg-transparent text-xs font-bold text-slate-700 focus:outline-none cursor-pointer">
+          <option value="1">1° Bimestre (Marzo - Mayo)</option>
+          <option value="2" selected>2° Bimestre (Junio - Agosto) [Actual]</option>
+          <option value="3">3° Bimestre (Septiembre - Octubre)</option>
+          <option value="4">4° Bimestre (Noviembre - Diciembre)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- 3 Status KPI Cards (Exact Wireframe 2 colors & styling) -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+      
+      <!-- Card 1: Estudiantes en alerta crítica (Rose pastel) -->
+      <div class="bg-[#FFF0F0] border border-rose-100 rounded-3xl p-4 sm:p-5 flex items-center justify-between shadow-sm">
+        <div>
+          <span id="kpiDirAlertas" class="text-3xl sm:text-4xl font-extrabold text-[#E53E3E] block">8</span>
+          <span class="text-xs sm:text-sm font-semibold text-rose-700">Estudiantes en alerta institucional</span>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-[#E53E3E] text-white flex items-center justify-center text-sm font-bold shadow-sm">
+          !
+        </div>
+      </div>
+
+      <!-- Card 2: En seguimiento (Amber pastel) -->
+      <div class="bg-[#FFFBEB] border border-amber-100 rounded-3xl p-4 sm:p-5 flex items-center justify-between shadow-sm">
+        <div>
+          <span id="kpiDirSeguimiento" class="text-3xl sm:text-4xl font-extrabold text-[#D97706] block">15</span>
+          <span class="text-xs sm:text-sm font-semibold text-amber-700">En seguimiento pedagógico</span>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-[#D97706] text-white flex items-center justify-center text-sm font-bold shadow-sm">
+          <i class="fa-regular fa-clock"></i>
+        </div>
+      </div>
+
+      <!-- Card 3: Sin alertas / Trayectoria regular (Emerald pastel) -->
+      <div class="bg-[#F0FDF4] border border-emerald-100 rounded-3xl p-4 sm:p-5 flex items-center justify-between shadow-sm">
+        <div>
+          <span id="kpiDirRegulares" class="text-3xl sm:text-4xl font-extrabold text-[#059669] block">220</span>
+          <span class="text-xs sm:text-sm font-semibold text-emerald-700">Trayectoria regular (90.5%)</span>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-[#059669] text-white flex items-center justify-center text-sm font-bold shadow-sm">
+          <i class="fa-solid fa-users text-xs"></i>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Institutional Health Metrics (Executive directivo indicators) -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+      <div class="bg-white border border-slate-200/80 rounded-3xl p-4 shadow-sm">
+        <span class="text-[11px] font-semibold text-slate-500">Asistencia Institucional</span>
+        <div class="text-xl font-extrabold text-[#001433] mt-0.5" id="dirAsistProm">89.4%</div>
+        <p class="text-[10px] text-emerald-600 font-bold mt-0.5">+1.2% respecto a mes anterior</p>
+      </div>
+
+      <div class="bg-white border border-slate-200/80 rounded-3xl p-4 shadow-sm">
+        <span class="text-[11px] font-semibold text-slate-500">Retención de Matrícula</span>
+        <div class="text-xl font-extrabold text-[#0066FF] mt-0.5" id="dirRetencion">96.4%</div>
+        <p class="text-[10px] text-slate-500 font-medium mt-0.5">235 de 243 alumnos regulares</p>
+      </div>
+
+      <div class="bg-white border border-slate-200/80 rounded-3xl p-4 shadow-sm">
+        <span class="text-[11px] font-semibold text-slate-500">Carga Docente al Día</span>
+        <div class="text-xl font-extrabold text-emerald-600 mt-0.5" id="dirDocentesAlDia">24 / 26</div>
+        <p class="text-[10px] text-slate-500 font-medium mt-0.5">92.3% libros de temas firmados</p>
+      </div>
+    </div>
+
+    <!-- School Distribution Chart (Toggle between Bars and Donut / Pie) -->
+    <div class="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-sm space-y-3">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h3 class="text-sm sm:text-base font-bold text-[#001433]">Distribución de Alertas por Año</h3>
+          <p class="text-xs text-slate-500">Situación de trayectorias en los 5 años de la secundaria</p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <!-- Toggle Barras vs Torta (Torta Default) -->
+          <div class="flex items-center bg-slate-100 p-1 rounded-2xl border border-slate-200 text-xs">
+            <button id="btnDirBarras" onclick="cambiarGraficoDir('barras')" class="px-3 py-1 rounded-xl font-bold text-slate-600 hover:text-slate-900">
+              <i class="fa-solid fa-chart-column"></i> Barras
+            </button>
+            <button id="btnDirTorta" onclick="cambiarGraficoDir('torta')" class="px-3 py-1 rounded-xl font-bold bg-white text-[#0066FF] shadow-sm">
+              <i class="fa-solid fa-chart-pie"></i> Torta
+            </button>
+          </div>
+
+          <div class="hidden sm:flex items-center gap-2 text-xs font-semibold text-slate-600">
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-[#E53E3E]"></span> Alerta</span>
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-[#D97706]"></span> Seguimiento</span>
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-[#52B788]"></span> Regular</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- VISTA BARRAS -->
+      <div id="dirGraficoBarras" class="hidden grid grid-cols-5 gap-3 pt-3 pb-1 text-center">
+        <!-- 1° Año -->
+        <div class="flex flex-col items-center">
+          <div class="h-28 w-10 bg-slate-100 rounded-xl overflow-hidden flex flex-col-reverse shadow-inner">
+            <div style="height: 10%" class="bg-[#E53E3E] w-full" title="Alerta: 1"></div>
+            <div style="height: 15%" class="bg-[#D97706] w-full" title="Seguimiento: 2"></div>
+            <div style="height: 75%" class="bg-[#52B788] w-full" title="Regular: 45"></div>
+          </div>
+          <span class="text-xs font-bold text-slate-700 mt-2">1° Año</span>
+          <span class="text-[10px] text-slate-400">48 al.</span>
+        </div>
+
+        <!-- 2° Año -->
+        <div class="flex flex-col items-center">
+          <div class="h-28 w-10 bg-slate-100 rounded-xl overflow-hidden flex flex-col-reverse shadow-inner">
+            <div style="height: 15%" class="bg-[#E53E3E] w-full" title="Alerta: 2"></div>
+            <div style="height: 20%" class="bg-[#D97706] w-full" title="Seguimiento: 3"></div>
+            <div style="height: 65%" class="bg-[#52B788] w-full" title="Regular: 43"></div>
+          </div>
+          <span class="text-xs font-bold text-slate-700 mt-2">2° Año</span>
+          <span class="text-[10px] text-slate-400">48 al.</span>
+        </div>
+
+        <!-- 3° Año -->
+        <div class="flex flex-col items-center">
+          <div class="h-28 w-10 bg-slate-100 rounded-xl overflow-hidden flex flex-col-reverse shadow-inner">
+            <div style="height: 12%" class="bg-[#E53E3E] w-full" title="Alerta: 1"></div>
+            <div style="height: 18%" class="bg-[#D97706] w-full" title="Seguimiento: 3"></div>
+            <div style="height: 70%" class="bg-[#52B788] w-full" title="Regular: 44"></div>
+          </div>
+          <span class="text-xs font-bold text-slate-700 mt-2">3° Año</span>
+          <span class="text-[10px] text-slate-400">48 al.</span>
+        </div>
+
+        <!-- 4° Año -->
+        <div class="flex flex-col items-center">
+          <div class="h-28 w-10 bg-slate-100 rounded-xl overflow-hidden flex flex-col-reverse shadow-inner">
+            <div style="height: 25%" class="bg-[#E53E3E] w-full" title="Alerta: 3"></div>
+            <div style="height: 25%" class="bg-[#D97706] w-full" title="Seguimiento: 4"></div>
+            <div style="height: 50%" class="bg-[#52B788] w-full" title="Regular: 43"></div>
+          </div>
+          <span class="text-xs font-bold text-slate-700 mt-2">4° Año</span>
+          <span class="text-[10px] text-slate-400">50 al.</span>
+        </div>
+
+        <!-- 5° Año -->
+        <div class="flex flex-col items-center">
+          <div class="h-28 w-10 bg-slate-100 rounded-xl overflow-hidden flex flex-col-reverse shadow-inner">
+            <div style="height: 12%" class="bg-[#E53E3E] w-full" title="Alerta: 1"></div>
+            <div style="height: 20%" class="bg-[#D97706] w-full" title="Seguimiento: 3"></div>
+            <div style="height: 68%" class="bg-[#52B788] w-full" title="Regular: 45"></div>
+          </div>
+          <span class="text-xs font-bold text-slate-700 mt-2">5° Año</span>
+          <span class="text-[10px] text-slate-400">49 al.</span>
+        </div>
+      </div>
+
+      <!-- VISTA TORTA / DONUT DE LA INSTITUCIÓN (Default) -->
+      <div id="dirGraficoTorta" class="py-4 flex flex-col sm:flex-row items-center justify-center gap-8">
+        <div class="relative w-40 h-40">
+          <svg viewBox="0 0 42 42" class="w-full h-full transform -rotate-90">
+            <circle cx="21" cy="21" r="15.91549430918954" fill="#fff" stroke="#F1F5F9" stroke-width="6"/>
+            <!-- Regular: 90.5% -->
+            <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#52B788" stroke-width="6" stroke-dasharray="90.5 9.5" stroke-dashoffset="0"/>
+            <!-- Seguimiento: 6.2% -->
+            <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#D97706" stroke-width="6" stroke-dasharray="6.2 93.8" stroke-dashoffset="-90.5"/>
+            <!-- Alertas: 3.3% -->
+            <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#E53E3E" stroke-width="6" stroke-dasharray="3.3 96.7" stroke-dashoffset="-96.7"/>
+          </svg>
+          <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+            <span class="text-2xl font-extrabold text-[#001433]">243</span>
+            <span class="text-[9px] text-slate-400 font-bold uppercase">Matrícula</span>
+          </div>
+        </div>
+
+        <div class="space-y-2 text-xs">
+          <div class="p-2.5 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-between gap-6">
+            <span class="font-bold text-emerald-800">Trayectoria Regular</span>
+            <span class="font-extrabold text-emerald-700">220 al. (90.5%)</span>
+          </div>
+          <div class="p-2.5 rounded-2xl bg-amber-50 border border-amber-100 flex items-center justify-between gap-6">
+            <span class="font-bold text-amber-800">En Seguimiento</span>
+            <span class="font-extrabold text-amber-700">15 al. (6.2%)</span>
+          </div>
+          <div class="p-2.5 rounded-2xl bg-rose-50 border border-rose-100 flex items-center justify-between gap-6">
+            <span class="font-bold text-rose-800">Alerta Crítica</span>
+            <span class="font-extrabold text-rose-700">8 al. (3.3%)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs: Cuerpo Docente vs Casos en Alerta -->
+    <div class="flex border-b border-slate-200 text-xs sm:text-sm font-semibold text-slate-500">
+      <button onclick="cambiarTabDirectivo('docentes')" id="tabBtnDocentes" class="py-2.5 px-4 text-[#0066FF] border-b-2 border-[#0066FF] font-bold">
+        Cuerpo Docente (26)
+      </button>
+      <button onclick="cambiarTabDirectivo('alumnos')" id="tabBtnAlumnos" class="py-2.5 px-4 hover:text-slate-800">
+        Casos en Alerta Temprana (8)
+      </button>
+      <button onclick="cambiarTabDirectivo('gerencia')" id="tabBtnGerencia" class="py-2.5 px-4 hover:text-slate-800">
+        Red de Colegios del Sur
+      </button>
+    </div>
+
+    <!-- PANEL DOCENTES -->
+    <div id="panelDocentes" class="bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-sm space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-base font-bold text-[#001433]">Cuerpo Docente y Asignaciones</h2>
+          <p class="text-xs text-slate-500">Supervisión pedagógica y comunicación directa con profesores titulares.</p>
+        </div>
+        <div class="relative w-full sm:w-56">
+          <input type="text" id="filtroDocente" onkeyup="filtrarDocentes()" placeholder="Buscar docente..."
+            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-[#0066FF]">
+        </div>
+      </div>
+
+      <div id="listaDocentes" class="space-y-2.5">
+        <!-- Rellenado con JS -->
+      </div>
+    </div>
+
+    <!-- PANEL ALUMNOS EN ALERTA -->
+    <div id="panelAlumnos" class="hidden bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-sm space-y-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-base font-bold text-[#001433]">Casos Prioritarios para Conducción</h2>
+          <p class="text-xs text-slate-500">Estudiantes con riesgo inminente de deserción o ausentismo crónico.</p>
+        </div>
+      </div>
+
+      <div id="listaAlumnosRiesgo" class="space-y-2.5">
+        <!-- Rellenado con JS -->
+      </div>
+    </div>
+
+    <!-- PANEL GERENCIA RED -->
+    <div id="panelGerencia" class="hidden bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/80 shadow-sm space-y-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-base font-bold text-[#001433]">Enlace con Gerencia Red de Colegios del Sur</h2>
+          <p class="text-xs text-slate-500">Canal directo institucional con el Administrador y Tutor Legal.</p>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="flex items-center space-x-3">
+          <div class="w-12 h-12 rounded-full bg-purple-100 text-purple-700 font-extrabold flex items-center justify-center text-sm">
+            AR
+          </div>
+          <div>
+            <h4 class="text-sm font-bold text-[#001433]">Lic. Alejandro Rossi</h4>
+            <p class="text-xs text-purple-700 font-semibold">Gerente & Tutor Legal • Red de Colegios del Sur</p>
+            <p class="text-[11px] text-slate-500">Sede Central Consorcio</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <a href="tel:+5491155550300" class="px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:text-[#0066FF] flex items-center gap-1.5 shadow-sm">
+            <i class="fa-solid fa-phone text-emerald-600"></i> Llamar
+          </a>
+          <a href="https://wa.me/5491155550300?text=Estimado%20Lic.%20Rossi,%20le%20escribe%20la%20Directora%20Silvia%20Mart%C3%ADnez%20(Escuela%2012)" target="_blank" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-xs font-bold text-white flex items-center gap-1.5 shadow-sm">
+            <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- MODAL: CENTRO DE NOTIFICACIONES (Equipo Directivo) -->
+  <div id="modalNotificacionesDirectivo" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 rounded-3xl max-w-lg w-full p-5 sm:p-6 shadow-2xl relative space-y-4 max-h-[90vh] flex flex-col">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3 flex-shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-sm font-bold">
+            <i class="fa-solid fa-bell"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-[#001433]">Centro de Notificaciones</h3>
+            <p class="text-[11px] text-slate-500">Alertas institucionales y gestión docente</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span id="contadorNoLeidasDirectivo" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-rose-50 text-rose-700">4 no leídas</span>
+          <button onclick="cerrarModalNotificacionesDirectivo()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between text-xs px-1 flex-shrink-0">
+        <span class="text-slate-400 text-[11px]">Bandeja de rectoría</span>
+        <button onclick="marcarTodasLeidasDirectivo()" class="text-xs font-bold text-[#0066FF] hover:underline flex items-center gap-1">
+          <i class="fa-solid fa-check-double"></i> Marcar todas como leídas
+        </button>
+      </div>
+
+      <div id="contenedorListaNotificacionesDirectivo" class="space-y-2.5 overflow-y-auto text-xs flex-grow pr-1">
+        <!-- Rellenado dinámicamente con JS -->
+      </div>
+
+      <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs flex-shrink-0">
+        <button onclick="limpiarHistorialDirectivo()" class="text-slate-400 hover:text-rose-600 font-semibold transition-colors">
+          <i class="fa-regular fa-trash-can"></i> Vaciar bandeja
+        </button>
+        <button onclick="cerrarModalNotificacionesDirectivo()" class="px-4 py-2 rounded-xl bg-[#0066FF] hover:bg-blue-700 text-white font-bold">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="w-full py-4 px-6 text-center text-xs text-slate-400">
+    <p>© 2026 EduAlerta • Escuela Secundaria N° 12 • Equipo Directivo</p>
+  </footer>
+
+  <script>
+    // Toast Notification System
+    function mostrarToast(mensaje, tipo = 'info', titulo = '') {
+      let container = document.getElementById('toastContainer');
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'toastContainer';
+        container.className = 'fixed top-4 right-4 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-full px-4 sm:px-0';
+        document.body.appendChild(container);
+      }
+
+      const toast = document.createElement('div');
+      const bgColors = {
+        success: 'bg-emerald-50 border-emerald-200 text-emerald-900',
+        error: 'bg-rose-50 border-rose-200 text-rose-900',
+        warning: 'bg-amber-50 border-amber-200 text-amber-900',
+        info: 'bg-blue-50 border-blue-200 text-blue-900'
+      };
+      const iconColors = {
+        success: 'text-emerald-500 fa-circle-check',
+        error: 'text-rose-500 fa-circle-exclamation',
+        warning: 'text-amber-500 fa-triangle-exclamation',
+        info: 'text-[#0066FF] fa-circle-info'
+      };
+
+      const currentBg = bgColors[tipo] || bgColors.info;
+      const currentIcon = iconColors[tipo] || iconColors.info;
+
+      toast.className = `pointer-events-auto p-3.5 rounded-2xl border shadow-lg flex items-start gap-3 transition-all duration-300 transform translate-y-[-10px] opacity-0 ${currentBg}`;
+      toast.innerHTML = `
+        <div class="text-base flex-shrink-0 mt-0.5">
+          <i class="fa-solid ${currentIcon}"></i>
+        </div>
+        <div class="flex-grow text-xs">
+          ${titulo ? `<strong class="block font-bold mb-0.5">${titulo}</strong>` : ''}
+          <span class="leading-relaxed font-medium">${mensaje}</span>
+        </div>
+        <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-slate-600 text-xs p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      `;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-[-10px]', 'opacity-0');
+        toast.classList.add('translate-y-0', 'opacity-100');
+      });
+
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0', 'translate-y-[-10px]');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    const DOCENTES_DATA = [
+      {
+        nombre: "Prof. Roberto García",
+        materia: "Matemática",
+        cursos: "4° Año B, 5° Año A",
+        alumnosCargo: 58,
+        faltas: "1 falta (justificada por salud)",
+        diasHorarios: "Lun, Mié y Vie: 07:30 a 12:40",
+        tel: "+5491155550101",
+        wa: "5491155550101",
+        alDia: true
+      },
+      {
+        nombre: "Prof. María Paz",
+        materia: "Lengua y Literatura",
+        cursos: "1° Año A, 2° Año B, 4° Año B",
+        alumnosCargo: 84,
+        faltas: "0 faltas",
+        diasHorarios: "Mar y Jue: 07:30 a 13:20",
+        tel: "+5491155550110",
+        wa: "5491155550110",
+        alDia: true
+      },
+      {
+        nombre: "Prof. Alberto Conti",
+        materia: "Física",
+        cursos: "3° Año A, 4° Año B",
+        alumnosCargo: 54,
+        faltas: "2 faltas (1 justificada)",
+        diasHorarios: "Lun y Mié: 13:30 a 17:40",
+        tel: "+5491155550111",
+        wa: "5491155550111",
+        alDia: true
+      },
+      {
+        nombre: "Prof. Viviana Sosa",
+        materia: "Química",
+        cursos: "4° Año A, 4° Año B",
+        alumnosCargo: 56,
+        faltas: "3 faltas (pendiente descargo)",
+        diasHorarios: "Mar y Vie: 08:15 a 12:00",
+        tel: "+5491155550112",
+        wa: "5491155550112",
+        alDia: false
+      },
+      {
+        nombre: "Prof. Fernando Díaz",
+        materia: "Historia",
+        cursos: "2° Año A, 3° Año B, 4° Año B",
+        alumnosCargo: 78,
+        faltas: "0 faltas",
+        diasHorarios: "Mié y Jue: 09:00 a 13:20",
+        tel: "+5491155550113",
+        wa: "5491155550113",
+        alDia: true
+      },
+      {
+        nombre: "Prof. Kevin Brown",
+        materia: "Inglés",
+        cursos: "1° a 5° Año (Grupos de Nivel)",
+        alumnosCargo: 110,
+        faltas: "1 falta (capacitación docente)",
+        diasHorarios: "Lun a Jue: 08:00 a 11:30",
+        tel: "+5491155550114",
+        wa: "5491155550114",
+        alDia: true
+      }
+    ];
+
+    const ALUMNOS_RIESGO = [
+      { nombre: "Lucas Acuña", curso: "4° Año B", motivo: "6 inasistencias en Matemática y Física", tutor: "Marcos Acuña", tel: "+5491155550206", wa: "5491155550206" },
+      { nombre: "Joaquín Pereyra", curso: "4° Año B", motivo: "7 inasistencias acumuladas sin justificar", tutor: "Esteban Pereyra", tel: "+5491155550202", wa: "5491155550202" },
+      { nombre: "Martina Benítez", curso: "2° Año A", motivo: "Bajo rendimiento y entregas incompletas", tutor: "Silvia Benítez", tel: "+5491155550210", wa: "5491155550210" }
+    ];
+
+    function renderDirectivo() {
+      // Render docentes
+      const contDoc = document.getElementById('listaDocentes');
+      contDoc.innerHTML = '';
+      DOCENTES_DATA.forEach(d => {
+        const div = document.createElement('div');
+        div.className = 'p-4 rounded-3xl bg-white hover:bg-slate-50 border border-slate-200/90 shadow-sm transition-all space-y-3';
+        div.innerHTML = `
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
+            <div class="flex items-center space-x-3">
+              <div class="w-11 h-11 rounded-2xl bg-blue-50 text-[#0066FF] font-extrabold flex items-center justify-center text-sm shadow-sm">
+                ${d.nombre.split(' ').slice(1).map(n=>n[0]).join('')}
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h4 class="text-sm font-bold text-[#001433]">${d.nombre}</h4>
+                  <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${d.alDia ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-700 border border-amber-200'}">
+                    ${d.alDia ? 'Libro al día' : 'Pendiente cierre'}
+                  </span>
+                </div>
+                <p class="text-xs text-slate-500 font-semibold">${d.materia} • <span class="text-slate-700">${d.cursos}</span></p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-1.5 self-end sm:self-auto">
+              <a href="tel:${d.tel}" class="p-2 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-[#0066FF] text-xs border border-slate-200 font-semibold flex items-center gap-1" title="Llamar">
+                <i class="fa-solid fa-phone"></i>
+                <span class="hidden sm:inline">Llamar</span>
+              </a>
+              <a href="https://wa.me/${d.wa}?text=Estimado/a%20${encodeURIComponent(d.nombre)},%20le%20escribe%20la%20Direcci%C3%B3n" target="_blank" class="p-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-semibold flex items-center gap-1 shadow-sm" title="WhatsApp">
+                <i class="fa-brands fa-whatsapp text-sm"></i>
+                <span class="hidden sm:inline">WhatsApp</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Nutritional detail metrics for teacher -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs pt-1">
+            <div class="bg-slate-50 p-2.5 rounded-2xl border border-slate-100">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Días y Horarios:</span>
+              <p class="font-bold text-slate-700 mt-0.5 flex items-center gap-1">
+                <i class="fa-regular fa-clock text-[#0066FF] text-[11px]"></i>
+                ${d.diasHorarios}
+              </p>
+            </div>
+
+            <div class="bg-slate-50 p-2.5 rounded-2xl border border-slate-100">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Inasistencias Docente:</span>
+              <p class="font-bold ${d.faltas.includes('0') ? 'text-emerald-600' : 'text-amber-600'} mt-0.5 flex items-center gap-1">
+                <i class="fa-regular fa-calendar-xmark text-[11px]"></i>
+                ${d.faltas}
+              </p>
+            </div>
+
+            <div class="bg-slate-50 p-2.5 rounded-2xl border border-slate-100">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Alumnos a Cargo:</span>
+              <p class="font-bold text-slate-700 mt-0.5 flex items-center gap-1">
+                <i class="fa-solid fa-users text-[#0066FF] text-[11px]"></i>
+                <strong class="text-slate-900">${d.alumnosCargo} estudiantes</strong>
+              </p>
+            </div>
+          </div>
+        `;
+        contDoc.appendChild(div);
+      });
+
+      // Render alumnos
+      const contAlu = document.getElementById('listaAlumnosRiesgo');
+      contAlu.innerHTML = '';
+      ALUMNOS_RIESGO.forEach(a => {
+        const div = document.createElement('div');
+        div.className = 'p-3 sm:p-3.5 rounded-2xl bg-[#FFF0F0] border border-rose-100 flex items-center justify-between gap-3';
+        div.innerHTML = `
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-full bg-[#FFE2E2] text-[#E53E3E] font-extrabold flex items-center justify-center text-xs">
+              !
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs sm:text-sm font-bold text-[#001433]">${a.nombre}</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FFE2E2] text-[#E53E3E]">${a.curso}</span>
+              </div>
+              <p class="text-[11px] text-rose-800 font-medium">${a.motivo} • Tutor: ${a.tutor}</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-1.5">
+            <a href="tel:${a.tel}" class="px-3 py-1.5 rounded-xl bg-[#E53E3E] hover:bg-red-700 text-white text-xs font-bold flex items-center gap-1 shadow-sm">
+              <i class="fa-solid fa-phone"></i>
+              <span class="hidden sm:inline">Llamar Familia</span>
+            </a>
+            <a href="https://wa.me/${a.wa}?text=Estimado/a%20${encodeURIComponent(a.tutor)},%20le%20escribimos%20desde%20la%20Direcci%C3%B3n" target="_blank" class="p-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-xs">
+              <i class="fa-brands fa-whatsapp text-sm"></i>
+            </a>
+          </div>
+        `;
+        contAlu.appendChild(div);
+      });
+    }
+
+    function cambiarTabDirectivo(tab) {
+      document.getElementById('tabBtnDocentes').className = "py-2.5 px-4 text-slate-500 hover:text-slate-800";
+      document.getElementById('tabBtnAlumnos').className = "py-2.5 px-4 text-slate-500 hover:text-slate-800";
+      document.getElementById('tabBtnGerencia').className = "py-2.5 px-4 text-slate-500 hover:text-slate-800";
+
+      document.getElementById('panelDocentes').classList.add('hidden');
+      document.getElementById('panelAlumnos').classList.add('hidden');
+      document.getElementById('panelGerencia').classList.add('hidden');
+
+      if (tab === 'docentes') {
+        document.getElementById('tabBtnDocentes').className = "py-2.5 px-4 text-[#0066FF] border-b-2 border-[#0066FF] font-bold";
+        document.getElementById('panelDocentes').classList.remove('hidden');
+      } else if (tab === 'alumnos') {
+        document.getElementById('tabBtnAlumnos').className = "py-2.5 px-4 text-[#0066FF] border-b-2 border-[#0066FF] font-bold";
+        document.getElementById('panelAlumnos').classList.remove('hidden');
+      } else if (tab === 'gerencia') {
+        document.getElementById('tabBtnGerencia').className = "py-2.5 px-4 text-[#0066FF] border-b-2 border-[#0066FF] font-bold";
+        document.getElementById('panelGerencia').classList.remove('hidden');
+      }
+    }
+
+    function cambiarGraficoDir(tipo) {
+      const btnBarras = document.getElementById('btnDirBarras');
+      const btnTorta = document.getElementById('btnDirTorta');
+      const contBarras = document.getElementById('dirGraficoBarras');
+      const contTorta = document.getElementById('dirGraficoTorta');
+
+      if (tipo === 'barras') {
+        btnBarras.className = "px-3 py-1 rounded-xl font-bold bg-white text-[#0066FF] shadow-sm";
+        btnTorta.className = "px-3 py-1 rounded-xl font-bold text-slate-600 hover:text-slate-900";
+        contBarras.classList.remove('hidden');
+        contTorta.classList.add('hidden');
+      } else {
+        btnTorta.className = "px-3 py-1 rounded-xl font-bold bg-white text-[#0066FF] shadow-sm";
+        btnBarras.className = "px-3 py-1 rounded-xl font-bold text-slate-600 hover:text-slate-900";
+        contBarras.classList.add('hidden');
+        contTorta.classList.remove('hidden');
+      }
+    }
+
+    function filtrarDocentes() {
+      const q = document.getElementById('filtroDocente').value.toLowerCase();
+      const items = document.getElementById('listaDocentes').children;
+      for (let item of items) {
+        item.style.display = item.innerText.toLowerCase().includes(q) ? 'block' : 'none';
+      }
+    }
+
+    function actualizarBimestreDirectivo() {
+      renderDirectivo();
+    }
+
+    // GESTIÓN DE NOTIFICACIONES (Equipo Directivo)
+    const NOTIFICACIONES_DIRECTIVO_DEFAULT = [
+      {
+        id: 1,
+        tipo: 'ausentismo',
+        titulo: 'Ausentismo Docente Notificado',
+        detalle: 'Prof. Alberto Conti informó licencia médica para sus clases de Física en 4° B y 3° A.',
+        fecha: 'Hoy 07:15',
+        leida: false
+      },
+      {
+        id: 2,
+        tipo: 'supervision',
+        titulo: 'Convocatoria a Reunión de Supervisión',
+        detalle: 'Inspección distrital cita a equipo directivo este jueves a las 10:00 en sede inspectiva.',
+        fecha: 'Hoy 08:30',
+        leida: false
+      },
+      {
+        id: 3,
+        tipo: 'alerta',
+        titulo: 'Alerta Temprana de Riesgo (8 estudiantes)',
+        detalle: 'Se consolidaron los informes bimestrales con riesgo pedagógico e inasistencias reiteradas.',
+        fecha: 'Ayer 17:00',
+        leida: false
+      },
+      {
+        id: 4,
+        tipo: 'libro',
+        titulo: 'Libros de Temas del Ciclo 2026',
+        detalle: '26 de 26 docentes completaron la rúbrica y planificación del período inicial.',
+        fecha: '1 Octubre',
+        leida: true
+      }
+    ];
+
+    function obtenerNotificacionesDirectivo() {
+      const data = localStorage.getItem('edualerta_notificaciones_directivo');
+      if (data === null) {
+        localStorage.setItem('edualerta_notificaciones_directivo', JSON.stringify(NOTIFICACIONES_DIRECTIVO_DEFAULT));
+        return NOTIFICACIONES_DIRECTIVO_DEFAULT;
+      }
+      try {
+        return JSON.parse(data);
+      } catch (e) {
+        return NOTIFICACIONES_DIRECTIVO_DEFAULT;
+      }
+    }
+
+    function guardarNotificacionesDirectivo(notifs) {
+      localStorage.setItem('edualerta_notificaciones_directivo', JSON.stringify(notifs));
+      actualizarBadgeDirectivo(notifs);
+    }
+
+    function actualizarBadgeDirectivo(notifs) {
+      if (!notifs) notifs = obtenerNotificacionesDirectivo();
+      const noLeidas = notifs.filter(n => !n.leida).length;
+      const badge = document.getElementById('badgeDirectivoNotif');
+      const contador = document.getElementById('contadorNoLeidasDirectivo');
+      if (badge) {
+        if (noLeidas > 0) {
+          badge.textContent = noLeidas;
+          badge.classList.remove('hidden');
+        } else {
+          badge.classList.add('hidden');
+        }
+      }
+      if (contador) {
+        contador.textContent = `${noLeidas} no leída${noLeidas === 1 ? '' : 's'}`;
+      }
+    }
+
+    function renderNotificacionesDirectivo() {
+      const notifs = obtenerNotificacionesDirectivo();
+      const cont = document.getElementById('contenedorListaNotificacionesDirectivo');
+      if (!cont) return;
+      cont.innerHTML = '';
+
+      if (notifs.length === 0) {
+        cont.innerHTML = `
+          <div class="text-center py-8 text-slate-400">
+            <i class="fa-regular fa-bell-slash text-2xl mb-2 block"></i>
+            <p>No tenés notificaciones en tu bandeja.</p>
+          </div>
+        `;
+        actualizarBadgeDirectivo(notifs);
+        return;
+      }
+
+      notifs.forEach(n => {
+        const item = document.createElement('div');
+        const iconBg = n.tipo === 'ausentismo' ? 'bg-amber-100 text-amber-600' : (n.tipo === 'alerta' ? 'bg-rose-100 text-rose-600' : 'bg-blue-100 text-[#0066FF]');
+        const iconFa = n.tipo === 'ausentismo' ? 'fa-user-clock' : (n.tipo === 'alerta' ? 'fa-triangle-exclamation' : 'fa-building-columns');
+
+        item.className = `p-3.5 rounded-2xl border transition-all ${
+          n.leida 
+            ? 'bg-slate-50 border-slate-200/60 opacity-80' 
+            : 'bg-rose-50/40 border-rose-200/90 shadow-xs'
+        }`;
+
+        item.innerHTML = `
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 rounded-xl ${iconBg} flex items-center justify-center flex-shrink-0 text-xs mt-0.5 font-bold">
+              <i class="fa-solid ${iconFa}"></i>
+            </div>
+            <div class="flex-grow min-w-0">
+              <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center gap-1.5 min-w-0">
+                  ${!n.leida ? '<span class="w-2 h-2 rounded-full bg-rose-600 flex-shrink-0 animate-pulse"></span>' : ''}
+                  <span class="font-bold text-[#001433] truncate">${n.titulo}</span>
+                </div>
+                <span class="text-[10px] text-slate-400 font-semibold flex-shrink-0">${n.fecha}</span>
+              </div>
+              <p class="text-slate-600 text-[11px] mt-0.5 leading-snug">${n.detalle}</p>
+              <div class="mt-2.5 flex items-center justify-between pt-1.5 border-t border-slate-100">
+                ${!n.leida ? `
+                  <button onclick="marcarLeidaDirectivo(${n.id})" class="text-[11px] font-bold text-rose-600 hover:text-rose-800 flex items-center gap-1">
+                    <i class="fa-solid fa-check"></i> Marcar como leída
+                  </button>
+                ` : `
+                  <span class="text-[10px] text-slate-400 font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-check-double text-emerald-500"></i> Leída
+                  </span>
+                `}
+                <button onclick="eliminarNotifDirectivo(${n.id})" class="text-[11px] text-slate-400 hover:text-rose-600 p-1" title="Eliminar">
+                  <i class="fa-regular fa-trash-can"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+        cont.appendChild(item);
+      });
+
+      actualizarBadgeDirectivo(notifs);
+    }
+
+    function abrirModalNotificacionesDirectivo() {
+      renderNotificacionesDirectivo();
+      document.getElementById('modalNotificacionesDirectivo').classList.remove('hidden');
+    }
+
+    function cerrarModalNotificacionesDirectivo() {
+      document.getElementById('modalNotificacionesDirectivo').classList.add('hidden');
+    }
+
+    function marcarLeidaDirectivo(id) {
+      const notifs = obtenerNotificacionesDirectivo();
+      const target = notifs.find(n => n.id === id);
+      if (target) {
+        target.leida = true;
+        guardarNotificacionesDirectivo(notifs);
+        renderNotificacionesDirectivo();
+        mostrarToast('Notificación marcada como leída.', 'info', 'Centro de Alertas');
+      }
+    }
+
+    function marcarTodasLeidasDirectivo() {
+      const notifs = obtenerNotificacionesDirectivo();
+      notifs.forEach(n => n.leida = true);
+      guardarNotificacionesDirectivo(notifs);
+      renderNotificacionesDirectivo();
+      mostrarToast('Todas las alertas marcadas como leídas.', 'success', 'Bandeja Actualizada');
+    }
+
+    function eliminarNotifDirectivo(id) {
+      let notifs = obtenerNotificacionesDirectivo();
+      notifs = notifs.filter(n => n.id !== id);
+      guardarNotificacionesDirectivo(notifs);
+      renderNotificacionesDirectivo();
+    }
+
+    function limpiarHistorialDirectivo() {
+      guardarNotificacionesDirectivo([]);
+      renderNotificacionesDirectivo();
+      mostrarToast('Bandeja de notificaciones vaciada.', 'info');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderDirectivo();
+      actualizarBadgeDirectivo();
+    });
+  </script>
+</body>
+</html>
