@@ -132,14 +132,14 @@
           <span>Tomar Asistencia de Hoy</span>
         </button>
         <div class="pt-2 border-t border-slate-100">
-          <a href="#listaEstudiantesAlerta" onclick="toggleMenuMobile();" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 text-slate-700 transition-colors text-left">
+          <button onclick="navegarDocente('nomina')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 text-slate-700 transition-colors text-left">
             <i class="fa-solid fa-users text-slate-400 w-4 text-center"></i>
             <span>Nómina y Alertas del Curso</span>
-          </a>
-          <a href="#graficoTortaContainer" onclick="toggleMenuMobile();" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 text-slate-700 transition-colors text-left">
+          </button>
+          <button onclick="navegarDocente('resumen')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 text-slate-700 transition-colors text-left">
             <i class="fa-solid fa-chart-pie text-slate-400 w-4 text-center"></i>
             <span>Resumen General del Período</span>
-          </a>
+          </button>
         </div>
       </nav>
     </div>
@@ -1106,6 +1106,17 @@
         drawer.classList.remove('-translate-x-full');
         backdrop.classList.remove('hidden');
         document.body.classList.add('overflow-hidden');
+      }
+    }
+
+    function navegarDocente(destino) {
+      toggleMenuMobile();
+      if (destino === 'nomina') {
+        const el = document.getElementById('listaEstudiantesAlerta');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      } else if (destino === 'resumen') {
+        const el = document.getElementById('graficoTortaContainer');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
       }
     }
 

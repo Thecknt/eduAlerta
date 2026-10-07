@@ -118,18 +118,18 @@
 
       <!-- Navigation & Quick Actions -->
       <nav class="p-3 space-y-1 text-xs font-semibold text-slate-700">
-        <a href="#kpiAdminAlertas" onclick="toggleMenuMobile();" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 text-slate-700 transition-colors text-left">
+        <button onclick="navegarAdmin('consolidado')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 text-slate-700 transition-colors text-left">
           <i class="fa-solid fa-chart-pie text-slate-400 w-4 text-center"></i>
           <span>Consolidado de la Red</span>
-        </a>
-        <a href="#tabsColegios" onclick="toggleMenuMobile();" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 text-slate-700 transition-colors text-left">
+        </button>
+        <button onclick="navegarAdmin('colegios')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 text-slate-700 transition-colors text-left">
           <i class="fa-solid fa-school text-[#0066FF] w-4 text-center"></i>
           <span>Supervisión de los 5 Colegios</span>
-        </a>
-        <a href="#detalleColegioActivo" onclick="toggleMenuMobile();" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 text-slate-700 transition-colors text-left">
+        </button>
+        <button onclick="navegarAdmin('detalle')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 text-slate-700 transition-colors text-left">
           <i class="fa-solid fa-user-tie text-emerald-600 w-4 text-center"></i>
           <span>Directivos, Docentes y Alumnos</span>
-        </a>
+        </button>
         <div class="pt-2 border-t border-slate-100">
           <a href="directivo.html" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-purple-50 text-purple-700 font-bold text-left">
             <i class="fa-solid fa-arrow-up-right-from-square w-4 text-center"></i>
@@ -1186,6 +1186,19 @@
         drawer.classList.remove('-translate-x-full');
         backdrop.classList.remove('hidden');
         document.body.classList.add('overflow-hidden');
+      }
+    }
+
+    function navegarAdmin(destino) {
+      toggleMenuMobile();
+      if (destino === 'consolidado') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (destino === 'colegios') {
+        const el = document.getElementById('tabsColegios');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      } else if (destino === 'detalle') {
+        const el = document.getElementById('detalleColegioActivo');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
       }
     }
 
